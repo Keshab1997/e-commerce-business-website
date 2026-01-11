@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>শাড়ি সম্ভার | আভিজাত্যের ছোঁয়া</title>
+    <link rel="stylesheet" href="./styles/variables.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./modules/common/navbar/navbar.css">
+    <link rel="stylesheet" href="./modules/common/footer/footer.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            text-align: center;
+            padding: 120px 20px;
+            margin-top: 70px;
+        }
+        .hero-title {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        .hero-btn {
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .hero-btn:hover {
+            background: #600000;
+            transform: translateY(-2px);
+        }
+        .features {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- নেভিগেশন বার -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">শাড়ি<span class="highlight">সম্ভার</span></a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">হোম</a></li>
+                <li><a href="shop.html" class="nav-link">কালেকশন</a></li>
+                <li><a href="admin.html" class="nav-link" style="color:var(--primary-color)">🔒 এডমিন</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- হিরো সেকশন -->
+    <section class="hero-section">
+        <h1 class="hero-title">শাড়ি সম্ভারে স্বাগতম</h1>
+        <p class="hero-subtitle">আভিজাত্যের ছোঁয়া আপনার অঙ্গে</p>
+        <a href="shop.html" class="hero-btn">কালেকশন দেখুন</a>
+    </section>
+
+    <!-- ফিচার সেকশন -->
+    <section class="features">
+        <h2 style="text-align:center; color:var(--primary-color); margin-bottom:20px;">কেন আমাদের বেছে নিবেন?</h2>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>প্রিমিয়াম কোয়ালিটি</h3>
+                <p>সেরা মানের কাপড় এবং নিখুঁত কারুকাজ</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🚚</div>
+                <h3>ফ্রি ডেলিভারি</h3>
+                <p>সারা দেশে বিনামূল্যে হোম ডেলিভারি</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>রিটার্ন পলিসি</h3>
+                <p>৭ দিনের মধ্যে সহজ রিটার্ন সুবিধা</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ফুটার -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3 class="footer-logo">শাড়ি<span class="highlight">সম্ভার</span></h3>
+                <p class="footer-desc">
+                    আভিজাত্য এবং ঐতিহ্যের এক অনন্য মেলবন্ধন। আমরা দিচ্ছি দেশের সেরা তাঁত এবং বেনারসি শাড়ির নিশ্চয়তা।
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h4>প্রয়োজনীয় লিঙ্ক</h4>
+                <ul>
+                    <li><a href="index.html">হোম</a></li>
+                    <li><a href="shop.html">নতুন কালেকশন</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>যোগাযোগ</h4>
+                <p>📍 মিরপুর, ঢাকা - ১২১৬</p>
+                <p>📞 +৮৮০ ১৭১১-০০০০০০</p>
+                <p>✉️ support@sarisambhar.com</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>অনুসরণ করুন</h4>
+                <div class="social-links">
+                    <a href="#" class="social-icon">Facebook</a>
+                    <a href="#" class="social-icon">Instagram</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; ২০২৫ শাড়ি সম্ভার | সর্বস্বত্ব সংরক্ষিত</p>
+        </div>
+    </footer>
+</body>
+</html>
