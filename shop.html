@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>কালেকশন</title>
-    <link rel="stylesheet" href="./styles/variables.css">
-    <link rel="stylesheet" href="./styles/main.css">
-    <link rel="stylesheet" href="./modules/client/collections/gallery.css">
+    <title>কালেকশন | শাড়ি সম্ভার</title>
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="modules/common/navbar/navbar.css">
+    <link rel="stylesheet" href="modules/client/collections/gallery.css">
 </head>
 <body>
+    <!-- নেভিগেশন বার -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="nav-logo">শাড়ি<span class="highlight">সম্ভার</span></a>
+            <!-- লোগো টেক্সট এখন ফাঁকা থাকবে, জাভাস্ক্রিপ্ট বসাবে -->
+            <a href="index.html" class="nav-logo" id="dynamic-nav-logo">লোড হচ্ছে...</a>
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">হোম</a></li>
                 <li><a href="shop.html" class="nav-link">কালেকশন</a></li>
@@ -19,22 +22,35 @@
         </div>
     </nav>
 
+    <!-- মেইন গ্যালারি সেকশন -->
     <div class="gallery-container">
+        
+        <!-- পেজ হেডার -->
+        <div class="gallery-header">
+            <h2>আমাদের এক্সক্লুসিভ কালেকশন</h2>
+            <p>সেরা মানের বেনারসি, কাতান এবং সিল্ক শাড়ির সমাহার</p>
+        </div>
+
+        <!-- ফিল্টার বাটন -->
         <div class="filter-bar">
             <button class="filter-btn active" onclick="filterProducts('all')">সব</button>
             <button class="filter-btn" onclick="filterProducts('saree')">শাড়ি</button>
             <button class="filter-btn" onclick="filterProducts('suit')">সুট</button>
             <button class="filter-btn" onclick="filterProducts('jewelry')">গয়না</button>
         </div>
+
+        <!-- প্রোডাক্ট গ্রিড -->
         <div id="gallery-grid" class="product-grid">
             <div class="loading-spinner">লোড হচ্ছে...</div>
         </div>
     </div>
 
-    <!-- গ্যালারি লজিক -->
+    <!-- স্ক্রিপ্ট -->
     <script type="module">
         import { initGallery } from './modules/client/collections/gallery.js';
-        // গ্যালারি লোড
     </script>
+
+    <!-- গ্লোবাল ব্র্যান্ডিং লোডার -->
+    <script type="module" src="./utils/global-loader.js"></script>
 </body>
 </html>

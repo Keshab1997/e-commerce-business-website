@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>এডমিন লগইন</title>
-    <link rel="stylesheet" href="./styles/variables.css">
-    <link rel="stylesheet" href="./styles/main.css">
-    <link rel="stylesheet" href="./modules/admin/auth/login.css">
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="modules/admin/auth/login.css">
 </head>
 <body>
     <div class="login-wrapper">
         <div class="login-card">
-            <h1>এডমিন প্যানেল</h1>
+            <!-- এখানে আইডি দেওয়া হলো -->
+            <h1 id="admin-page-title">লোড হচ্ছে...</h1>
+            <p>এডমিন প্যানেল</p>
             <button id="google-login-btn" class="btn-google">Google দিয়ে লগইন করুন</button>
             <p id="login-message"></p>
         </div>
@@ -35,5 +37,8 @@
             }
         });
     </script>
+
+    <!-- গ্লোবাল ব্র্যান্ডিং লোডার -->
+    <script type="module" src="./utils/global-loader.js"></script>
 </body>
 </html>

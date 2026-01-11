@@ -1,102 +1,163 @@
+/* কন্টেইনার */
 .gallery-container {
-    padding: 20px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 80vh;
 }
 
-/* ফিল্টার বাটন ডিজাইন */
+/* হেডার ডিজাইন */
+.gallery-header {
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+.gallery-header h2 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+/* শিরোনামের নিচে গোল্ডেন দাগ */
+.gallery-header h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--secondary-color);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.gallery-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* ফিল্টার বাটন */
 .filter-bar {
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     flex-wrap: wrap;
 }
 
 .filter-btn {
-    padding: 8px 20px;
-    border: 1px solid var(--primary-color);
+    padding: 10px 30px;
+    border: 1px solid var(--secondary-color);
     background: transparent;
-    color: var(--primary-color);
-    border-radius: 25px;
+    color: var(--text-dark);
+    border-radius: 50px; /* ক্যাপসুল শেপ */
     cursor: pointer;
     font-weight: 600;
-    transition: 0.3s;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
 .filter-btn:hover, .filter-btn.active {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     color: white;
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    transform: translateY(-2px);
 }
 
-/* প্রোডাক্ট গ্রিড */
+/* প্রোডাক্ট গ্রিড (সবচেয়ে গুরুত্বপূর্ণ) */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 25px;
+    /* রেসপন্সিভ কলাম: ডেস্কটপে ৪টা, ট্যাবে ২/৩টা, মোবাইলে ১টা */
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 30px;
 }
 
-/* প্রোডাক্ট কার্ড */
+/* প্রোডাক্ট কার্ড ডিজাইন */
 .product-card {
     background: white;
-    border-radius: 10px;
+    border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05); /* সফট শ্যাডো */
+    transition: all 0.4s ease;
+    border: 1px solid #f0f0f0;
     cursor: pointer;
-    border: 1px solid #eee;
+    position: relative;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transform: translateY(-10px); /* উপরে উঠবে */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    border-color: var(--secondary-color);
 }
 
+/* ছবির বক্স */
 .card-img-box {
-    height: 250px;
+    height: 320px; /* ফিক্সড হাইট যাতে সব কার্ড সমান হয় */
     overflow: hidden;
-    background: #f9f9f9;
+    background-color: #f9f9f9;
+    position: relative;
 }
 
 .card-img-box img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
+    object-fit: cover; /* ছবি চ্যাপ্টা হবে না */
+    transition: transform 0.6s ease;
 }
 
+/* হোভার করলে ছবি জুম হবে */
 .product-card:hover .card-img-box img {
-    transform: scale(1.1); /* জুম ইফেক্ট */
+    transform: scale(1.1);
 }
 
+/* কার্ডের তথ্য */
 .card-info {
-    padding: 15px;
+    padding: 20px;
     text-align: center;
 }
 
 .card-title {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 5px;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: #333;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* নাম বড় হলে ... দেখাবে */
 }
 
 .card-price {
     color: var(--primary-color);
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
 }
 
+/* বাটন */
 .btn-view {
-    display: block;
+    display: inline-block;
     width: 100%;
-    padding: 10px;
-    background-color: var(--secondary-color);
-    color: white;
-    text-align: center;
-    margin-top: 10px;
-    border-radius: 5px;
+    padding: 10px 0;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 8px;
+    font-weight: 600;
     font-size: 0.9rem;
+    transition: 0.3s;
+    background: transparent;
 }
 
-.btn-view:hover {
-    background-color: #b8962e;
+.product-card:hover .btn-view {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* লোডিং স্পিনার */
+.loading-spinner {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2rem;
+    color: var(--secondary-color);
 }

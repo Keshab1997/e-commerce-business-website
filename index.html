@@ -3,47 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>শাড়ি সম্ভার | হোম</title>
-    <link rel="stylesheet" href="./styles/variables.css">
-    <link rel="stylesheet" href="./styles/main.css">
-    <link rel="stylesheet" href="./modules/client/home/home.css">
+    <title>শাড়ি সম্ভার | আভিজাত্যের প্রতীক</title>
+    
+    <!-- স্টাইলশিট -->
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="modules/common/navbar/navbar.css">
+    <link rel="stylesheet" href="modules/common/footer/footer.css">
+    <link rel="stylesheet" href="modules/client/home/home.css">
 </head>
 <body>
-    <!-- নেভিগেশন বার -->
+
+    <!-- ১. নেভিগেশন বার -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="nav-logo">শাড়ি<span class="highlight">সম্ভার</span></a>
+            <!-- লোগো টেক্সট এখন ফাঁকা থাকবে, জাভাস্ক্রিপ্ট বসাবে -->
+            <a href="index.html" class="nav-logo" id="dynamic-nav-logo">লোড হচ্ছে...</a>
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">হোম</a></li>
                 <li><a href="shop.html" class="nav-link">কালেকশন</a></li>
                 <li id="admin-nav-item" style="display: none;">
-                    <a href="dashboard.html" class="nav-link" style="color:var(--primary-color)">🔒 ড্যাশবোর্ড</a>
+                    <a href="dashboard.html" class="nav-link" style="color:var(--secondary-color); font-weight:bold;">🔒 ড্যাশবোর্ড</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-- হিরো সেকশন -->
-    <div class="hero-section">
-        <h1>শাড়ি সম্ভারে স্বাগতম</h1>
-        <p>আভিজাত্যের ছোঁয়া আপনার অঙ্গে</p>
-        <a href="shop.html" class="btn btn-primary">কালেকশন দেখুন</a>
-    </div>
+    <!-- ২. হিরো সেকশন (বড় ব্যানার) -->
+    <header class="hero-section">
+        <div class="hero-overlay">
+            <div class="hero-content">
+                <h1 class="hero-title">ঐতিহ্য ও আভিজাত্যের <br> <span class="highlight-text">অনন্য মেলবন্ধন</span></h1>
+                <p class="hero-subtitle">আমাদের এক্সক্লুসিভ বেনারসি, কাতান এবং সিল্ক শাড়ির কালেকশন আপনাকে দেবে রাজকীয় সাজ।</p>
+                <a href="shop.html" class="btn-hero">কালেকশন দেখুন</a>
+            </div>
+        </div>
+    </header>
 
+    <!-- ৩. কেন আমাদের বাছবেন? (ফিচার সেকশন) -->
+    <section class="features-section">
+        <div class="feature-container">
+            <div class="feature-box">
+                <div class="f-icon">💎</div>
+                <h3>প্রিমিয়াম কোয়ালিটি</h3>
+                <p>আমরা দিচ্ছি ১০০% আসল এবং সেরা মানের কাপড়ের নিশ্চয়তা।</p>
+            </div>
+            <div class="feature-box">
+                <div class="f-icon">🚚</div>
+                <h3>সারা ভারতে ডেলিভারি</h3>
+                <p>আপনার পছন্দের শাড়ি পৌঁছে যাবে আপনার দরজায়, খুব দ্রুত।</p>
+            </div>
+            <div class="feature-box">
+                <div class="f-icon">✨</div>
+                <h3>এক্সক্লুসিভ ডিজাইন</h3>
+                <p>প্রতিটি শাড়ি আমাদের নিজস্ব কারিগর দ্বারা নিপুণভাবে তৈরি।</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ৪. ফুটার -->
     <footer class="site-footer">
-        <p>&copy; ২০২৫ শাড়ি সম্ভার</p>
+        <div class="footer-container">
+            <!-- কলাম ১: ব্র্যান্ড -->
+            <div class="footer-col">
+                <h3 id="f-name">শাড়ি সম্ভার</h3>
+                <p id="f-desc">সেরা মানের শাড়ির বিশ্বস্ত প্রতিষ্ঠান।</p>
+            </div>
+
+            <!-- কলাম ২: লিঙ্ক -->
+            <div class="footer-col">
+                <h4>কুইক লিঙ্ক</h4>
+                <ul>
+                    <li><a href="index.html">হোম</a></li>
+                    <li><a href="shop.html">কালেকশন</a></li>
+                    <li><a href="admin.html">এডমিন</a></li>
+                </ul>
+            </div>
+
+            <!-- কলাম ৩: যোগাযোগ -->
+            <div class="footer-col">
+                <h4>যোগাযোগ</h4>
+                <p>📞 <span id="f-phone">...</span></p>
+                <p>✉️ <span id="f-email">...</span></p>
+                <p>📍 <span id="f-address" style="white-space: pre-line;">...</span></p>
+            </div>
+
+            <!-- কলাম ৪: সোশ্যাল -->
+            <div class="footer-col">
+                <h4>অনুসরণ করুন</h4>
+                <a href="#" id="f-fb" target="_blank" class="social-link">Facebook Page</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; ২০২৫ শাড়ি সম্ভার | সর্বস্বত্ব সংরক্ষিত</p>
+        </div>
     </footer>
 
-    <!-- এডমিন চেক স্ক্রিপ্ট -->
+    <!-- স্ক্রিপ্ট -->
     <script type="module">
         import { auth } from './config/firebase-config.js';
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         const ADMIN_EMAIL = "keshabsarkar2018@gmail.com";
+
         onAuthStateChanged(auth, (user) => {
             if (user && user.email === ADMIN_EMAIL) {
                 document.getElementById('admin-nav-item').style.display = 'block';
             }
         });
     </script>
+
+    <!-- ফুটার ডেটা লোড করার স্ক্রিপ্ট -->
+    <script type="module">
+        import { db } from './config/firebase-config.js';
+        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        async function loadFooterData() {
+            try {
+                const docRef = doc(db, "settings", "shopInfo");
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if(data.name) document.getElementById('f-name').innerText = data.name;
+                    if(data.description) document.getElementById('f-desc').innerText = data.description;
+                    if(data.phone) document.getElementById('f-phone').innerText = data.phone;
+                    if(data.email) document.getElementById('f-email').innerText = data.email;
+                    if(data.address) document.getElementById('f-address').innerText = data.address;
+                    if(data.facebook) document.getElementById('f-fb').href = data.facebook;
+                }
+            } catch (e) { console.log("Footer load error"); }
+        }
+        loadFooterData();
+    </script>
+
+    <!-- গ্লোবাল ব্র্যান্ডিং লোডার -->
+    <script type="module" src="./utils/global-loader.js"></script>
 </body>
 </html>

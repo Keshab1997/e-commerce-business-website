@@ -2,25 +2,76 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>সেটিংস</title>
-    <link rel="stylesheet" href="./styles/variables.css">
-    <link rel="stylesheet" href="./styles/main.css">
-    <link rel="stylesheet" href="./modules/admin/shop-settings/settings.css">
+    <title>দোকান সেটিংস</title>
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="modules/admin/shop-settings/settings.css">
 </head>
 <body>
     <div class="settings-container">
-        <a href="dashboard.html" class="btn-back">⬅ ড্যাশবোর্ড</a>
+        <div class="settings-header">
+            <h2>⚙️ দোকান সেটিংস</h2>
+            <a href="dashboard.html" class="btn-back">⬅ ড্যাশবোর্ড</a>
+        </div>
+
         <div class="settings-card">
             <form id="shop-settings-form">
-                <input type="text" id="shop-name" placeholder="দোকানের নাম">
-                <input type="text" id="shop-phone" placeholder="ফোন">
-                <input type="text" id="shop-address" placeholder="ঠিকানা">
-                <input type="file" id="shop-logo-file">
-                <button type="submit" class="btn btn-primary" id="save-btn">সেভ করুন</button>
-                <p id="status-msg"></p>
+                
+                <!-- ১. সাধারণ তথ্য -->
+                <div class="form-section">
+                    <h3>সাধারণ তথ্য</h3>
+                    <div class="form-group">
+                        <label>দোকানের নাম</label>
+                        <input type="text" id="shop-name" placeholder="যেমন: শাড়ি সম্ভার">
+                    </div>
+                    <div class="form-group">
+                        <label>ফুটার ডেসক্রিপশন (ছোট বিবরণ)</label>
+                        <textarea id="shop-desc" rows="2" placeholder="দোকান সম্পর্কে ১-২ লাইন..."></textarea>
+                    </div>
+                </div>
+
+                <!-- ২. যোগাযোগ -->
+                <div class="form-section">
+                    <h3>যোগাযোগ</h3>
+                    <div class="form-group">
+                        <label>ফোন নম্বর</label>
+                        <input type="text" id="shop-phone" placeholder="+৮৮০ ১৭১১...">
+                    </div>
+                    <div class="form-group">
+                        <label>ইমেইল</label>
+                        <input type="email" id="shop-email" placeholder="example@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label>ঠিকানা (লাইন বাই লাইন লিখুন)</label>
+                        <textarea id="shop-address" rows="4" placeholder="দোকান নং ১২৩,&#10;মিরপুর রোড,&#10;ঢাকা - ১২১৬"></textarea>
+                    </div>
+                </div>
+
+                <!-- ৩. সোশ্যাল মিডিয়া -->
+                <div class="form-section">
+                    <h3>সোশ্যাল লিঙ্ক</h3>
+                    <div class="form-group">
+                        <label>ফেসবুক পেজ লিঙ্ক</label>
+                        <input type="url" id="shop-fb" placeholder="https://facebook.com/...">
+                    </div>
+                </div>
+
+                <!-- ৪. লোগো -->
+                <div class="form-section">
+                    <h3>লোগো</h3>
+                    <input type="file" id="shop-logo-file">
+                    <div id="logo-preview" style="margin-top:10px;">
+                        <img id="current-logo" src="" style="height: 60px; display:none;">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="save-btn">💾 সেটিংস সেভ করুন</button>
+                <p id="status-msg" class="status-text"></p>
+
             </form>
         </div>
     </div>
+
     <script type="module">
         import { initSettings } from './modules/admin/shop-settings/settings.js';
     </script>

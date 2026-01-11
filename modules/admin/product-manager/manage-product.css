@@ -1,109 +1,301 @@
-.product-manager-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 20px;
+.manager-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
 }
 
-.pm-header {
+/* হেডার */
+.manager-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-}
-
-.pm-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr; /* ফর্ম ছোট, লিস্ট বড় */
-    gap: 30px;
-}
-
-/* মোবাইল রেসপন্সিভ */
-@media (max-width: 768px) {
-    .pm-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.pm-card {
+    margin-bottom: 30px;
     background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-add-new {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-back {
+    text-decoration: none;
+    color: #666;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 5px;
+}
+
+/* অ্যাড ফর্ম সেকশন */
+.add-section {
+    margin-bottom: 30px;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.form-card {
+    background: #f9f9f9;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    height: fit-content;
-}
-
-.pm-card h3 {
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    color: var(--primary-color);
-}
-
-.form-row {
-    display: flex;
-    gap: 15px;
-}
-
-.form-row .form-group {
-    flex: 1;
-}
-
-/* প্রোডাক্ট লিস্ট আইটেম ডিজাইন */
-.product-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    transition: 0.2s;
-}
-
-.product-item:hover {
-    background-color: #f9f9f9;
-}
-
-.thumb-img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 5px;
     border: 1px solid #ddd;
 }
 
-.p-info {
-    flex: 1;
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
-.p-title {
-    font-weight: bold;
-    font-size: 0.95rem;
-    color: #333;
+.form-grid input, .form-grid select, textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
 }
 
-.p-price {
-    color: var(--primary-color);
-    font-size: 0.9rem;
+.form-btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
 }
 
-.btn-delete {
-    background: #ffebee;
-    color: red;
+.btn-cancel {
+    background: #ddd;
     border: none;
-    padding: 5px 10px;
+    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+/* প্রোডাক্ট গ্রিড */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+/* কার্ড ডিজাইন */
+.admin-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    border-color: var(--secondary-color);
+}
+
+/* ইমেজ সেকশন */
+.card-img-wrapper {
+    height: 280px;
+    position: relative;
+    background: #f9f9f9;
+    overflow: hidden;
+}
+
+.card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+/* ইমেজ আপলোড ওভারলে (লুকানো থাকবে) */
+.img-upload-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 0.3s;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.card-img-wrapper:hover .img-upload-overlay {
+    opacity: 1;
+}
+
+/* কার্ড বডি */
+.card-body {
+    padding: 20px;
+}
+
+/* ইনপুট লেবেল (ছোট করে উপরে দেখাবে) */
+.input-label {
+    font-size: 0.75rem;
+    color: #888;
+    margin-bottom: 2px;
+    display: block;
+}
+
+/* ইনপুট ফিল্ড ডিজাইন */
+.edit-input {
+    width: 100%;
+    border: 1px solid transparent; /* বর্ডার লুকানো */
+    background: transparent;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    padding: 5px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.price-input {
+    color: var(--primary-color);
     font-size: 1.2rem;
 }
 
-.btn-delete:hover {
-    background: red;
-    color: white;
+/* ডিটেইলস গ্রিড (রঙ, কাপড়, সাইজ পাশাপাশি থাকবে) */
+.details-edit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* ৩ কলাম */
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
 }
 
-.image-preview img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    margin-top: 10px;
+/* ডিটেইলস ইনপুট ফিল্ড */
+.detail-input {
+    font-size: 0.9rem;
+    color: #555;
+    padding: 4px;
+}
+
+/* এডিট মোড চালু হলে */
+.admin-card.editing {
+    border: 2px solid var(--primary-color);
+    transform: scale(1.02);
+    z-index: 10;
+}
+
+.admin-card.editing .edit-input {
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* এডিট মোডে বর্ডার */
+.admin-card.editing .detail-input {
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+/* অ্যাকশন বাটন এরিয়া */
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+/* বাটন ডিজাইন */
+.action-btn {
+    padding: 8px 15px;
     border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: 0.2s;
+}
+
+.btn-edit {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.btn-del {
+    background: #ffebee;
+    color: #d32f2f;
+}
+
+.btn-save {
+    background: #e8f5e9;
+    color: #2e7d32;
+    display: none; /* শুরুতে লুকানো */
+    flex: 1;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.btn-cancel {
+    background: #f5f5f5;
+    color: #666;
+    display: none; /* শুরুতে লুকানো */
+}
+
+/* এডিট মোডে বাটন চেঞ্জ */
+.admin-card.editing .btn-edit,
+.admin-card.editing .btn-del {
+    display: none;
+}
+
+.admin-card.editing .btn-save,
+.admin-card.editing .btn-cancel {
+    display: flex;
+}
+
+/* বিবরণ বক্সের স্টাইল */
+.desc-input {
+    width: 100%;
+    resize: vertical; /* ইউজার চাইলে বক্স বড় করতে পারবে */
+    font-size: 0.9rem;
+    color: #666;
+    border: 1px solid transparent;
+    background: transparent;
+    padding: 5px;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+/* এডিট মোডে বিবরণ বক্স */
+.admin-card.editing .desc-input {
+    border: 1px solid #ddd;
+    background: #fff;
+    min-height: 60px; /* এডিট করার সময় একটু বড় হবে */
+}
+
+.loading-spinner {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    color: var(--secondary-color);
 }

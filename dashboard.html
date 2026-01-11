@@ -2,26 +2,79 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>ড্যাশবোর্ড</title>
-    <link rel="stylesheet" href="./styles/variables.css">
-    <link rel="stylesheet" href="./styles/main.css">
-    <link rel="stylesheet" href="./modules/admin/dashboard/dashboard.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>এডমিন ড্যাশবোর্ড</title>
+    
+    <!-- স্টাইলশিট -->
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="modules/admin/dashboard/dashboard.css">
 </head>
 <body>
-    <div id="auth-check" style="text-align:center; padding:50px;">যাচাই করা হচ্ছে...</div>
+
+    <!-- সিকিউরিটি চেকিং লোডার -->
+    <div id="auth-check" class="loading-screen">
+        <div class="spinner"></div>
+        <p>যাচাই করা হচ্ছে...</p>
+    </div>
     
-    <div class="dashboard-container" id="main-dash" style="display:none;">
-        <div class="dashboard-header">
-            <h2>স্বাগতম এডমিন</h2>
-            <button id="logout-btn" class="btn-logout">লগআউট</button>
-        </div>
-        <div class="dashboard-grid">
-            <a href="settings.html" class="dash-card"><h3>⚙️ সেটিংস</h3></a>
-            <a href="manage-product.html" class="dash-card"><h3>👗 প্রোডাক্ট ম্যানেজার</h3></a>
-            <a href="orders.html" class="dash-card"><h3>📦 অর্ডার লিস্ট</h3></a>
+    <!-- মেইন ড্যাশবোর্ড -->
+    <div class="dashboard-wrapper" id="main-dash" style="display:none;">
+        
+        <!-- ১. টপ বার -->
+        <header class="dash-header">
+            <div class="header-left">
+                <h2>এডমিন প্যানেল</h2>
+                <!-- এখানে আইডি দেওয়া হলো -->
+                <p id="admin-page-title">লোড হচ্ছে...</p>
+            </div>
+            <div class="header-right">
+                <a href="index.html" class="btn-view-site" target="_blank">🌍 সাইট দেখুন</a>
+                <button id="logout-btn" class="btn-logout">লগআউট</button>
+            </div>
+        </header>
+
+        <!-- ২. ড্যাশবোর্ড কন্টেন্ট -->
+        <div class="dashboard-container">
+            <div class="welcome-banner">
+                <h1>স্বাগতম, কেশব সরকার 👋</h1>
+                <p>আজকের দিনের কার্যক্রম এখান থেকে পরিচালনা করুন।</p>
+            </div>
+
+            <div class="dashboard-grid">
+                
+                <!-- সেটিংস কার্ড -->
+                <a href="settings.html" class="dash-card">
+                    <div class="icon-box settings-icon">⚙️</div>
+                    <div class="card-info">
+                        <h3>দোকান সেটিংস</h3>
+                        <p>নাম, লোগো ও ঠিকানা পরিবর্তন</p>
+                    </div>
+                </a>
+
+                <!-- প্রোডাক্ট কার্ড -->
+                <a href="manage-product.html" class="dash-card">
+                    <div class="icon-box product-icon">👗</div>
+                    <div class="card-info">
+                        <h3>প্রোডাক্ট ম্যানেজার</h3>
+                        <p>নতুন শাড়ি আপলোড ও ডিলিট</p>
+                    </div>
+                </a>
+
+                <!-- অর্ডার কার্ড -->
+                <a href="orders.html" class="dash-card">
+                    <div class="icon-box order-icon">📦</div>
+                    <div class="card-info">
+                        <h3>অর্ডার লিস্ট</h3>
+                        <p>কাস্টমার অর্ডার দেখুন</p>
+                    </div>
+                </a>
+
+            </div>
         </div>
     </div>
 
+    <!-- স্ক্রিপ্ট -->
     <script type="module">
         import { auth, logoutUser } from './config/firebase-config.js';
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -37,9 +90,14 @@
         });
 
         document.getElementById('logout-btn').addEventListener('click', () => {
-            logoutUser();
-            window.location.href = 'index.html';
+            if(confirm("আপনি কি লগআউট করতে চান?")) {
+                logoutUser();
+                window.location.href = 'index.html';
+            }
         });
     </script>
+
+    <!-- গ্লোবাল ব্র্যান্ডিং লোডার -->
+    <script type="module" src="./utils/global-loader.js"></script>
 </body>
 </html>

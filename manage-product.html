@@ -3,39 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <title>প্রোডাক্ট ম্যানেজার</title>
-    <link rel="stylesheet" href="./styles/variables.css">
-    <link rel="stylesheet" href="./styles/main.css">
-    <link rel="stylesheet" href="./modules/admin/product-manager/manage-product.css">
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="modules/admin/product-manager/manage-product.css">
 </head>
 <body>
-    <div class="product-manager-container">
-        <a href="dashboard.html" class="btn-back">⬅ ড্যাশবোর্ড</a>
-        <div class="pm-grid">
-            <div class="pm-card">
-                <h3>নতুন প্রোডাক্ট</h3>
+    <div class="manager-container">
+        
+        <div class="manager-header">
+            <h2>👗 প্রোডাক্ট ম্যানেজার</h2>
+            <div class="header-actions">
+                <button onclick="toggleAddForm()" class="btn-add-new">➕ নতুন প্রোডাক্ট যোগ করুন</button>
+                <a href="dashboard.html" class="btn-back">⬅ ড্যাশবোর্ড</a>
+            </div>
+        </div>
+
+        <!-- নতুন প্রোডাক্ট ফর্ম -->
+        <div id="add-product-section" class="add-section" style="display: none;">
+            <div class="form-card">
+                <h3>নতুন প্রোডাক্ট ফর্ম</h3>
                 <form id="add-product-form">
-                    <input type="text" id="p-name" placeholder="নাম" required>
-                    <input type="number" id="p-price" placeholder="দাম (₹)" required>
-                    <select id="p-category">
-                        <option value="saree">শাড়ি</option>
-                        <option value="suit">সুট</option>
-                        <option value="jewelry">গয়না</option>
-                    </select>
-                    <textarea id="p-desc" placeholder="বিবরণ"></textarea>
-                    <input type="file" id="p-image" required>
-                    <div id="p-preview"></div>
-                    <button type="submit" class="btn btn-primary" id="add-btn">যোগ করুন</button>
+                    
+                    <!-- ১. বেসিক তথ্য -->
+                    <div class="form-grid">
+                        <input type="text" id="p-name" placeholder="পণ্যের নাম (যেমন: লাল বেনারসি)" required>
+                        <input type="number" id="p-price" placeholder="দাম (₹)" required>
+                        <select id="p-category">
+                            <option value="saree">শাড়ি</option>
+                            <option value="suit">সুট / থ্রি-পিস</option>
+                            <option value="jewelry">গয়না</option>
+                            <option value="lehenga">লেহেঙ্গা</option>
+                        </select>
+                        <input type="file" id="p-image" required>
+                    </div>
+
+                    <!-- ২. বিস্তারিত তথ্য (নতুন) -->
+                    <h4 style="margin: 15px 0 10px; color: #666; border-bottom:1px solid #eee; padding-bottom:5px;">বিস্তারিত তথ্য:</h4>
+                    <div class="form-grid">
+                        <input type="text" id="p-color" placeholder="রঙ (যেমন: মেরুন, গোল্ডেন)">
+                        <input type="text" id="p-material" placeholder="কাপড় (যেমন: সিল্ক, কটন)">
+                        <input type="text" id="p-size" placeholder="সাইজ (যেমন: ১২ হাত / ফ্রি সাইজ)">
+                    </div>
+
+                    <!-- ৩. বিবরণ -->
+                    <textarea id="p-desc" placeholder="অতিরিক্ত বিবরণ (ডিজাইন, কাজের ধরন ইত্যাদি)..." rows="3" style="margin-top: 15px;"></textarea>
+                    
+                    <div class="form-btn-group">
+                        <button type="submit" class="btn btn-primary" id="add-btn">আপলোড করুন</button>
+                        <button type="button" onclick="toggleAddForm()" class="btn btn-cancel">বাতিল</button>
+                    </div>
                     <p id="p-status"></p>
                 </form>
             </div>
-            <div class="pm-card">
-                <h3>লিস্ট</h3>
-                <div id="product-list-container"></div>
-            </div>
         </div>
+
+        <!-- প্রোডাক্ট গ্রিড -->
+        <div id="product-grid" class="product-grid">
+            <div class="loading-spinner">প্রোডাক্ট লোড হচ্ছে...</div>
+        </div>
+
     </div>
+
     <script type="module">
         import { initProductManager } from './modules/admin/product-manager/manage-product.js';
+        
+        // 👇 এই লাইনটি যোগ করা হয়েছে (এটিই মিসিং ছিল)
+        initProductManager();
+
+        // ফর্ম টগল করার ফাংশন
+        window.toggleAddForm = () => {
+            const form = document.getElementById('add-product-section');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        };
     </script>
 </body>
 </html>
