@@ -1,131 +1,315 @@
-/* হিরো সেকশন (ব্যানার) */
-.hero-section {
-    height: 90vh; /* পুরো স্ক্রিন জুড়ে থাকবে */
-    background-image: url('https://images.unsplash.com/photo-1610189012906-4783fdae2c26?q=80&w=1920&auto=format&fit=crop');
-    background-size: cover;
-    background-position: center;
+/* ১. হিরো স্লাইডার (ফিক্সড) */
+.slider-container {
+    height: 100vh; /* একদম ফুল স্ক্রিন হাইট */
+    width: 100%;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-top: -70px; /* মেনুবারের নিচে চলে যাবে */
+    overflow: hidden;
+    margin-top: 0; /* মেনুবারের নিচ থেকে শুরু */
 }
 
-/* কালো শেড (যাতে লেখা স্পষ্ট দেখা যায়) */
-.hero-overlay {
+.slide {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* ৬০% কালো */
+    background-size: cover;
+    background-position: center;
+    opacity: 0; /* শুরুতে সব লুকানো */
+    transition: opacity 1s ease-in-out;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
 
-.hero-content {
+/* যে স্লাইডটি একটিভ থাকবে */
+.slide.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+/* স্লাইডারের ওপর কালো শেড */
+.slide::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* ৪০% কালো */
+    z-index: 1;
+}
+
+.slide-content {
+    position: relative;
+    z-index: 3; /* লেখার উপরে থাকবে */
+    text-align: center;
+    color: white;
     max-width: 800px;
     padding: 20px;
-    color: white;
-    animation: fadeInUp 1s ease;
 }
 
-.hero-title {
+.slide-content h1 {
     font-size: 3.5rem;
     font-weight: 700;
-    line-height: 1.2;
     margin-bottom: 20px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    line-height: 1.2;
 }
 
-.highlight-text {
-    color: var(--secondary-color); /* গোল্ডেন কালার */
-    font-family: 'Hind Siliguri', serif;
-}
-
-.hero-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 40px;
-    opacity: 0.9;
-}
-
-/* হিরো বাটন */
 .btn-hero {
-    padding: 15px 40px;
-    background-color: var(--secondary-color);
-    color: #2c0404; /* গাঢ় মেরুন */
-    font-size: 1.1rem;
-    font-weight: bold;
-    border-radius: 50px;
+    display: inline-block;
+    padding: 12px 35px;
+    background: var(--secondary-color);
+    color: #2c0404;
     text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 .btn-hero:hover {
-    background-color: white;
+    background: white;
     color: var(--primary-color);
     transform: translateY(-3px);
 }
 
-/* ফিচার সেকশন */
-.features-section {
-    padding: 80px 20px;
-    background-color: #fff;
-}
-
-.feature-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.feature-box {
+/* ২. ক্যাটাগরি সেকশন (ফিক্সড) */
+.category-section {
+    padding: 80px 4%; /* দুই পাশে ৪% গ্যাপ */
     text-align: center;
-    padding: 40px 20px;
-    border-radius: 15px;
     background: #fff;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    width: 100%;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    margin-bottom: 50px;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--secondary-color);
+    margin: 10px auto 0;
+}
+
+.category-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap; /* জায়গা না হলে নিচে নামবে */
+}
+
+.cat-item {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     transition: 0.3s;
-    border: 1px solid #eee;
 }
 
-.feature-box:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(128, 0, 0, 0.1);
+.cat-item img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%; /* গোল ছবি */
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.cat-item:hover img {
     border-color: var(--secondary-color);
+    transform: scale(1.1); /* জুম হবে */
 }
 
-.f-icon {
-    font-size: 3rem;
+.cat-item p {
+    margin-top: 15px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* ৩. অফার ব্যানার */
+.offer-section {
+    width: 100%;
+    height: 500px; /* হাইট বাড়ানো হলো */
+    background-attachment: fixed; /* প্যারালাক্স ইফেক্ট */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: 50px;
+}
+
+.offer-content {
+    background: white;
+    padding: 40px 60px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    max-width: 600px;
+    width: 90%;
+}
+
+.offer-content h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
     margin-bottom: 20px;
 }
 
-.feature-box h3 {
+.btn-offer {
+    display: inline-block;
+    padding: 10px 30px;
+    border: 2px solid var(--primary-color);
     color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-offer:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* ৪. ফিচারড প্রোডাক্ট */
+.featured-products {
+    padding: 80px 4%; /* দুই পাশে ৪% গ্যাপ */
+    background: #f9f9f9;
+    text-align: center;
+    width: 100%;
+}
+
+.product-grid {
+    display: grid;
+    /* বড় স্ক্রিনে ৫টা, ল্যাপটপে ৪টা, ট্যাবে ৩টা, মোবাইলে ২টা */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.product-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.card-img-box {
+    height: 250px;
+    overflow: hidden;
+}
+
+.card-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.3s;
+}
+
+.product-card:hover .card-img-box img {
+    transform: scale(1.05);
+}
+
+.card-info {
+    padding: 20px;
+}
+
+.card-info h3 {
+    font-size: 1.2rem;
     margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.price {
     font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--secondary-color);
 }
 
-.feature-box p {
+.loading-spinner {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2rem;
     color: #666;
-    font-size: 0.95rem;
 }
 
-/* এনিমেশন */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+/* ৫. ভিডিও সেকশন */
+.video-section {
+    width: 100%;
+    height: 400px;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: 50px;
 }
 
-/* মোবাইল রেসপন্সিভ */
+.video-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.video-overlay {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+.video-overlay h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.video-overlay p {
+    font-size: 1.2rem;
+}
+
+/* রেসপন্সিভ ডিজাইন */
 @media (max-width: 768px) {
-    .hero-title {
-        font-size: 2.2rem;
+    .slide-content h1 {
+        font-size: 2.5rem;
     }
-    .hero-subtitle {
-        font-size: 1rem;
+    
+    .category-grid {
+        gap: 20px;
+    }
+    
+    .cat-item img {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .offer-content {
+        padding: 30px 20px;
+    }
+    
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
     }
 }

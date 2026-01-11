@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>হোম পেজ ম্যানেজার</title>
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="modules/admin/shop-settings/settings.css">
+</head>
+<body>
+    <div class="settings-container">
+        <div class="settings-header">
+            <h2>🏠 হোম পেজ সাজান</h2>
+            <a href="dashboard.html" class="btn-back">⬅ ড্যাশবোর্ড</a>
+        </div>
+
+        <div class="settings-card">
+            <form id="home-settings-form">
+                
+                <!-- ১. স্লাইডার ১ -->
+                <div class="form-section">
+                    <h3>স্লাইডার ১ (মেইন ব্যানার)</h3>
+                    <input type="text" id="slide1-img" placeholder="ছবির লিঙ্ক (Image URL)">
+                    <input type="text" id="slide1-title" placeholder="শিরোনাম (যেমন: এক্সক্লুসিভ শাড়ি)">
+                </div>
+
+                <!-- ২. স্লাইডার ২ -->
+                <div class="form-section">
+                    <h3>স্লাইডার ২</h3>
+                    <input type="text" id="slide2-img" placeholder="ছবির লিঙ্ক">
+                    <input type="text" id="slide2-title" placeholder="শিরোনাম">
+                </div>
+
+                <!-- ৩. স্লাইডার ৩ -->
+                <div class="form-section">
+                    <h3>স্লাইডার ৩</h3>
+                    <input type="text" id="slide3-img" placeholder="ছবির লিঙ্ক">
+                    <input type="text" id="slide3-title" placeholder="শিরোনাম">
+                </div>
+
+                <!-- ৪. অফার ব্যানার -->
+                <div class="form-section">
+                    <h3>মাঝখানের অফার ব্যানার</h3>
+                    <input type="text" id="offer-img" placeholder="ব্যানার লিঙ্ক">
+                    <input type="text" id="offer-title" placeholder="অফারের নাম">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="save-btn">💾 সেভ করুন</button>
+                <p id="status-msg" class="status-text"></p>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db } from './config/firebase-config.js';
+        import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // ডিফল্ট ডেটা (যদি ডেটাবেসে কিছু না থাকে)
+        const DEFAULT_DATA = {
+            slide1: { img: "https://images.unsplash.com/photo-1610189012906-4783fdae2c26?q=80&w=1920", title: "এক্সক্লুসিভ বেনারসি" },
+            slide2: { img: "https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?q=80&w=1920", title: "ছেলেদের প্রিমিয়াম পাঞ্জাবি" },
+            slide3: { img: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1920", title: "স্টাইলিশ ব্লেজার ও সুট" },
+            offer: { img: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=1600", title: "ওয়েডিং কালেকশন - ৩০% ছাড়" }
+        };
+
+        // লোড করা
+        async function loadData() {
+            try {
+                const docSnap = await getDoc(doc(db, "settings", "homeConfig"));
+                const data = docSnap.exists() ? docSnap.data() : DEFAULT_DATA;
+
+                document.getElementById('slide1-img').value = data.slide1.img;
+                document.getElementById('slide1-title').value = data.slide1.title;
+                
+                document.getElementById('slide2-img').value = data.slide2.img;
+                document.getElementById('slide2-title').value = data.slide2.title;
+
+                document.getElementById('slide3-img').value = data.slide3.img;
+                document.getElementById('slide3-title').value = data.slide3.title;
+
+                document.getElementById('offer-img').value = data.offer.img;
+                document.getElementById('offer-title').value = data.offer.title;
+            } catch (e) { console.log(e); }
+        }
+        loadData();
+
+        // সেভ করা
+        document.getElementById('home-settings-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('save-btn');
+            btn.innerText = "সেভ হচ্ছে...";
+            
+            const newData = {
+                slide1: { 
+                    img: document.getElementById('slide1-img').value, 
+                    title: document.getElementById('slide1-title').value 
+                },
+                slide2: { 
+                    img: document.getElementById('slide2-img').value, 
+                    title: document.getElementById('slide2-title').value 
+                },
+                slide3: { 
+                    img: document.getElementById('slide3-img').value, 
+                    title: document.getElementById('slide3-title').value 
+                },
+                offer: { 
+                    img: document.getElementById('offer-img').value, 
+                    title: document.getElementById('offer-title').value 
+                }
+            };
+
+            try {
+                await setDoc(doc(db, "settings", "homeConfig"), newData);
+                alert("✅ হোম পেজ আপডেট হয়েছে!");
+            } catch (e) { alert("এরর হয়েছে!"); }
+            btn.innerText = "💾 সেভ করুন";
+        });
+    </script>
+</body>
+</html>
