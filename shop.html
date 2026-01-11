@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>কালেকশন | শাড়ি সম্ভার</title>
+    <link rel="stylesheet" href="./styles/variables.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./modules/common/navbar/navbar.css">
+    <link rel="stylesheet" href="./modules/client/collections/gallery.css">
+</head>
+<body>
+    <!-- নেভিগেশন -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">শাড়ি<span class="highlight">সম্ভার</span></a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">হোম</a></li>
+                <li><a href="shop.html" class="nav-link">কালেকশন</a></li>
+                <li><a href="admin.html" class="nav-link">🔒 এডমিন</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- গ্যালারি -->
+    <div class="gallery-container">
+        <h2 style="text-align:center; margin:40px 0; color:var(--primary-color);">আমাদের কালেকশন</h2>
+        
+        <!-- ফিল্টার -->
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterProducts('all')">সব</button>
+            <button class="filter-btn" onclick="filterProducts('saree')">শাড়ি</button>
+            <button class="filter-btn" onclick="filterProducts('suit')">সুট</button>
+            <button class="filter-btn" onclick="filterProducts('jewelry')">গয়না</button>
+        </div>
+
+        <!-- প্রোডাক্ট গ্রিড -->
+        <div id="gallery-grid" class="product-grid">
+            <div class="loading-spinner">প্রোডাক্ট লোড হচ্ছে...</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db } from './config/firebase-config.js';
+        import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        let allProducts = [];
+
+        async function loadProducts() {
+            const grid = document.getElementById('gallery-grid');
+            try {
+                const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                allProducts = [];
+                querySnapshot.forEach((doc) => {
+                    allProducts.push({ id: doc.id, ...doc.data() });
+                });
+
+                renderProducts(allProducts);
+            } catch (error) {
+                grid.innerHTML = '<p style="text-align:center;">প্রোডাক্ট লোড করা যায়নি।</p>';
+            }
+        }
+
+        function renderProducts(products) {
+            const grid = document.getElementById('gallery-grid');
+            if (products.length === 0) {
+                grid.innerHTML = '<p style="text-align:center;">কোনো প্রোডাক্ট নেই।</p>';
+                return;
+            }
+
+            let html = '';
+            products.forEach(p => {
+                html += `
+                    <div class="product-card" onclick="viewProduct('${p.id}')">
+                        <div class="card-img-box">
+                            <img src="${p.image}" alt="${p.name}" loading="lazy">
+                        </div>
+                        <div class="card-info">
+                            <h3 class="card-title">${p.name}</h3>
+                            <p class="card-price">৳ ${p.price}</p>
+                            <span class="btn-view">বিস্তারিত দেখুন</span>
+                        </div>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+
+        window.filterProducts = (category) => {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (category === 'all') {
+                renderProducts(allProducts);
+            } else {
+                const filtered = allProducts.filter(p => p.category === category);
+                renderProducts(filtered);
+            }
+        };
+
+        window.viewProduct = (id) => {
+            localStorage.setItem('currentProductId', id);
+            window.location.href = `product.html?id=${id}`;
+        };
+
+        loadProducts();
+    </script>
+</body>
+</html>

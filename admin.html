@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>এডমিন লগইন | শাড়ি সম্ভার</title>
+    <link rel="stylesheet" href="./styles/variables.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./modules/admin/auth/login.css">
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="brand-header">
+                <h1 id="dynamic-shop-name">শাড়ি সম্ভার</h1>
+                <p class="admin-badge">এডমিন প্যানেল</p>
+            </div>
+
+            <div class="login-body">
+                <p class="instruction">দোকান পরিচালনা করতে আপনার গুগল একাউন্ট দিয়ে লগইন করুন</p>
+                
+                <button id="google-login-btn" class="btn-google">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google G">
+                    <span>Google দিয়ে লগইন করুন</span>
+                </button>
+
+                <div id="login-message" class="status-message"></div>
+            </div>
+
+            <div class="login-footer">
+                <p>&copy; ২০২৫ <span id="footer-shop-name">শাড়ি সম্ভার</span> সিস্টেম</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { loginWithGoogle } from './config/firebase-config.js';
+        
+        const loginBtn = document.getElementById('google-login-btn');
+        const messageBox = document.getElementById('login-message');
+
+        loginBtn.addEventListener('click', async () => {
+            try {
+                loginBtn.disabled = true;
+                loginBtn.innerText = "লগইন হচ্ছে...";
+                messageBox.style.color = '#666';
+                messageBox.innerText = 'অনুগ্রহ করে পপআপ উইন্ডোতে কনফার্ম করুন...';
+
+                const user = await loginWithGoogle();
+
+                messageBox.style.color = 'green';
+                messageBox.innerHTML = `✅ স্বাগতম! ড্যাশবোর্ডে নেওয়া হচ্ছে...`;
+
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+
+            } catch (error) {
+                console.error("Login Error:", error);
+                loginBtn.disabled = false;
+                loginBtn.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G"> <span>Google দিয়ে লগইন করুন</span>';
+                messageBox.style.color = 'red';
+                messageBox.innerText = 'লগইন ব্যর্থ হয়েছে।';
+            }
+        });
+    </script>
+</body>
+</html>

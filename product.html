@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রোডাক্ট বিস্তারিত | শাড়ি সম্ভার</title>
+    <link rel="stylesheet" href="./styles/variables.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./modules/client/product-view/view.css">
+</head>
+<body>
+    <!-- নেভিগেশন -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">শাড়ি<span class="highlight">সম্ভার</span></a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">হোম</a></li>
+                <li><a href="shop.html" class="nav-link">কালেকশন</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="product-view-container">
+        <button onclick="window.history.back()" class="btn-back">⬅ ফিরে যান</button>
+
+        <div class="product-details-grid">
+            <div class="image-section">
+                <div class="main-image-box">
+                    <img id="view-img" src="" alt="Product Image">
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h1 id="view-name" class="product-title">লোড হচ্ছে...</h1>
+                <p class="product-category" id="view-category">...</p>
+                
+                <div class="price-tag">
+                    ৳ <span id="view-price">0</span>
+                </div>
+
+                <div class="description-box">
+                    <h3>বিবরণ:</h3>
+                    <p id="view-desc">...</p>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary btn-lg" onclick="orderNow()">🛒 অর্ডার করুন</button>
+                    <button class="btn btn-whatsapp" onclick="orderOnWhatsApp()">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20"> 
+                        হোয়াটসঅ্যাপে অর্ডার
+                    </button>
+                </div>
+
+                <div class="delivery-info">
+                    <p>🚚 সারা দেশে হোম ডেলিভারি</p>
+                    <p>🔄 ৭ দিনের রিটার্ন পলিসি</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- অর্ডার মোডাল -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2>অর্ডার কনফার্ম করুন</h2>
+            <form id="order-form">
+                <input type="text" id="cust-name" placeholder="আপনার নাম" required>
+                <input type="text" id="cust-phone" placeholder="মোবাইল নম্বর" required>
+                <textarea id="cust-address" placeholder="পূর্ণ ঠিকানা" required></textarea>
+                <button type="submit" class="btn btn-primary btn-block">অর্ডার কনফার্ম করুন</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db } from './config/firebase-config.js';
+        import { doc, getDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        let currentProduct = {};
+
+        async function loadProduct() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id') || localStorage.getItem('currentProductId');
+            
+            if (!productId) {
+                document.querySelector('.product-view-container').innerHTML = '<h1>প্রোডাক্ট পাওয়া যায়নি</h1>';
+                return;
+            }
+
+            try {
+                const docRef = doc(db, "products", productId);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    currentProduct = { id: docSnap.id, ...docSnap.data() };
+                    
+                    const categoryMap = {
+                        'saree': 'শাড়ি',
+                        'suit': 'সুট/থ্রি-পিস',
+                        'panjabi': 'পাঞ্জাবি',
+                        'jewelry': 'গয়না'
+                    };
+
+                    document.getElementById('view-img').src = currentProduct.image;
+                    document.getElementById('view-name').innerText = currentProduct.name;
+                    document.getElementById('view-price').innerText = currentProduct.price;
+                    document.getElementById('view-category').innerText = categoryMap[currentProduct.category] || currentProduct.category;
+                    document.getElementById('view-desc').innerText = currentProduct.description || "কোনো বিবরণ নেই।";
+                } else {
+                    document.querySelector('.product-view-container').innerHTML = '<h1>প্রোডাক্টটি পাওয়া যায়নি।</h1>';
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+
+        window.orderNow = () => {
+            document.getElementById('order-modal').style.display = 'flex';
+        };
+
+        window.closeModal = () => {
+            document.getElementById('order-modal').style.display = 'none';
+        };
+
+        window.orderOnWhatsApp = () => {
+            const phoneNumber = "8801711000000"; 
+            const message = `হাই! আমি এই প্রোডাক্টটি কিনতে চাই:
+            
+নাম: ${currentProduct.name}
+দাম: ${currentProduct.price} টাকা
+লিঙ্ক: ${window.location.href}`;
+
+            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        };
+
+        document.getElementById('order-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = e.target.querySelector('button');
+            btn.innerText = "অর্ডার হচ্ছে...";
+            btn.disabled = true;
+
+            const orderData = {
+                customerName: document.getElementById('cust-name').value,
+                phone: document.getElementById('cust-phone').value,
+                address: document.getElementById('cust-address').value,
+                productName: currentProduct.name,
+                price: currentProduct.price,
+                productId: currentProduct.id,
+                status: 'pending',
+                orderDate: new Date()
+            };
+
+            try {
+                await addDoc(collection(db, "orders"), orderData);
+                alert("✅ আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে!");
+                closeModal();
+                e.target.reset();
+            } catch (error) {
+                alert("অর্ডার করতে সমস্যা হয়েছে।");
+            } finally {
+                btn.innerText = "অর্ডার কনফার্ম করুন";
+                btn.disabled = false;
+            }
+        });
+
+        loadProduct();
+    </script>
+</body>
+</html>

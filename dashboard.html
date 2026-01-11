@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ড্যাশবোর্ড | শাড়ি সম্ভার</title>
+    <link rel="stylesheet" href="./styles/variables.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./modules/admin/dashboard/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h2>স্বাগতম, <span id="admin-name">এডমিন</span> 👋</h2>
+            <a href="index.html" class="btn-logout">লগআউট</a>
+        </div>
+
+        <div class="dashboard-grid">
+            <a href="settings.html" class="dash-card">
+                <div class="card-icon">⚙️</div>
+                <h3>দোকান সেটিংস</h3>
+                <p>দোকানের নাম, লোগো এবং ঠিকানা পরিবর্তন করুন</p>
+            </a>
+
+            <a href="manage-product.html" class="dash-card">
+                <div class="card-icon">👗</div>
+                <h3>প্রোডাক্ট ম্যানেজার</h3>
+                <p>নতুন শাড়ি বা কালেকশন আপলোড করুন</p>
+            </a>
+
+            <a href="orders.html" class="dash-card">
+                <div class="card-icon">📦</div>
+                <h3>অর্ডার লিস্ট</h3>
+                <p>কাস্টমারের নতুন অর্ডারগুলো দেখুন</p>
+            </a>
+
+            <a href="shop.html" class="dash-card">
+                <div class="card-icon">🏪</div>
+                <h3>সাইট দেখুন</h3>
+                <p>কাস্টমার কী দেখছে তা চেক করুন</p>
+            </a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth } from './config/firebase-config.js';
+        
+        // Auth check
+        setTimeout(() => {
+            const user = auth.currentUser;
+            if (user) {
+                document.getElementById('admin-name').innerText = user.displayName?.split(' ')[0] || 'এডমিন';
+            } else {
+                window.location.href = 'admin.html';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

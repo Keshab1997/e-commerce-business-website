@@ -3,35 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>শাড়ি সম্ভার | এক্সক্লুসিভ কালেকশন</title>
-    
-    <!-- স্টাইলশিট লিঙ্ক (সামনে ডট . যোগ করা হয়েছে) -->
+    <title>শাড়ি সম্ভার | হোম</title>
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/main.css">
-    
-    <!-- ফন্ট (Google Fonts) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./modules/common/navbar/navbar.css">
+    <link rel="stylesheet" href="./modules/common/footer/footer.css">
 </head>
 <body>
+    <!-- নেভিগেশন বার -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">শাড়ি<span class="highlight">সম্ভার</span></a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">হোম</a></li>
+                <li><a href="shop.html" class="nav-link">কালেকশন</a></li>
+                <li><a href="admin.html" class="nav-link" style="color:var(--primary-color)">🔒 এডমিন</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <!-- পুরো অ্যাপ কন্টেইনার -->
-    <div id="app">
-        <!-- ১. নেভিগেশন বার (Navbar) এখানে লোড হবে -->
-        <header id="navbar-container"></header>
-
-        <!-- ২. মেইন কন্টেন্ট (Home, Shop, Admin) এখানে লোড হবে -->
-        <main id="main-content">
-            <div class="loading-screen">লোড হচ্ছে...</div>
-        </main>
-
-        <!-- ৩. ফুটার (Footer) এখানে লোড হবে -->
-        <footer id="footer-container"></footer>
+    <!-- হিরো সেকশন -->
+    <div style="text-align:center; padding:100px 20px; background:linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);">
+        <h1 style="font-size:3rem; color:var(--primary-color); margin-bottom:20px;">শাড়ি সম্ভারে স্বাগতম</h1>
+        <p style="font-size:1.2rem; color:#666; margin-bottom:30px;">আভিজাত্যের ছোঁয়া আপনার অঙ্গে</p>
+        <a href="shop.html" class="btn btn-primary" style="padding:15px 30px; font-size:1.1rem;">কালেকশন দেখুন</a>
     </div>
 
-    <!-- জাভাস্ক্রিপ্ট (সামনে ডট . যোগ করা হয়েছে) -->
-    <script type="module" src="./utils/router.js"></script>
-
+    <!-- ফুটার -->
+    <footer class="site-footer">
+        <div style="text-align:center; padding:20px;">
+            <p>&copy; ২০২৫ শাড়ি সম্ভার | সর্বস্বত্ব সংরক্ষিত</p>
+        </div>
+    </footer>
 </body>
 </html>
