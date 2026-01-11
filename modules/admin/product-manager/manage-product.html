@@ -1,0 +1,60 @@
+<div class="product-manager-container">
+    <div class="pm-header">
+        <h2>👗 প্রোডাক্ট ম্যানেজার</h2>
+        <button onclick="window.history.back()" class="btn-back">⬅ ফিরে যান</button>
+    </div>
+
+    <div class="pm-grid">
+        
+        <!-- ১. প্রোডাক্ট আপলোড ফর্ম -->
+        <div class="pm-card upload-section">
+            <h3>নতুন প্রোডাক্ট যোগ করুন</h3>
+            <form id="add-product-form">
+                
+                <div class="form-group">
+                    <label>পণ্যের নাম</label>
+                    <input type="text" id="p-name" placeholder="যেমন: লাল বেনারসি শাড়ি" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>দাম (টাকা)</label>
+                        <input type="number" id="p-price" placeholder="৫০০০" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ক্যাটাগরি</label>
+                        <select id="p-category">
+                            <option value="saree">শাড়ি</option>
+                            <option value="suit">থ্রি-পিস / সুট</option>
+                            <option value="panjabi">পাঞ্জাবি</option>
+                            <option value="jewelry">গয়না</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>বিবরণ (অপশনাল)</label>
+                    <textarea id="p-desc" rows="2" placeholder="কাপড়ের মান, রং ইত্যাদি..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>ছবি আপলোড</label>
+                    <input type="file" id="p-image" accept="image/*" required>
+                    <div id="p-preview" class="image-preview"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="add-btn">➕ প্রোডাক্ট যোগ করুন</button>
+                <p id="p-status" class="status-text"></p>
+            </form>
+        </div>
+
+        <!-- ২. প্রোডাক্ট লিস্ট (যা আপলোড করা হয়েছে) -->
+        <div class="pm-card list-section">
+            <h3>স্টক লিস্ট (<span id="total-products">0</span>)</h3>
+            <div id="product-list-container" class="product-list">
+                <p class="loading-text">লোড হচ্ছে...</p>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,65 @@
+/* বেসিক রিসেট */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: #f9f9f9;
+    color: var(--text-dark);
+    line-height: 1.6;
+    padding-top: 70px; /* নেভবারের জন্য স্পেস */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* অ্যাপ লেআউট */
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#main-content {
+    flex: 1; /* ফুটারকে নিচে ঠেলে দেবে */
+    padding: var(--spacing-md);
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* লোডিং স্ক্রিন */
+.loading-screen {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+/* বাটন স্টাইল (গ্লোবাল) */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+.btn-primary:hover {
+    background-color: #600000;
+}

@@ -1,0 +1,93 @@
+.site-footer {
+    background-color: #2c0404; /* খুব গাঢ় মেরুন (Dark Maroon) */
+    color: #f4e4bc; /* ক্রিম কালার টেক্সট */
+    padding: 60px 0 20px 0;
+    margin-top: 50px;
+    font-family: var(--font-main);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    padding: 0 20px;
+}
+
+.footer-logo {
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.footer-logo .highlight {
+    color: var(--secondary-color);
+}
+
+.footer-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    opacity: 0.8;
+}
+
+.footer-col h4 {
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* শিরোনামের নিচে ছোট দাগ */
+.footer-col h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 40px;
+    height: 2px;
+    background-color: var(--secondary-color);
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    color: #f4e4bc;
+    transition: 0.3s;
+    font-size: 0.95rem;
+}
+
+.footer-col ul li a:hover {
+    color: #fff;
+    padding-left: 5px; /* হোভার করলে একটু ডানে সরবে */
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icon {
+    padding: 8px 15px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.social-icon:hover {
+    background-color: var(--secondary-color);
+    color: #2c0404;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.85rem;
+    opacity: 0.7;
+}

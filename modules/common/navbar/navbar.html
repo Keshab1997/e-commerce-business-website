@@ -1,0 +1,42 @@
+<nav class="navbar">
+    <div class="nav-container">
+        <!-- ১. লোগো সেকশন -->
+        <a href="/" class="nav-logo" onclick="route()">
+            <span class="logo-text">শাড়ি<span class="highlight">সম্ভার</span></span>
+        </a>
+
+        <!-- ২. মেনু আইটেম (ডেস্কটপ) -->
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="/" class="nav-link" onclick="route()">হোম</a>
+            </li>
+            <li class="nav-item">
+                <a href="/shop" class="nav-link" onclick="route()">কালেকশন</a>
+            </li>
+            <!-- 👇 এই নতুন লাইনটি যোগ করুন (এডমিন লিঙ্ক) -->
+            <li class="nav-item">
+                <a href="/admin" class="nav-link" style="color: var(--primary-color); font-weight: bold;" onclick="route()">🔒 এডমিন</a>
+            </li>
+        </ul>
+
+        <!-- ৩. আইকন (কার্ট ও মোবাইল মেনু) -->
+        <div class="nav-icons">
+            <div class="cart-icon-box">
+                <span class="icon">🛍️</span>
+                <span class="cart-count">০</span>
+            </div>
+            <div class="hamburger" id="mobile-menu-btn">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- মোবাইল মেনু ড্রপডাউন -->
+    <div class="mobile-nav" id="mobile-nav-menu">
+        <a href="/" class="mobile-link" onclick="route()">হোম</a>
+        <a href="/shop" class="mobile-link" onclick="route()">কালেকশন</a>
+        <a href="/admin" class="mobile-link" onclick="route()">🔒 এডমিন</a>
+    </div>
+</nav>

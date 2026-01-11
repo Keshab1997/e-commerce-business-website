@@ -1,0 +1,109 @@
+.product-manager-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.pm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.pm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr; /* ফর্ম ছোট, লিস্ট বড় */
+    gap: 30px;
+}
+
+/* মোবাইল রেসপন্সিভ */
+@media (max-width: 768px) {
+    .pm-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pm-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    height: fit-content;
+}
+
+.pm-card h3 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* প্রোডাক্ট লিস্ট আইটেম ডিজাইন */
+.product-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    transition: 0.2s;
+}
+
+.product-item:hover {
+    background-color: #f9f9f9;
+}
+
+.thumb-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.p-info {
+    flex: 1;
+}
+
+.p-title {
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.p-price {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+.btn-delete {
+    background: #ffebee;
+    color: red;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.btn-delete:hover {
+    background: red;
+    color: white;
+}
+
+.image-preview img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    margin-top: 10px;
+    border-radius: 5px;
+}

@@ -1,0 +1,85 @@
+.orders-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.orders-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* টেবিল ডিজাইন */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* ছোট স্ক্রিনে স্ক্রল হবে */
+}
+
+.orders-table th, .orders-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.orders-table th {
+    background-color: #f8f9fa;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.orders-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* স্ট্যাটাস ব্যাজ */
+.badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.badge-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.badge-completed {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* ডিলিট বাটন */
+.btn-del {
+    background: #ffebee;
+    color: red;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-del:hover {
+    background: red;
+    color: white;
+}
+
+.loading-text {
+    text-align: center;
+    color: #777;
+    padding: 20px;
+}

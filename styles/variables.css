@@ -1,0 +1,22 @@
+:root {
+    /* কালার প্যালেট (Color Palette) */
+    --primary-color: #800000;       /* মেরুন (Maroon) - মেইন কালার */
+    --secondary-color: #d4af37;     /* গোল্ডেন (Gold) - হাইলাইট কালার */
+    --accent-color: #f4e4bc;        /* হালকা ক্রিম - ব্যাকগ্রাউন্ডের জন্য */
+    --text-dark: #333333;           /* কালো টেক্সট */
+    --text-light: #ffffff;          /* সাদা টেক্সট */
+    --danger-color: #e74c3c;        /* ডিলিট বা এরর এর জন্য */
+    --success-color: #2ecc71;       /* সাকসেস মেসেজ */
+
+    /* ফন্ট (Fonts) */
+    --font-main: 'Hind Siliguri', sans-serif;
+
+    /* স্পেসিং (Spacing) */
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 32px;
+
+    /* শ্যাডো (Shadows) */
+    --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.2);
+}

@@ -1,0 +1,55 @@
+<div class="product-view-container">
+    <button onclick="window.history.back()" class="btn-back">⬅ ফিরে যান</button>
+
+    <div class="product-details-grid">
+        <!-- ১. বাম পাশে ছবি -->
+        <div class="image-section">
+            <div class="main-image-box" id="zoom-container">
+                <img id="view-img" src="" alt="Product Image">
+            </div>
+        </div>
+
+        <!-- ২. ডান পাশে তথ্য -->
+        <div class="info-section">
+            <h1 id="view-name" class="product-title">লোড হচ্ছে...</h1>
+            <p class="product-category" id="view-category">...</p>
+            
+            <div class="price-tag">
+                ৳ <span id="view-price">0</span>
+            </div>
+
+            <div class="description-box">
+                <h3>বিবরণ:</h3>
+                <p id="view-desc">...</p>
+            </div>
+
+            <!-- অ্যাকশন বাটন -->
+            <div class="action-buttons">
+                <button class="btn btn-primary btn-lg" onclick="orderNow()">🛒 অর্ডার করুন</button>
+                <button class="btn btn-whatsapp" onclick="orderOnWhatsApp()">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20"> 
+                    হোয়াটসঅ্যাপে অর্ডার
+                </button>
+            </div>
+
+            <div class="delivery-info">
+                <p>🚚 সারা দেশে হোম ডেলিভারি</p>
+                <p>🔄 ৭ দিনের রিটার্ন পলিসি</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- অর্ডার মোডাল (পপআপ ফর্ম) -->
+<div id="order-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2>অর্ডার কনফার্ম করুন</h2>
+        <form id="order-form">
+            <input type="text" id="cust-name" placeholder="আপনার নাম" required>
+            <input type="text" id="cust-phone" placeholder="মোবাইল নম্বর" required>
+            <textarea id="cust-address" placeholder="পূর্ণ ঠিকানা" required></textarea>
+            <button type="submit" class="btn btn-primary btn-block">অর্ডার কনফার্ম করুন</button>
+        </form>
+    </div>
+</div>
