@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>শাড়ি সম্ভার</title>
+    <title>শাড়ি সম্ভার | হোম</title>
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/main.css">
     <link rel="stylesheet" href="./modules/client/home/home.css">
@@ -16,8 +16,6 @@
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">হোম</a></li>
                 <li><a href="shop.html" class="nav-link">কালেকশন</a></li>
-                
-                <!-- 👇 পরিবর্তন: স্টাইল দিয়ে লুকিয়ে রাখা হয়েছে -->
                 <li id="admin-nav-item" style="display: none;">
                     <a href="dashboard.html" class="nav-link" style="color:var(--primary-color)">🔒 ড্যাশবোর্ড</a>
                 </li>
@@ -36,22 +34,14 @@
         <p>&copy; ২০২৫ শাড়ি সম্ভার</p>
     </footer>
 
-    <!-- 👇 সিকিউরিটি স্ক্রিপ্ট: এটি চেক করবে আপনি এডমিন কিনা -->
+    <!-- এডমিন চেক স্ক্রিপ্ট -->
     <script type="module">
         import { auth } from './config/firebase-config.js';
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
         const ADMIN_EMAIL = "keshabsarkar2018@gmail.com";
-
         onAuthStateChanged(auth, (user) => {
-            const adminBtn = document.getElementById('admin-nav-item');
-            
             if (user && user.email === ADMIN_EMAIL) {
-                // ইমেইল মিললে বাটন দেখাবে
-                adminBtn.style.display = 'block';
-            } else {
-                // না মিললে বাটন লুকানো থাকবে
-                adminBtn.style.display = 'none';
+                document.getElementById('admin-nav-item').style.display = 'block';
             }
         });
     </script>

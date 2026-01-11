@@ -2,118 +2,25 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>অর্ডার লিস্ট | শাড়ি সম্ভার</title>
+    <title>অর্ডার লিস্ট</title>
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/main.css">
     <link rel="stylesheet" href="./modules/admin/order-view/orders.css">
 </head>
 <body>
     <div class="orders-container">
-        <div class="orders-header">
-            <h2>📦 কাস্টমার অর্ডার লিস্ট</h2>
-            <a href="dashboard.html" class="btn-back">⬅ ড্যাশবোর্ডে ফিরুন</a>
-        </div>
-
+        <a href="dashboard.html" class="btn-back">⬅ ড্যাশবোর্ড</a>
         <div class="orders-card">
-            <div class="table-responsive">
-                <table class="orders-table">
-                    <thead>
-                        <tr>
-                            <th>তারিখ</th>
-                            <th>কাস্টমার নাম</th>
-                            <th>ফোন নম্বর</th>
-                            <th>প্রোডাক্ট</th>
-                            <th>দাম</th>
-                            <th>ঠিকানা</th>
-                            <th>স্ট্যাটাস</th>
-                            <th>অ্যাকশন</th>
-                        </tr>
-                    </thead>
-                    <tbody id="orders-table-body">
-                        <tr>
-                            <td colspan="8" class="loading-text">অর্ডার লোড হচ্ছে...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table class="orders-table">
+                <thead>
+                    <tr><th>তারিখ</th><th>নাম</th><th>ফোন</th><th>প্রোডাক্ট</th><th>দাম</th><th>স্ট্যাটাস</th><th>অ্যাকশন</th></tr>
+                </thead>
+                <tbody id="orders-table-body"></tbody>
+            </table>
         </div>
     </div>
-
     <script type="module">
-        import { db } from './config/firebase-config.js';
-        import { collection, getDocs, query, orderBy, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        async function loadOrders() {
-            const tableBody = document.getElementById('orders-table-body');
-
-            try {
-                const q = query(collection(db, "orders"), orderBy("orderDate", "desc"));
-                const querySnapshot = await getDocs(q);
-
-                let html = '';
-                let count = 0;
-
-                querySnapshot.forEach((doc) => {
-                    const order = doc.data();
-                    count++;
-                    
-                    const date = order.orderDate ? new Date(order.orderDate.seconds * 1000).toLocaleDateString('bn-BD') : 'N/A';
-
-                    html += `
-                        <tr>
-                            <td>${date}</td>
-                            <td>${order.customerName}</td>
-                            <td><a href="tel:${order.phone}">${order.phone}</a></td>
-                            <td>${order.productName}</td>
-                            <td>৳ ${order.price}</td>
-                            <td>${order.address}</td>
-                            <td>
-                                <span class="badge badge-${order.status}" onclick="toggleStatus('${doc.id}', '${order.status}')" style="cursor:pointer">
-                                    ${order.status === 'pending' ? 'অপেক্ষমান' : 'সম্পন্ন'}
-                                </span>
-                            </td>
-                            <td>
-                                <button class="btn-del" onclick="deleteOrder('${doc.id}')">🗑️</button>
-                            </td>
-                        </tr>
-                    `;
-                });
-
-                if (count === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:20px;">কোনো অর্ডার নেই।</td></tr>';
-                } else {
-                    tableBody.innerHTML = html;
-                }
-
-            } catch (error) {
-                console.error("Error loading orders:", error);
-                tableBody.innerHTML = '<tr><td colspan="8" style="color:red; text-align:center;">অর্ডার লোড করা যায়নি।</td></tr>';
-            }
-        }
-
-        window.deleteOrder = async (id) => {
-            if (confirm("আপনি কি নিশ্চিত এই অর্ডারটি মুছে ফেলতে চান?")) {
-                try {
-                    await deleteDoc(doc(db, "orders", id));
-                    loadOrders();
-                } catch (error) {
-                    alert("ডিলিট করা যায়নি!");
-                }
-            }
-        };
-
-        window.toggleStatus = async (id, currentStatus) => {
-            const newStatus = currentStatus === 'pending' ? 'completed' : 'pending';
-            try {
-                await updateDoc(doc(db, "orders", id), { status: newStatus });
-                loadOrders();
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        loadOrders();
+        import { initOrderView } from './modules/admin/order-view/orders.js';
     </script>
 </body>
 </html>

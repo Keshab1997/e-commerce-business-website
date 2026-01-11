@@ -2,7 +2,6 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>প্রোডাক্ট বিস্তারিত</title>
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/main.css">
@@ -11,39 +10,16 @@
 <body>
     <div class="product-view-container">
         <a href="shop.html" class="btn-back">⬅ ফিরে যান</a>
-
         <div class="product-details-grid">
-            <div class="image-section">
-                <div class="main-image-box">
-                    <img id="view-img" src="" alt="Product Image">
-                </div>
-            </div>
-
+            <div class="image-section"><img id="view-img" src=""></div>
             <div class="info-section">
-                <h1 id="view-name" class="product-title">লোড হচ্ছে...</h1>
-                <p class="product-category" id="view-category">...</p>
-                
-                <!-- 👇 পরিবর্তন: এখানে ডিফল্ট ₹ দেওয়া হয়েছে -->
-                <div class="price-tag">
-                    ₹ <span id="view-price">0</span>
-                </div>
-
-                <div class="description-box">
-                    <h3>বিবরণ:</h3>
-                    <p id="view-desc">...</p>
-                </div>
-
+                <h1 id="view-name">...</h1>
+                <p id="view-category">...</p>
+                <div class="price-tag">₹ <span id="view-price">0</span></div>
+                <p id="view-desc">...</p>
                 <div class="action-buttons">
-                    <button class="btn btn-primary btn-lg" onclick="orderNow()">🛒 অর্ডার করুন</button>
-                    <button class="btn btn-whatsapp" onclick="orderOnWhatsApp()">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="20"> 
-                        হোয়াটসঅ্যাপে অর্ডার
-                    </button>
-                </div>
-
-                <div class="delivery-info">
-                    <p>🚚 সারা ভারতে হোম ডেলিভারি</p>
-                    <p>🔄 ৭ দিনের রিটার্ন পলিসি</p>
+                    <button class="btn btn-primary" onclick="orderNow()">🛒 অর্ডার করুন</button>
+                    <button class="btn btn-whatsapp" onclick="orderOnWhatsApp()">WhatsApp Order</button>
                 </div>
             </div>
         </div>
@@ -55,10 +31,10 @@
             <span class="close-modal" onclick="closeModal()">&times;</span>
             <h2>অর্ডার কনফার্ম করুন</h2>
             <form id="order-form">
-                <input type="text" id="cust-name" placeholder="আপনার নাম" required>
-                <input type="text" id="cust-phone" placeholder="মোবাইল নম্বর" required>
-                <textarea id="cust-address" placeholder="পূর্ণ ঠিকানা" required></textarea>
-                <button type="submit" class="btn btn-primary btn-block">অর্ডার কনফার্ম করুন</button>
+                <input type="text" id="cust-name" placeholder="নাম" required>
+                <input type="text" id="cust-phone" placeholder="ফোন নম্বর" required>
+                <textarea id="cust-address" placeholder="ঠিকানা" required></textarea>
+                <button type="submit" class="btn btn-primary btn-block">কনফার্ম করুন</button>
             </form>
         </div>
     </div>
@@ -75,71 +51,43 @@
             if (!productId) return;
             const docRef = doc(db, "products", productId);
             const docSnap = await getDoc(docRef);
-
             if (docSnap.exists()) {
                 const p = docSnap.data();
                 currentProduct = { id: docSnap.id, ...p };
-
                 document.getElementById('view-img').src = p.image;
                 document.getElementById('view-name').innerText = p.name;
-                document.getElementById('view-price').innerText = p.price; // শুধু সংখ্যা বসবে, সামনে ₹ আছে
+                document.getElementById('view-price').innerText = p.price;
                 document.getElementById('view-category').innerText = p.category;
-                document.getElementById('view-desc').innerText = p.description || "কোনো বিবরণ নেই।";
+                document.getElementById('view-desc').innerText = p.description;
             }
         }
         loadProduct();
 
-        window.orderNow = () => {
-            document.getElementById('order-modal').style.display = 'flex';
-        };
-
-        window.closeModal = () => {
-            document.getElementById('order-modal').style.display = 'none';
-        };
-
+        // গ্লোবাল ফাংশন
+        window.orderNow = () => document.getElementById('order-modal').style.display = 'flex';
+        window.closeModal = () => document.getElementById('order-modal').style.display = 'none';
+        
         window.orderOnWhatsApp = () => {
-            // 👇 আপনার ইন্ডিয়ান নম্বর দিন (91 দিয়ে শুরু)
-            const phoneNumber = "919876543210"; 
-            
-            // 👇 পরিবর্তন: মেসেজে রুপি চিহ্ন
-            const message = `হাই! আমি এই প্রোডাক্টটি কিনতে চাই:
-            
-নাম: ${currentProduct.name}
-দাম: ₹${currentProduct.price}
-লিঙ্ক: ${window.location.href}`;
-
-            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-            window.open(url, '_blank');
+            const phone = "919876543210"; // আপনার নম্বর
+            const msg = `Order: ${currentProduct.name}, Price: ₹${currentProduct.price}`;
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
         };
 
         document.getElementById('order-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = e.target.querySelector('button');
-            btn.innerText = "অর্ডার হচ্ছে...";
-            btn.disabled = true;
-
-            const orderData = {
-                customerName: document.getElementById('cust-name').value,
-                phone: document.getElementById('cust-phone').value,
-                address: document.getElementById('cust-address').value,
-                productName: currentProduct.name,
-                price: currentProduct.price,
-                productId: currentProduct.id,
-                status: 'pending',
-                orderDate: new Date()
-            };
-
             try {
-                await addDoc(collection(db, "orders"), orderData);
-                alert("✅ অর্ডার সফল হয়েছে!");
+                await addDoc(collection(db, "orders"), {
+                    customerName: document.getElementById('cust-name').value,
+                    phone: document.getElementById('cust-phone').value,
+                    address: document.getElementById('cust-address').value,
+                    productName: currentProduct.name,
+                    price: currentProduct.price,
+                    status: 'pending',
+                    orderDate: new Date()
+                });
+                alert("অর্ডার সফল হয়েছে!");
                 closeModal();
-                e.target.reset();
-            } catch (error) {
-                alert("সমস্যা হয়েছে!");
-            } finally {
-                btn.innerText = "অর্ডার কনফার্ম করুন";
-                btn.disabled = false;
-            }
+            } catch (err) { alert("সমস্যা হয়েছে"); }
         });
     </script>
 </body>

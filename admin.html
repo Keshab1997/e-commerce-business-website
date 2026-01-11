@@ -2,7 +2,6 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>এডমিন লগইন</title>
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/main.css">
@@ -12,55 +11,27 @@
     <div class="login-wrapper">
         <div class="login-card">
             <h1>এডমিন প্যানেল</h1>
-            <p style="color:#666; margin-bottom:20px;">শুধুমাত্র অনুমোদিত এডমিন প্রবেশ করতে পারবেন।</p>
-            
             <button id="google-login-btn" class="btn-google">Google দিয়ে লগইন করুন</button>
-            <p id="login-message" style="margin-top:15px; font-weight:bold;"></p>
+            <p id="login-message"></p>
         </div>
     </div>
 
     <script type="module">
         import { auth, loginWithGoogle, logoutUser } from './config/firebase-config.js';
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
         const ADMIN_EMAIL = "keshabsarkar2018@gmail.com";
-        const msgBox = document.getElementById('login-message');
 
-        // ১. পেজ লোড হলে চেক করা: আগে থেকেই লগইন আছে কিনা
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                if (user.email === ADMIN_EMAIL) {
-                    window.location.href = 'dashboard.html'; // লগইন থাকলে সরাসরি ড্যাশবোর্ডে
-                } else {
-                    // ভুল ইউজার হলে লগআউট করে দেওয়া
-                    logoutUser();
-                    msgBox.style.color = 'red';
-                    msgBox.innerText = "আপনি এডমিন নন! অ্যাক্সেস ডিনাইড।";
-                }
-            }
+            if (user && user.email === ADMIN_EMAIL) window.location.href = 'dashboard.html';
         });
 
-        // ২. লগইন বাটনে ক্লিক করলে
         document.getElementById('google-login-btn').addEventListener('click', async () => {
-            try {
-                const user = await loginWithGoogle();
-                
-                if (user.email === ADMIN_EMAIL) {
-                    msgBox.style.color = 'green';
-                    msgBox.innerText = "স্বাগতম এডমিন! ড্যাশবোর্ডে নেওয়া হচ্ছে...";
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 1000);
-                } else {
-                    // ভুল ইমেইল হলে সাথে সাথে লগআউট
-                    await logoutUser();
-                    msgBox.style.color = 'red';
-                    msgBox.innerText = "দুঃখিত, এই ইমেইলটির এডমিন পারমিশন নেই।";
-                }
-            } catch (error) {
-                console.error(error);
-                msgBox.style.color = 'red';
-                msgBox.innerText = "লগইন ব্যর্থ হয়েছে।";
+            const user = await loginWithGoogle();
+            if (user.email === ADMIN_EMAIL) {
+                window.location.href = 'dashboard.html';
+            } else {
+                await logoutUser();
+                alert("আপনি এডমিন নন!");
             }
         });
     </script>

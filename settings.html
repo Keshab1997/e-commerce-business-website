@@ -2,134 +2,27 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>দোকান সেটিংস | শাড়ি সম্ভার</title>
+    <title>সেটিংস</title>
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/main.css">
     <link rel="stylesheet" href="./modules/admin/shop-settings/settings.css">
 </head>
 <body>
     <div class="settings-container">
-        <div class="settings-header">
-            <h2>⚙️ দোকান সেটিংস</h2>
-            <a href="dashboard.html" class="btn-back">⬅ ড্যাশবোর্ডে ফিরুন</a>
-        </div>
-
+        <a href="dashboard.html" class="btn-back">⬅ ড্যাশবোর্ড</a>
         <div class="settings-card">
             <form id="shop-settings-form">
-                <div class="form-group">
-                    <label>দোকানের নাম</label>
-                    <input type="text" id="shop-name" placeholder="যেমন: শাড়ি সম্ভার" required>
-                </div>
-
-                <div class="form-group">
-                    <label>ট্যাগলাইন (স্লোগান)</label>
-                    <input type="text" id="shop-tagline" placeholder="যেমন: আভিজাত্যের ছোঁয়া...">
-                </div>
-
-                <div class="form-group">
-                    <label>ফোন নম্বর</label>
-                    <input type="text" id="shop-phone" placeholder="+৮৮০ ১৭১১...">
-                </div>
-
-                <div class="form-group">
-                    <label>ঠিকানা</label>
-                    <textarea id="shop-address" rows="3" placeholder="দোকানের পূর্ণ ঠিকানা..."></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>ফেসবুক পেজ লিঙ্ক</label>
-                    <input type="url" id="shop-fb" placeholder="https://facebook.com/...">
-                </div>
-
-                <div class="form-group">
-                    <label>লোগো আপলোড করুন</label>
-                    <input type="file" id="shop-logo-file" accept="image/*">
-                    <div id="logo-preview-area">
-                        <img id="current-logo" src="" alt="Logo Preview" style="display:none; height: 60px; margin-top: 10px;">
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-block" id="save-btn">💾 পরিবর্তন সেভ করুন</button>
-                <p id="status-msg" class="status-text"></p>
+                <input type="text" id="shop-name" placeholder="দোকানের নাম">
+                <input type="text" id="shop-phone" placeholder="ফোন">
+                <input type="text" id="shop-address" placeholder="ঠিকানা">
+                <input type="file" id="shop-logo-file">
+                <button type="submit" class="btn btn-primary" id="save-btn">সেভ করুন</button>
+                <p id="status-msg"></p>
             </form>
         </div>
     </div>
-
     <script type="module">
-        import { db } from './config/firebase-config.js';
-        import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { uploadImage } from './utils/image-uploader.js';
-
-        const form = document.getElementById('shop-settings-form');
-        const statusMsg = document.getElementById('status-msg');
-        const saveBtn = document.getElementById('save-btn');
-
-        // Load current settings
-        async function loadCurrentSettings() {
-            try {
-                const docRef = doc(db, "settings", "shopInfo");
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    document.getElementById('shop-name').value = data.name || '';
-                    document.getElementById('shop-tagline').value = data.tagline || '';
-                    document.getElementById('shop-phone').value = data.phone || '';
-                    document.getElementById('shop-address').value = data.address || '';
-                    document.getElementById('shop-fb').value = data.facebook || '';
-
-                    if (data.logo) {
-                        const img = document.getElementById('current-logo');
-                        img.src = data.logo;
-                        img.style.display = 'block';
-                    }
-                }
-            } catch (error) {
-                console.log("No settings found yet.");
-            }
-        }
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            saveBtn.disabled = true;
-            saveBtn.innerText = "সেভ হচ্ছে...";
-            statusMsg.innerText = "";
-
-            try {
-                const shopData = {
-                    name: document.getElementById('shop-name').value,
-                    tagline: document.getElementById('shop-tagline').value,
-                    phone: document.getElementById('shop-phone').value,
-                    address: document.getElementById('shop-address').value,
-                    facebook: document.getElementById('shop-fb').value
-                };
-
-                const fileInput = document.getElementById('shop-logo-file');
-                if (fileInput.files.length > 0) {
-                    statusMsg.innerText = "লোগো আপলোড হচ্ছে...";
-                    const imageUrl = await uploadImage(fileInput.files[0]);
-                    shopData.logo = imageUrl;
-                }
-
-                await setDoc(doc(db, "settings", "shopInfo"), shopData, { merge: true });
-
-                statusMsg.style.color = "green";
-                statusMsg.innerText = "✅ সফলভাবে সেভ হয়েছে!";
-                saveBtn.innerText = "💾 পরিবর্তন সেভ করুন";
-                saveBtn.disabled = false;
-
-            } catch (error) {
-                console.error(error);
-                statusMsg.style.color = "red";
-                statusMsg.innerText = "❌ সেভ করা যায়নি। আবার চেষ্টা করুন।";
-                saveBtn.disabled = false;
-                saveBtn.innerText = "💾 পরিবর্তন সেভ করুন";
-            }
-        });
-
-        loadCurrentSettings();
+        import { initSettings } from './modules/admin/shop-settings/settings.js';
     </script>
 </body>
 </html>

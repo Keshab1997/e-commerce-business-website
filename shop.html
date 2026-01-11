@@ -3,67 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>কালেকশন | শাড়ি সম্ভার</title>
+    <title>কালেকশন</title>
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/main.css">
-    <link rel="stylesheet" href="./modules/common/navbar/navbar.css">
     <link rel="stylesheet" href="./modules/client/collections/gallery.css">
 </head>
 <body>
-    <!-- নেভিগেশন -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">শাড়ি<span class="highlight">সম্ভার</span></a>
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">হোম</a></li>
                 <li><a href="shop.html" class="nav-link">কালেকশন</a></li>
-                
-                <!-- 👇 পরিবর্তন: স্টাইল দিয়ে লুকিয়ে রাখা হয়েছে -->
-                <li id="admin-nav-item" style="display: none;">
-                    <a href="dashboard.html" class="nav-link" style="color:var(--primary-color)">🔒 ড্যাশবোর্ড</a>
-                </li>
             </ul>
         </div>
     </nav>
 
-    <!-- গ্যালারি -->
     <div class="gallery-container">
-        <h2 style="text-align:center; margin:40px 0; color:var(--primary-color);">আমাদের কালেকশন</h2>
-        
-        <!-- ফিল্টার -->
         <div class="filter-bar">
             <button class="filter-btn active" onclick="filterProducts('all')">সব</button>
             <button class="filter-btn" onclick="filterProducts('saree')">শাড়ি</button>
             <button class="filter-btn" onclick="filterProducts('suit')">সুট</button>
             <button class="filter-btn" onclick="filterProducts('jewelry')">গয়না</button>
         </div>
-
-        <!-- প্রোডাক্ট গ্রিড -->
         <div id="gallery-grid" class="product-grid">
-            <div class="loading-spinner">প্রোডাক্ট লোড হচ্ছে...</div>
+            <div class="loading-spinner">লোড হচ্ছে...</div>
         </div>
     </div>
 
-    <!-- 👇 সিকিউরিটি স্ক্রিপ্ট: এটি চেক করবে আপনি এডমিন কিনা -->
+    <!-- গ্যালারি লজিক -->
     <script type="module">
-        import { auth } from './config/firebase-config.js';
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        const ADMIN_EMAIL = "keshabsarkar2018@gmail.com";
-
-        onAuthStateChanged(auth, (user) => {
-            const adminBtn = document.getElementById('admin-nav-item');
-            
-            if (user && user.email === ADMIN_EMAIL) {
-                // ইমেইল মিললে বাটন দেখাবে
-                adminBtn.style.display = 'block';
-            } else {
-                // না মিললে বাটন লুকানো থাকবে
-                adminBtn.style.display = 'none';
-            }
-        });
+        import { initGallery } from './modules/client/collections/gallery.js';
+        // গ্যালারি লোড
     </script>
-
-    <script type="module" src="./modules/client/collections/gallery.js"></script>
 </body>
 </html>
