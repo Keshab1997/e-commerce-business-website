@@ -3,57 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ড্যাশবোর্ড | শাড়ি সম্ভার</title>
+    <title>ড্যাশবোর্ড</title>
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/main.css">
     <link rel="stylesheet" href="./modules/admin/dashboard/dashboard.css">
 </head>
 <body>
-    <div class="dashboard-container">
+    <!-- লোডিং স্ক্রিন (চেক করার সময় দেখাবে) -->
+    <div id="auth-check" style="text-align:center; padding:50px;">যাচাই করা হচ্ছে...</div>
+
+    <!-- মেইন ড্যাশবোর্ড (লুকানো থাকবে যতক্ষণ না ভেরিফাই হয়) -->
+    <div class="dashboard-container" id="main-dash" style="display:none;">
         <div class="dashboard-header">
-            <h2>স্বাগতম, <span id="admin-name">এডমিন</span> 👋</h2>
-            <a href="index.html" class="btn-logout">লগআউট</a>
+            <h2>স্বাগতম কেশব সরকার 👋</h2>
+            <button id="logout-btn" class="btn-logout">লগআউট</button>
         </div>
 
         <div class="dashboard-grid">
             <a href="settings.html" class="dash-card">
                 <div class="card-icon">⚙️</div>
-                <h3>দোকান সেটিংস</h3>
-                <p>দোকানের নাম, লোগো এবং ঠিকানা পরিবর্তন করুন</p>
+                <h3>সেটিংস</h3>
             </a>
-
             <a href="manage-product.html" class="dash-card">
                 <div class="card-icon">👗</div>
                 <h3>প্রোডাক্ট ম্যানেজার</h3>
-                <p>নতুন শাড়ি বা কালেকশন আপলোড করুন</p>
             </a>
-
             <a href="orders.html" class="dash-card">
                 <div class="card-icon">📦</div>
                 <h3>অর্ডার লিস্ট</h3>
-                <p>কাস্টমারের নতুন অর্ডারগুলো দেখুন</p>
-            </a>
-
-            <a href="shop.html" class="dash-card">
-                <div class="card-icon">🏪</div>
-                <h3>সাইট দেখুন</h3>
-                <p>কাস্টমার কী দেখছে তা চেক করুন</p>
             </a>
         </div>
     </div>
 
     <script type="module">
-        import { auth } from './config/firebase-config.js';
-        
-        // Auth check
-        setTimeout(() => {
-            const user = auth.currentUser;
-            if (user) {
-                document.getElementById('admin-name').innerText = user.displayName?.split(' ')[0] || 'এডমিন';
+        import { auth, logoutUser } from './config/firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const ADMIN_EMAIL = "keshabsarkar2018@gmail.com";
+
+        // সিকিউরিটি চেক
+        onAuthStateChanged(auth, (user) => {
+            if (user && user.email === ADMIN_EMAIL) {
+                // আসল এডমিন
+                document.getElementById('auth-check').style.display = 'none';
+                document.getElementById('main-dash').style.display = 'block';
             } else {
-                window.location.href = 'admin.html';
+                // নকল বা লগআউট ইউজার -> হোম পেজে পাঠিয়ে দেওয়া হবে
+                window.location.href = 'index.html';
             }
-        }, 1000);
+        });
+
+        // লগআউট বাটন
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            logoutUser();
+        });
     </script>
 </body>
 </html>

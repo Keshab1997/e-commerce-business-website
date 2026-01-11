@@ -17,7 +17,11 @@
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">হোম</a></li>
                 <li><a href="shop.html" class="nav-link">কালেকশন</a></li>
-                <li><a href="admin.html" class="nav-link">🔒 এডমিন</a></li>
+                
+                <!-- 👇 পরিবর্তন: স্টাইল দিয়ে লুকিয়ে রাখা হয়েছে -->
+                <li id="admin-nav-item" style="display: none;">
+                    <a href="dashboard.html" class="nav-link" style="color:var(--primary-color)">🔒 ড্যাশবোর্ড</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -40,72 +44,26 @@
         </div>
     </div>
 
+    <!-- 👇 সিকিউরিটি স্ক্রিপ্ট: এটি চেক করবে আপনি এডমিন কিনা -->
     <script type="module">
-        import { db } from './config/firebase-config.js';
-        import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { auth } from './config/firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        let allProducts = [];
+        const ADMIN_EMAIL = "keshabsarkar2018@gmail.com";
 
-        async function loadProducts() {
-            const grid = document.getElementById('gallery-grid');
-            try {
-                const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
-                const querySnapshot = await getDocs(q);
-                
-                allProducts = [];
-                querySnapshot.forEach((doc) => {
-                    allProducts.push({ id: doc.id, ...doc.data() });
-                });
-
-                renderProducts(allProducts);
-            } catch (error) {
-                grid.innerHTML = '<p style="text-align:center;">প্রোডাক্ট লোড করা যায়নি।</p>';
-            }
-        }
-
-        function renderProducts(products) {
-            const grid = document.getElementById('gallery-grid');
-            if (products.length === 0) {
-                grid.innerHTML = '<p style="text-align:center;">কোনো প্রোডাক্ট নেই।</p>';
-                return;
-            }
-
-            let html = '';
-            products.forEach(p => {
-                html += `
-                    <div class="product-card" onclick="viewProduct('${p.id}')">
-                        <div class="card-img-box">
-                            <img src="${p.image}" alt="${p.name}" loading="lazy">
-                        </div>
-                        <div class="card-info">
-                            <h3 class="card-title">${p.name}</h3>
-                            <p class="card-price">৳ ${p.price}</p>
-                            <span class="btn-view">বিস্তারিত দেখুন</span>
-                        </div>
-                    </div>
-                `;
-            });
-            grid.innerHTML = html;
-        }
-
-        window.filterProducts = (category) => {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            if (category === 'all') {
-                renderProducts(allProducts);
+        onAuthStateChanged(auth, (user) => {
+            const adminBtn = document.getElementById('admin-nav-item');
+            
+            if (user && user.email === ADMIN_EMAIL) {
+                // ইমেইল মিললে বাটন দেখাবে
+                adminBtn.style.display = 'block';
             } else {
-                const filtered = allProducts.filter(p => p.category === category);
-                renderProducts(filtered);
+                // না মিললে বাটন লুকানো থাকবে
+                adminBtn.style.display = 'none';
             }
-        };
-
-        window.viewProduct = (id) => {
-            localStorage.setItem('currentProductId', id);
-            window.location.href = `product.html?id=${id}`;
-        };
-
-        loadProducts();
+        });
     </script>
+
+    <script type="module" src="./modules/client/collections/gallery.js"></script>
 </body>
 </html>

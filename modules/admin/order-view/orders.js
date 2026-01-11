@@ -3,9 +3,9 @@ import { collection, getDocs, query, orderBy, deleteDoc, doc, updateDoc } from "
 
 export async function initOrderView() {
     const tableBody = document.getElementById('orders-table-body');
+    if (!tableBody) return;
 
     try {
-        // অর্ডারগুলো তারিখ অনুযায়ী সাজিয়ে আনা (নতুনগুলো আগে)
         const q = query(collection(db, "orders"), orderBy("orderDate", "desc"));
         const querySnapshot = await getDocs(q);
 
@@ -16,16 +16,16 @@ export async function initOrderView() {
             const order = doc.data();
             count++;
             
-            // তারিখ ফরম্যাট করা
             const date = order.orderDate ? new Date(order.orderDate.seconds * 1000).toLocaleDateString('bn-BD') : 'N/A';
 
+            // 👇 পরিবর্তন: এখানে ৳ এর বদলে ₹ দেওয়া হয়েছে
             html += `
                 <tr>
                     <td>${date}</td>
                     <td>${order.customerName}</td>
                     <td><a href="tel:${order.phone}">${order.phone}</a></td>
                     <td>${order.productName}</td>
-                    <td>৳ ${order.price}</td>
+                    <td>₹ ${order.price}</td>
                     <td>${order.address}</td>
                     <td>
                         <span class="badge badge-${order.status}" onclick="toggleStatus('${doc.id}', '${order.status}')" style="cursor:pointer">
@@ -51,28 +51,25 @@ export async function initOrderView() {
     }
 }
 
-// ১. অর্ডার ডিলিট করা
 window.deleteOrder = async (id) => {
     if (confirm("আপনি কি নিশ্চিত এই অর্ডারটি মুছে ফেলতে চান?")) {
         try {
             await deleteDoc(doc(db, "orders", id));
-            initOrderView(); // টেবিল রিফ্রেশ
+            initOrderView();
         } catch (error) {
             alert("ডিলিট করা যায়নি!");
         }
     }
 };
 
-// ২. স্ট্যাটাস পরিবর্তন করা (Pending <-> Completed)
 window.toggleStatus = async (id, currentStatus) => {
     const newStatus = currentStatus === 'pending' ? 'completed' : 'pending';
     try {
         await updateDoc(doc(db, "orders", id), { status: newStatus });
-        initOrderView(); // টেবিল রিফ্রেশ
+        initOrderView();
     } catch (error) {
         console.error(error);
     }
 };
 
-// অটোমেটিক রান
 initOrderView();

@@ -9,7 +9,6 @@ export function initProductManager() {
     const fileInput = document.getElementById('p-image');
     const previewDiv = document.getElementById('p-preview');
 
-    // ১. ছবি প্রিভিউ
     if (fileInput) {
         fileInput.addEventListener('change', function() {
             const file = this.files[0];
@@ -23,10 +22,8 @@ export function initProductManager() {
         });
     }
 
-    // ২. প্রোডাক্ট লিস্ট লোড করা
     loadProducts();
 
-    // ৩. নতুন প্রোডাক্ট আপলোড
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -37,23 +34,19 @@ export function initProductManager() {
             statusMsg.style.color = "blue";
 
             try {
-                // ক) ছবি ImgBB তে পাঠানো
                 const imageUrl = await uploadImage(fileInput.files[0]);
 
-                // খ) ডেটা তৈরি করা (দাম ইংরেজি নাম্বারে সেভ হবে)
                 const productData = {
                     name: document.getElementById('p-name').value,
-                    price: Number(document.getElementById('p-price').value), // এখানে ইংরেজি নাম্বারই থাকবে
+                    price: Number(document.getElementById('p-price').value),
                     category: document.getElementById('p-category').value,
                     description: document.getElementById('p-desc').value,
                     image: imageUrl,
                     createdAt: new Date()
                 };
 
-                // গ) ফায়ারবেসে সেভ করা
                 await addDoc(collection(db, "products"), productData);
 
-                // ঘ) সফল মেসেজ ও রিসেট
                 statusMsg.style.color = "green";
                 statusMsg.innerText = "✅ প্রোডাক্ট সফলভাবে যোগ হয়েছে!";
                 form.reset();
@@ -61,7 +54,6 @@ export function initProductManager() {
                 addBtn.innerText = "➕ প্রোডাক্ট যোগ করুন";
                 addBtn.disabled = false;
 
-                // ঙ) লিস্ট রিফ্রেশ করা
                 loadProducts();
 
             } catch (error) {
@@ -75,7 +67,6 @@ export function initProductManager() {
     }
 }
 
-// প্রোডাক্ট লিস্ট লোড করার ফাংশন
 async function loadProducts() {
     const listContainer = document.getElementById('product-list-container');
     const totalCount = document.getElementById('total-products');
@@ -93,7 +84,6 @@ async function loadProducts() {
             const p = doc.data();
             count++;
             
-            // ক্যাটাগরি বাংলায় দেখানোর জন্য ম্যাপ
             const categoryMap = {
                 'saree': 'শাড়ি',
                 'suit': 'সুট/থ্রি-পিস',
@@ -102,12 +92,13 @@ async function loadProducts() {
             };
             const categoryBangla = categoryMap[p.category] || p.category;
 
+            // 👇 পরিবর্তন: এখানে ৳ এর বদলে ₹ দেওয়া হয়েছে
             html += `
                 <div class="product-item">
                     <img src="${p.image}" class="thumb-img" alt="${p.name}">
                     <div class="p-info">
                         <div class="p-title">${p.name}</div>
-                        <div class="p-price">৳ ${p.price} | ${categoryBangla}</div>
+                        <div class="p-price">₹ ${p.price} | ${categoryBangla}</div>
                     </div>
                     <button class="btn-delete" onclick="deleteProduct('${doc.id}')" title="ডিলিট করুন">🗑️</button>
                 </div>
@@ -127,18 +118,15 @@ async function loadProducts() {
     }
 }
 
-// প্রোডাক্ট ডিলিট করার ফাংশন
 window.deleteProduct = async (id) => {
     if (confirm("আপনি কি নিশ্চিত এই প্রোডাক্টটি ডিলিট করতে চান?")) {
         try {
             await deleteDoc(doc(db, "products", id));
-            loadProducts(); // লিস্ট রিফ্রেশ
+            loadProducts();
         } catch (error) {
             alert("ডিলিট করা যায়নি!");
-            console.error(error);
         }
     }
 };
 
-// অটোমেটিক রান
 initProductManager();
