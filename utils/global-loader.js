@@ -38,6 +38,10 @@ function updateNameElements(name) {
 
     const footerName = document.getElementById('f-name');
     if (footerName) footerName.innerText = name;
+    
+    // এডমিন প্যানেলের জন্য
+    const adminPageTitle = document.getElementById('admin-page-title');
+    if (adminPageTitle) adminPageTitle.innerText = name + " - এডমিন প্যানেল";
 }
 
 // 👇 ফুটার ডিটেইলস আপডেট করার ফাংশন

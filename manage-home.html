@@ -2,97 +2,160 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>হোম পেজ ম্যানেজার</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>হোম পেজ ম্যানেজার | SootBoot</title>
     <link rel="stylesheet" href="styles/variables.css">
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="modules/admin/shop-settings/settings.css">
+    <style>
+        body { background-color: #f4f7f6; font-family: 'Hind Siliguri', sans-serif; }
+        
+        .manager-wrapper { width: 100%; padding: 0; margin: 0; }
+        
+        /* হেডার */
+        .top-bar {
+            background: white; padding: 15px 4%; display: flex;
+            justify-content: space-between; align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100;
+        }
+        .top-bar h2 { color: var(--primary-color); margin: 0; font-size: 1.5rem; }
+        .btn-back { text-decoration: none; color: #666; border: 1px solid #ddd; padding: 8px 20px; border-radius: 50px; transition: 0.3s; font-weight: 600; }
+        .btn-back:hover { background: #eee; }
+
+        /* মেইন কন্টেইনার */
+        .content-container { padding: 40px 4% 120px; max-width: 1400px; margin: 0 auto; }
+        
+        .form-grid-main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+        }
+
+        /* কার্ড স্টাইল */
+        .config-card {
+            background: white; padding: 30px; border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03); border-top: 4px solid var(--secondary-color);
+        }
+        .config-card h3 { color: #333; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+
+        /* ইনপুট স্টাইল */
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #555; font-size: 0.9rem; }
+        .input-group input, .input-group textarea {
+            width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px;
+            font-size: 1rem; transition: 0.3s; background: #fafafa;
+        }
+        .input-group input:focus, .input-group textarea:focus { border-color: var(--primary-color); background: white; outline: none; box-shadow: 0 0 8px rgba(128,0,0,0.1); }
+
+        /* সেভ বাটন (ফ্লোটিং) */
+        .save-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: white; padding: 15px 4%; box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            display: flex; justify-content: center; z-index: 99;
+        }
+        .btn-save-main {
+            width: 100%; max-width: 400px; padding: 15px;
+            background: var(--primary-color); color: white; border: none;
+            border-radius: 50px; font-size: 1.2rem; font-weight: bold;
+            cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(128,0,0,0.3);
+        }
+        .btn-save-main:hover { transform: translateY(-3px); background: #600000; }
+
+        /* মোবাইল ফিক্স */
+        @media (max-width: 768px) {
+            .form-grid-main { grid-template-columns: 1fr; }
+            .content-container { padding: 20px 15px 100px; }
+            .config-card { padding: 20px; }
+            .top-bar h2 { font-size: 1.2rem; }
+        }
+    </style>
 </head>
 <body>
-    <div class="settings-container">
-        <div class="settings-header">
-            <h2>🏠 হোম পেজ সাজান</h2>
-            <a href="dashboard.html" class="btn-back">⬅ ড্যাশবোর্ড</a>
+
+    <div class="manager-wrapper">
+        <!-- টপ বার -->
+        <div class="top-bar">
+            <h2>🏠 Home Page Manager</h2>
+            <a href="dashboard.html" class="btn-back">⬅ Dashboard</a>
         </div>
 
-        <div class="settings-card">
+        <div class="content-container">
             <form id="home-settings-form">
-                
-                <!-- ১. স্লাইডার ১ -->
-                <div class="form-section">
-                    <h3>স্লাইডার ১ (মেইন ব্যানার)</h3>
-                    <input type="text" id="slide1-img" placeholder="ছবির লিঙ্ক (Image URL)">
-                    <input type="text" id="slide1-title" placeholder="শিরোনাম (যেমন: এক্সক্লুসিভ শাড়ি)">
-                </div>
-
-                <!-- ২. স্লাইডার ২ -->
-                <div class="form-section">
-                    <h3>স্লাইডার ২</h3>
-                    <input type="text" id="slide2-img" placeholder="ছবির লিঙ্ক">
-                    <input type="text" id="slide2-title" placeholder="শিরোনাম">
-                </div>
-
-                <!-- ৩. স্লাইডার ৩ -->
-                <div class="form-section">
-                    <h3>স্লাইডার ৩</h3>
-                    <input type="text" id="slide3-img" placeholder="ছবির লিঙ্ক">
-                    <input type="text" id="slide3-title" placeholder="শিরোনাম">
-                </div>
-
-                <!-- ৪. অফার ব্যানার -->
-                <div class="form-section">
-                    <h3>মাঝখানের অফার ব্যানার</h3>
-                    <input type="text" id="offer-img" placeholder="ব্যানার লিঙ্ক">
-                    <input type="text" id="offer-title" placeholder="অফারের নাম">
-                </div>
-
-                <!-- ৫. ভিডিও গ্যালারি -->
-                <div class="form-section">
-                    <h3>ইন্সটাগ্রাম রিলস (Instagram Reel Links)</h3>
-                    <p style="font-size:0.8rem; color:#666; margin-bottom:10px;">শুধু রিলসের লিঙ্ক পেস্ট করুন (যেমন: https://www.instagram.com/reel/xyz...)</p>
+                <div class="form-grid-main">
                     
-                    <div class="form-grid">
-                        <input type="text" id="vid1" placeholder="রিল ১ লিঙ্ক">
-                        <input type="text" id="vid2" placeholder="রিল ২ লিঙ্ক">
-                        <input type="text" id="vid3" placeholder="রিল ৩ লিঙ্ক">
-                        <input type="text" id="vid4" placeholder="রিল ৪ লিঙ্ক">
+                    <!-- ১. স্লাইডার সেকশন -->
+                    <div class="config-card">
+                        <h3>🖼️ Hero Sliders</h3>
+                        <div class="input-group">
+                            <label>Slider 1 (Image URL & Title)</label>
+                            <input type="text" id="slide1-img" placeholder="Image URL" style="margin-bottom:5px;">
+                            <input type="text" id="slide1-title" placeholder="Title">
+                        </div>
+                        <div class="input-group">
+                            <label>Slider 2</label>
+                            <input type="text" id="slide2-img" placeholder="Image URL" style="margin-bottom:5px;">
+                            <input type="text" id="slide2-title" placeholder="Title">
+                        </div>
+                        <div class="input-group">
+                            <label>Slider 3</label>
+                            <input type="text" id="slide3-img" placeholder="Image URL" style="margin-bottom:5px;">
+                            <input type="text" id="slide3-title" placeholder="Title">
+                        </div>
                     </div>
+
+                    <!-- ২. অফার ও ভিডিও -->
+                    <div class="config-card">
+                        <h3>📢 Offer & Video</h3>
+                        <div class="input-group">
+                            <label>Main Offer Banner (Image URL & Title)</label>
+                            <input type="text" id="offer-img" placeholder="Banner URL" style="margin-bottom:5px;">
+                            <input type="text" id="offer-title" placeholder="Offer Text">
+                        </div>
+                        <div class="input-group">
+                            <label>Instagram Reels (Paste Links)</label>
+                            <input type="text" id="vid1" placeholder="Reel 1 Link" style="margin-bottom:5px;">
+                            <input type="text" id="vid2" placeholder="Reel 2 Link" style="margin-bottom:5px;">
+                            <input type="text" id="vid3" placeholder="Reel 3 Link" style="margin-bottom:5px;">
+                            <input type="text" id="vid4" placeholder="Reel 4 Link">
+                        </div>
+                    </div>
+
+                    <!-- ৩. কাস্টমার রিভিউ -->
+                    <div class="config-card">
+                        <h3>⭐ Customer Reviews</h3>
+                        <div class="input-group">
+                            <label>Review 1 (Name & Text)</label>
+                            <input type="text" id="rev1-name" placeholder="Customer Name" style="margin-bottom:5px;">
+                            <textarea id="rev1-text" rows="2" placeholder="Review content..."></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label>Review 2</label>
+                            <input type="text" id="rev2-name" placeholder="Customer Name" style="margin-bottom:5px;">
+                            <textarea id="rev2-text" rows="2" placeholder="Review content..."></textarea>
+                        </div>
+                        <div class="input-group">
+                            <label>Review 3</label>
+                            <input type="text" id="rev3-name" placeholder="Customer Name" style="margin-bottom:5px;">
+                            <textarea id="rev3-text" rows="2" placeholder="Review content..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- ৪. সার্ভিস ও পলিসি -->
+                    <div class="config-card">
+                        <h3>✅ Services & Highlights</h3>
+                        <div class="input-group">
+                            <label>Service Highlights</label>
+                            <input type="text" id="serv1" placeholder="Service 1 (e.g., Fast Delivery)" style="margin-bottom:5px;">
+                            <input type="text" id="serv2" placeholder="Service 2 (e.g., Premium Quality)" style="margin-bottom:5px;">
+                            <input type="text" id="serv3" placeholder="Service 3 (e.g., 24/7 Support)">
+                        </div>
+                    </div>
+
                 </div>
 
-                <!-- ৬. গ্রাহকের মতামত (Reviews) -->
-                <div class="form-section">
-                    <h3>গ্রাহকের মতামত (Top 3 Reviews)</h3>
-                    
-                    <div class="review-box" style="border:1px solid #eee; padding:10px; margin-bottom:10px;">
-                        <h4>রিভিউ ১</h4>
-                        <input type="text" id="rev1-name" placeholder="কাস্টমারের নাম">
-                        <textarea id="rev1-text" rows="2" placeholder="মতামত..."></textarea>
-                    </div>
-
-                    <div class="review-box" style="border:1px solid #eee; padding:10px; margin-bottom:10px;">
-                        <h4>রিভিউ ২</h4>
-                        <input type="text" id="rev2-name" placeholder="কাস্টমারের নাম">
-                        <textarea id="rev2-text" rows="2" placeholder="মতামত..."></textarea>
-                    </div>
-
-                    <div class="review-box" style="border:1px solid #eee; padding:10px;">
-                        <h4>রিভিউ ৩</h4>
-                        <input type="text" id="rev3-name" placeholder="কাস্টমারের নাম">
-                        <textarea id="rev3-text" rows="2" placeholder="মতামত..."></textarea>
-                    </div>
+                <!-- ফ্লোটিং সেভ বাটন -->
+                <div class="save-bar">
+                    <button type="submit" class="btn-save-main" id="save-btn">💾 Save All Changes</button>
                 </div>
-
-                <!-- ৭. কেন আমাদের বাছবেন (Services) -->
-                <div class="form-section">
-                    <h3>সার্ভিস হাইলাইট</h3>
-                    <div class="form-grid">
-                        <input type="text" id="serv1" placeholder="সার্ভিস ১ (যেমন: ফাস্ট ডেলিভারি)">
-                        <input type="text" id="serv2" placeholder="সার্ভিস ২ (যেমন: প্রিমিয়াম কোয়ালিটি)">
-                        <input type="text" id="serv3" placeholder="সার্ভিস ৩ (যেমন: ২৪/৭ সাপোর্ট)">
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary btn-block" id="save-btn">💾 সেভ করুন</button>
-                <p id="status-msg" class="status-text"></p>
             </form>
         </div>
     </div>
@@ -101,7 +164,7 @@
         import { db } from './config/firebase-config.js';
         import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // ডিফল্ট ডেটা (যদি ডেটাবেসে কিছু না থাকে)
+        // ডিফল্ট ডেটা
         const DEFAULT_DATA = {
             slide1: { img: "https://images.unsplash.com/photo-1610189012906-4783fdae2c26?q=80&w=1920", title: "এক্সক্লুসিভ বেনারসি" },
             slide2: { img: "https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?q=80&w=1920", title: "ছেলেদের প্রিমিয়াম পাঞ্জাবি" },
@@ -125,33 +188,32 @@
             ]
         };
 
-        // লোড করা
         async function loadData() {
             try {
                 const docSnap = await getDoc(doc(db, "settings", "homeConfig"));
                 const data = docSnap.exists() ? docSnap.data() : DEFAULT_DATA;
 
-                document.getElementById('slide1-img').value = data.slide1.img;
-                document.getElementById('slide1-title').value = data.slide1.title;
+                // স্লাইডার
+                document.getElementById('slide1-img').value = data.slide1?.img || '';
+                document.getElementById('slide1-title').value = data.slide1?.title || '';
+                document.getElementById('slide2-img').value = data.slide2?.img || '';
+                document.getElementById('slide2-title').value = data.slide2?.title || '';
+                document.getElementById('slide3-img').value = data.slide3?.img || '';
+                document.getElementById('slide3-title').value = data.slide3?.title || '';
                 
-                document.getElementById('slide2-img').value = data.slide2.img;
-                document.getElementById('slide2-title').value = data.slide2.title;
-
-                document.getElementById('slide3-img').value = data.slide3.img;
-                document.getElementById('slide3-title').value = data.slide3.title;
-
-                document.getElementById('offer-img').value = data.offer.img;
-                document.getElementById('offer-title').value = data.offer.title;
-
-                // ভিডিও গ্যালারি লোড
+                // অফার
+                document.getElementById('offer-img').value = data.offer?.img || '';
+                document.getElementById('offer-title').value = data.offer?.title || '';
+                
+                // ভিডিও
                 if(data.videoGallery) {
                     document.getElementById('vid1').value = data.videoGallery[0] || '';
                     document.getElementById('vid2').value = data.videoGallery[1] || '';
                     document.getElementById('vid3').value = data.videoGallery[2] || '';
                     document.getElementById('vid4').value = data.videoGallery[3] || '';
                 }
-
-                // রিভিউ লোড
+                
+                // রিভিউ
                 if(data.reviews) {
                     document.getElementById('rev1-name').value = data.reviews[0]?.name || '';
                     document.getElementById('rev1-text').value = data.reviews[0]?.text || '';
@@ -160,8 +222,8 @@
                     document.getElementById('rev3-name').value = data.reviews[2]?.name || '';
                     document.getElementById('rev3-text').value = data.reviews[2]?.text || '';
                 }
-
-                // সার্ভিস লোড
+                
+                // সার্ভিস
                 if(data.services) {
                     document.getElementById('serv1').value = data.services[0] || '';
                     document.getElementById('serv2').value = data.services[1] || '';
@@ -171,29 +233,16 @@
         }
         loadData();
 
-        // সেভ করা
         document.getElementById('home-settings-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('save-btn');
-            btn.innerText = "সেভ হচ্ছে...";
+            btn.innerText = "Saving...";
             
             const newData = {
-                slide1: { 
-                    img: document.getElementById('slide1-img').value, 
-                    title: document.getElementById('slide1-title').value 
-                },
-                slide2: { 
-                    img: document.getElementById('slide2-img').value, 
-                    title: document.getElementById('slide2-title').value 
-                },
-                slide3: { 
-                    img: document.getElementById('slide3-img').value, 
-                    title: document.getElementById('slide3-title').value 
-                },
-                offer: { 
-                    img: document.getElementById('offer-img').value, 
-                    title: document.getElementById('offer-title').value 
-                },
+                slide1: { img: document.getElementById('slide1-img').value, title: document.getElementById('slide1-title').value },
+                slide2: { img: document.getElementById('slide2-img').value, title: document.getElementById('slide2-title').value },
+                slide3: { img: document.getElementById('slide3-img').value, title: document.getElementById('slide3-title').value },
+                offer: { img: document.getElementById('offer-img').value, title: document.getElementById('offer-title').value },
                 videoGallery: [
                     document.getElementById('vid1').value,
                     document.getElementById('vid2').value,
@@ -214,9 +263,9 @@
 
             try {
                 await setDoc(doc(db, "settings", "homeConfig"), newData);
-                alert("✅ হোম পেজ আপডেট হয়েছে!");
-            } catch (e) { alert("এরর হয়েছে!"); }
-            btn.innerText = "💾 সেভ করুন";
+                alert("✅ Home Page Updated Successfully!");
+            } catch (e) { alert("Error saving data!"); }
+            btn.innerText = "💾 Save All Changes";
         });
     </script>
 </body>

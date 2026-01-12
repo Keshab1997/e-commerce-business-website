@@ -30,20 +30,17 @@
             </div>
             
             <div class="modal-body">
-                <!-- প্রোডাক্ট ইনফো -->
-                <div class="product-info-box">
-                    <img id="m-img" src="" alt="Product">
-                    <div>
-                        <h4 id="m-pname">...</h4>
-                        <p class="price">₹ <span id="m-price">0</span></p>
-                    </div>
+                <!-- ১. সব প্রোডাক্টের লিস্ট এখানে দেখাবে -->
+                <div id="m-items-container">
+                    <!-- জাভাস্ক্রিপ্ট দিয়ে ছবি ও নাম আসবে -->
                 </div>
 
-                <!-- কাস্টমার ইনফো -->
+                <!-- ২. কাস্টমার ইনফো -->
                 <div class="customer-info-box">
-                    <p><strong>👤 নাম:</strong> <span id="m-cname">...</span></p>
-                    <p><strong>📞 ফোন:</strong> <a id="m-phone" href="#">...</a></p>
-                    <p><strong>📍 ঠিকানা:</strong> <span id="m-address">...</span></p>
+                    <p><strong>👤 Name:</strong> <span id="m-cname" style="cursor:pointer; color:var(--primary-color);">...</span></p>
+                    <p><strong>📞 Phone:</strong> <a id="m-phone" href="#">...</a></p>
+                    <p><strong>📍 Address:</strong> <span id="m-address">...</span></p>
+                    <p><strong>💰 Total Price:</strong> ₹ <span id="m-total-price" style="font-weight:bold; color:green;">0</span></p>
                 </div>
 
                 <!-- স্ট্যাটাস -->

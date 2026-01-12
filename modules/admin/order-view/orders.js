@@ -27,14 +27,15 @@ export async function initOrderView() {
                         <span>ID: #${doc.id.slice(0,6)}</span>
                     </div>
                     <div class="order-body">
-                        <h4>${order.customerName}</h4>
+                        <!-- নাম ক্লিকেবল করা হলো -->
+                        <h4 onclick="viewOrderDetails('${doc.id}')" style="cursor:pointer; color:var(--primary-color); text-decoration:underline;">
+                            ${order.customerName}
+                        </h4>
                         <p>📞 ${order.phone}</p>
-                        <p>🛍️ ${order.productName}</p>
-                        <span class="status-badge status-${order.status}">
-                            ${getStatusText(order.status)}
-                        </span>
+                        <p>🛍️ Items: ${order.items ? order.items.length : 1}</p>
+                        <span class="status-badge status-${order.status}">${getStatusText(order.status)}</span>
                     </div>
-                    <button class="btn-view" onclick="viewOrderDetails('${doc.id}')">👁️ বিস্তারিত দেখুন</button>
+                    <button class="btn-view" onclick="viewOrderDetails('${doc.id}')">👁️ View Details</button>
                 </div>
             `;
         });
@@ -61,48 +62,54 @@ function getStatusText(status) {
 window.viewOrderDetails = async (id) => {
     currentOrderId = id;
     const modal = document.getElementById('order-details-modal');
+    const itemsContainer = document.getElementById('m-items-container');
     
     try {
-        // অর্ডার ডেটা আনা
         const orderSnap = await getDoc(doc(db, "orders", id));
         const order = orderSnap.data();
 
-        // ছবির লজিক (প্রথমে অর্ডারে সেভ করা ছবি, তারপর প্রোডাক্ট থেকে)
-        let productImg = 'https://via.placeholder.com/60';
-        
-        if (order.productImage) {
-            // নতুন অর্ডারে ছবি আছে
-            productImg = order.productImage;
-        } else if (order.productId) {
-            // পুরানো অর্ডার - প্রোডাক্ট আইডি দিয়ে ছবি আনা
-            try {
-                const prodSnap = await getDoc(doc(db, "products", order.productId));
-                if (prodSnap.exists()) {
-                    productImg = prodSnap.data().image;
-                }
-            } catch (err) {
-                console.log('Product not found:', err);
-            }
+        // ১. প্রোডাক্ট লিস্ট ও ছবি রেন্ডার করা
+        let itemsHtml = '';
+        if (order.items && Array.isArray(order.items)) {
+            // যদি কার্ট থেকে অর্ডার হয় (একাধিক প্রোডাক্ট)
+            order.items.forEach(item => {
+                itemsHtml += `
+                    <div class="product-info-box">
+                        <img src="${item.image}" onerror="this.src='https://via.placeholder.com/60?text=No+Img'">
+                        <div>
+                            <h4>${item.name}</h4>
+                            <p class="price">₹ ${item.price} | Size: ${item.size || 'N/A'}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        } else {
+            // পুরানো সিঙ্গেল প্রোডাক্ট অর্ডারের জন্য
+            itemsHtml = `
+                <div class="product-info-box">
+                    <img src="${order.productImage || 'https://via.placeholder.com/60'}" onerror="this.src='https://via.placeholder.com/60?text=No+Img'">
+                    <div>
+                        <h4>${order.productName || 'Unknown Product'}</h4>
+                        <p class="price">₹ ${order.price || '0'}</p>
+                    </div>
+                </div>
+            `;
         }
+        itemsContainer.innerHTML = itemsHtml;
 
-        // ডেটা বসানো
+        // ২. কাস্টমার তথ্য বসানো
         document.getElementById('m-date').innerText = new Date(order.orderDate.seconds * 1000).toLocaleString();
-        document.getElementById('m-pname').innerText = order.productName;
-        document.getElementById('m-price').innerText = order.price;
-        document.getElementById('m-img').src = productImg;
-        
         document.getElementById('m-cname').innerText = order.customerName;
         document.getElementById('m-phone').innerText = order.phone;
         document.getElementById('m-phone').href = `tel:${order.phone}`;
         document.getElementById('m-address').innerText = order.address;
-        
+        document.getElementById('m-total-price').innerText = order.totalPrice || order.price;
         document.getElementById('m-status').value = order.status;
 
         modal.style.display = 'flex';
-
     } catch (error) {
         console.error(error);
-        alert("ডিটেইলস লোড করা যায়নি!");
+        alert("Error loading details!");
     }
 };
 

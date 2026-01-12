@@ -168,3 +168,68 @@
     background: #006400 !important; /* গাঢ় সবুজ */
     box-shadow: 0 5px 15px rgba(0,128,0,0.3);
 }
+
+/* 📱 মোবাইল রেসপন্সিভ স্টাইল */
+@media (max-width: 768px) {
+    .orders-container {
+        padding: 10px;
+        margin-bottom: 80px;
+    }
+
+    .orders-header h2 { font-size: 1.3rem; }
+
+    /* গ্রিড ১ কলামে আসবে */
+    .orders-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* মোডাল ফিক্স */
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+        max-height: 90vh;
+        overflow-y: auto; /* লম্বা হলে স্ক্রল হবে */
+    }
+
+    .product-info-box {
+        gap: 10px;
+        padding: 8px;
+    }
+
+    .product-info-box img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .product-info-box h4 {
+        font-size: 0.9rem;
+    }
+
+    .customer-info-box p {
+        font-size: 0.85rem;
+    }
+
+    .modal-footer {
+        flex-direction: column; /* বাটন উপরে নিচে */
+    }
+}
+
+/* প্রোডাক্ট বক্স স্টাইল (মোডালের ভেতর) */
+.product-info-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+}
+
+.product-info-box img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+}
