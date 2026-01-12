@@ -40,7 +40,8 @@ export const logoutUser = async () => {
     try {
         await signOut(auth);
         console.log("লগআউট সফল");
-        window.location.href = '/'; // হোম পেজে পাঠিয়ে দেবে
+        // 👇 পরিবর্তন: '/' এর বদলে 'index.html' ব্যবহার করুন
+        window.location.href = 'index.html'; 
     } catch (error) {
         console.error("লগআউট এরর:", error);
     }

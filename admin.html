@@ -24,7 +24,15 @@
         const ADMIN_EMAIL = "keshabsarkar2018@gmail.com";
 
         onAuthStateChanged(auth, (user) => {
-            if (user && user.email === ADMIN_EMAIL) window.location.href = 'dashboard.html';
+            if (user) {
+                if (user.email === ADMIN_EMAIL) {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    logoutUser();
+                    // 👇 এখানে index.html দিন
+                    window.location.href = 'index.html';
+                }
+            }
         });
 
         document.getElementById('google-login-btn').addEventListener('click', async () => {

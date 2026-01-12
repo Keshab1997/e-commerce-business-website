@@ -101,6 +101,7 @@
         document.getElementById('logout-btn').addEventListener('click', () => {
             if(confirm("আপনি কি লগআউট করতে চান?")) {
                 logoutUser();
+                // 👇 নিশ্চিত করুন এখানেও index.html আছে
                 window.location.href = 'index.html';
             }
         });
