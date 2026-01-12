@@ -59,7 +59,13 @@ async function loadHomeContent() {
     const sliderContainer = document.getElementById('hero-slider');
     if (!sliderContainer) return;
 
-    const slidesData = [data.slide1, data.slide2, data.slide3];
+    // ১০টি স্লাইডার চেক করে অ্যারে তৈরি করা
+    const slidesData = [];
+    for (let i = 1; i <= 10; i++) {
+        if (data[`slide${i}`] && data[`slide${i}`].img) {
+            slidesData.push(data[`slide${i}`]);
+        }
+    }
     
     sliderContainer.innerHTML = ''; 
     slidesData.forEach((slide, index) => {
@@ -86,11 +92,32 @@ async function loadHomeContent() {
         }, 5000);
     }
 
-    // অফার ব্যানার
-    const offerSection = document.getElementById('offer-banner');
-    if (offerSection) {
-        offerSection.style.backgroundImage = `url('${data.offer.img}')`;
-        document.getElementById('offer-title').innerText = data.offer.title;
+    // অফার ব্যানারগুলো লোড করা (১০টি)
+    const offerContainer = document.getElementById('offer-banner-container');
+    if (offerContainer) {
+        offerContainer.innerHTML = ''; // লোডিং টেক্সট মুছে ফেলা
+        
+        let hasOffer = false;
+        for (let i = 1; i <= 10; i++) {
+            const off = data[`offer${i}`];
+            // যদি ছবি এবং টাইটেল থাকে তবেই দেখাবে
+            if (off && off.img && off.img.trim() !== "") {
+                hasOffer = true;
+                offerContainer.innerHTML += `
+                    <div class="offer-card-item" style="background-image: url('${off.img}')">
+                        <div class="offer-mini-content">
+                            <h3>${off.title || 'Special Offer'}</h3>
+                            <a href="shop.html" class="btn-offer-sm">এখনই কিনুন</a>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // যদি কোনো অফার না থাকে
+        if (!hasOffer) {
+            offerContainer.innerHTML = '<p style="grid-column: 1/-1; color:#888; text-align:center; padding:40px;">বর্তমানে কোনো অফার নেই।</p>';
+        }
     }
 
     // ভিডিও গ্যালারি লোড (Instagram Embed)

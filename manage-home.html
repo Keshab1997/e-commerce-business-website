@@ -84,38 +84,23 @@
                     
                     <!-- ১. স্লাইডার সেকশন -->
                     <div class="config-card">
-                        <h3>🖼️ Hero Sliders</h3>
-                        <div class="input-group">
-                            <label>Slider 1 (Image URL & Title)</label>
-                            <input type="text" id="slide1-img" placeholder="Image URL" style="margin-bottom:5px;">
-                            <input type="text" id="slide1-title" placeholder="Title">
-                        </div>
-                        <div class="input-group">
-                            <label>Slider 2</label>
-                            <input type="text" id="slide2-img" placeholder="Image URL" style="margin-bottom:5px;">
-                            <input type="text" id="slide2-title" placeholder="Title">
-                        </div>
-                        <div class="input-group">
-                            <label>Slider 3</label>
-                            <input type="text" id="slide3-img" placeholder="Image URL" style="margin-bottom:5px;">
-                            <input type="text" id="slide3-title" placeholder="Title">
+                        <h3>🖼️ Hero Sliders (Up to 10)</h3>
+                        <div id="slider-inputs-container">
+                            <!-- জাভাস্ক্রিপ্ট দিয়ে ১০টি বক্স তৈরি হবে -->
                         </div>
                     </div>
 
                     <!-- ২. অফার ও ভিডিও -->
                     <div class="config-card">
-                        <h3>📢 Offer & Video</h3>
-                        <div class="input-group">
-                            <label>Main Offer Banner (Image URL & Title)</label>
-                            <input type="text" id="offer-img" placeholder="Banner URL" style="margin-bottom:5px;">
-                            <input type="text" id="offer-title" placeholder="Offer Text">
+                        <h3>📢 Offer Banners (Up to 10)</h3>
+                        <div id="offer-inputs-container">
+                            <!-- জাভাস্ক্রিপ্ট দিয়ে ১০টি অফার বক্স তৈরি হবে -->
                         </div>
-                        <div class="input-group">
-                            <label>Instagram Reels (Paste Links)</label>
-                            <input type="text" id="vid1" placeholder="Reel 1 Link" style="margin-bottom:5px;">
-                            <input type="text" id="vid2" placeholder="Reel 2 Link" style="margin-bottom:5px;">
-                            <input type="text" id="vid3" placeholder="Reel 3 Link" style="margin-bottom:5px;">
-                            <input type="text" id="vid4" placeholder="Reel 4 Link">
+                        <div class="input-group" style="margin-top: 20px;">
+                            <label>Instagram Reels (Up to 10)</label>
+                            <div id="video-inputs-container">
+                                <!-- জাভাস্ক্রিপ্ট দিয়ে ১০টি ভিডিও বক্স তৈরি হবে -->
+                            </div>
                         </div>
                     </div>
 
@@ -188,29 +173,66 @@
             ]
         };
 
+        // ১. ১০টি ইনপুট বক্স অটোমেটিক তৈরি করা
+        const container = document.getElementById('slider-inputs-container');
+        for (let i = 1; i <= 10; i++) {
+            container.innerHTML += `
+                <div class="input-group" style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                    <label>Slider ${i} (Image URL & Title)</label>
+                    <input type="text" id="slide${i}-img" placeholder="Image URL" style="margin-bottom:5px;">
+                    <input type="text" id="slide${i}-title" placeholder="Title">
+                </div>
+            `;
+        }
+
+        // ২. ১০টি অফার ইনপুট বক্স তৈরি
+        const offerContainer = document.getElementById('offer-inputs-container');
+        for (let i = 1; i <= 10; i++) {
+            offerContainer.innerHTML += `
+                <div class="input-group" style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                    <label>Offer Banner ${i} (Image URL & Title)</label>
+                    <input type="text" id="offer${i}-img" placeholder="Banner URL" style="margin-bottom:5px;">
+                    <input type="text" id="offer${i}-title" placeholder="Offer Title">
+                </div>
+            `;
+        }
+
+        // ৩. ১০টি ভিডিও ইনপুট বক্স তৈরি
+        const videoContainer = document.getElementById('video-inputs-container');
+        for (let i = 1; i <= 10; i++) {
+            videoContainer.innerHTML += `
+                <input type="text" id="vid${i}" placeholder="Instagram Reel ${i} Link" style="margin-bottom:5px;">
+            `;
+        }
+
         async function loadData() {
             try {
                 const docSnap = await getDoc(doc(db, "settings", "homeConfig"));
                 const data = docSnap.exists() ? docSnap.data() : DEFAULT_DATA;
 
-                // স্লাইডার
-                document.getElementById('slide1-img').value = data.slide1?.img || '';
-                document.getElementById('slide1-title').value = data.slide1?.title || '';
-                document.getElementById('slide2-img').value = data.slide2?.img || '';
-                document.getElementById('slide2-title').value = data.slide2?.title || '';
-                document.getElementById('slide3-img').value = data.slide3?.img || '';
-                document.getElementById('slide3-title').value = data.slide3?.title || '';
+                // ১০টি স্লাইডার লোড করা
+                for (let i = 1; i <= 10; i++) {
+                    if (data[`slide${i}`]) {
+                        document.getElementById(`slide${i}-img`).value = data[`slide${i}`].img || '';
+                        document.getElementById(`slide${i}-title`).value = data[`slide${i}`].title || '';
+                    }
+                }
                 
-                // অফার
-                document.getElementById('offer-img').value = data.offer?.img || '';
-                document.getElementById('offer-title').value = data.offer?.title || '';
+                // ১০টি অফার লোড করা
+                for (let i = 1; i <= 10; i++) {
+                    if (data[`offer${i}`]) {
+                        document.getElementById(`offer${i}-img`).value = data[`offer${i}`].img || '';
+                        document.getElementById(`offer${i}-title`).value = data[`offer${i}`].title || '';
+                    }
+                }
                 
-                // ভিডিও
+                // ১০টি ভিডিও লোড করা
                 if(data.videoGallery) {
-                    document.getElementById('vid1').value = data.videoGallery[0] || '';
-                    document.getElementById('vid2').value = data.videoGallery[1] || '';
-                    document.getElementById('vid3').value = data.videoGallery[2] || '';
-                    document.getElementById('vid4').value = data.videoGallery[3] || '';
+                    for (let i = 1; i <= 10; i++) {
+                        if (data.videoGallery[i-1]) {
+                            document.getElementById(`vid${i}`).value = data.videoGallery[i-1];
+                        }
+                    }
                 }
                 
                 // রিভিউ
@@ -238,28 +260,40 @@
             const btn = document.getElementById('save-btn');
             btn.innerText = "Saving...";
             
-            const newData = {
-                slide1: { img: document.getElementById('slide1-img').value, title: document.getElementById('slide1-title').value },
-                slide2: { img: document.getElementById('slide2-img').value, title: document.getElementById('slide2-title').value },
-                slide3: { img: document.getElementById('slide3-img').value, title: document.getElementById('slide3-title').value },
-                offer: { img: document.getElementById('offer-img').value, title: document.getElementById('offer-title').value },
-                videoGallery: [
-                    document.getElementById('vid1').value,
-                    document.getElementById('vid2').value,
-                    document.getElementById('vid3').value,
-                    document.getElementById('vid4').value
-                ],
-                reviews: [
-                    { name: document.getElementById('rev1-name').value, text: document.getElementById('rev1-text').value },
-                    { name: document.getElementById('rev2-name').value, text: document.getElementById('rev2-text').value },
-                    { name: document.getElementById('rev3-name').value, text: document.getElementById('rev3-text').value }
-                ],
-                services: [
-                    document.getElementById('serv1').value,
-                    document.getElementById('serv2').value,
-                    document.getElementById('serv3').value
-                ]
-            };
+            const newData = {};
+            
+            // ১০টি স্লাইডার সেভ করা
+            for (let i = 1; i <= 10; i++) {
+                newData[`slide${i}`] = {
+                    img: document.getElementById(`slide${i}-img`).value,
+                    title: document.getElementById(`slide${i}-title`).value
+                };
+            }
+            
+            // ১০টি অফার সেভ করা
+            for (let i = 1; i <= 10; i++) {
+                newData[`offer${i}`] = {
+                    img: document.getElementById(`offer${i}-img`).value,
+                    title: document.getElementById(`offer${i}-title`).value
+                };
+            }
+            
+            // ১০টি ভিডিও সেভ করা
+            const vids = [];
+            for (let i = 1; i <= 10; i++) {
+                vids.push(document.getElementById(`vid${i}`).value);
+            }
+            newData.videoGallery = vids;
+            newData.reviews = [
+                { name: document.getElementById('rev1-name').value, text: document.getElementById('rev1-text').value },
+                { name: document.getElementById('rev2-name').value, text: document.getElementById('rev2-text').value },
+                { name: document.getElementById('rev3-name').value, text: document.getElementById('rev3-text').value }
+            ];
+            newData.services = [
+                document.getElementById('serv1').value,
+                document.getElementById('serv2').value,
+                document.getElementById('serv3').value
+            ];
 
             try {
                 await setDoc(doc(db, "settings", "homeConfig"), newData);
