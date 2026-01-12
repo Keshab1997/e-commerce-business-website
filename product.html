@@ -15,43 +15,11 @@
 <body>
 
     <!-- ১. নেভিগেশন বার -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <!-- লোগো -->
-            <a href="index.html" class="nav-logo" id="dynamic-nav-logo">Loading...</a>
-            
-            <!-- মেনু আইটেম -->
-            <ul class="nav-menu">
-                <li>
-                    <a href="index.html" class="nav-link">🏠 Home</a>
-                </li>
-                <li>
-                    <a href="shop.html" class="nav-link">🛍️ Collection</a>
-                </li>
-                
-                <!-- কার্ট আইকন -->
-                <li>
-                    <a href="cart.html" class="nav-link cart-link">
-                        🛒 Cart <span class="cart-count">0</span>
-                    </a>
-                </li>
-
-                <!-- লগইন / প্রোফাইল (ডাইনামিক) -->
-                <li id="auth-menu">
-                    <button onclick="googleLogin()" class="btn-login">🔑 Login</button>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <nav class="navbar"></nav>
 
     <!-- ২. মেইন কন্টেন্ট -->
     <div class="product-view-container">
         
-        <!-- ব্রেডক্রাম্ব / ব্যাক বাটন -->
-        <div class="breadcrumb">
-            <a href="shop.html" class="btn-back">⬅ কালেকশনে ফিরে যান</a>
-        </div>
-
         <div class="product-details-grid">
             <!-- বাম পাশ: ছবি -->
             <div class="image-section">
@@ -101,10 +69,11 @@
 
                 <!-- অ্যাকশন বাটন -->
                 <div class="action-buttons">
-                    <button class="btn btn-primary btn-lg" onclick="addToCartBtn()">
+                    <div id="stock-status" style="margin-bottom: 10px; font-size: 0.9rem;"></div>
+                    <button class="btn btn-primary btn-lg" id="add-to-cart-btn" onclick="addToCartBtn()">
                         🛒 কার্টে যোগ করুন
                     </button>
-                    <button class="btn btn-whatsapp btn-lg" onclick="orderOnWhatsApp()">
+                    <button class="btn btn-whatsapp btn-lg" id="wa-order-btn" onclick="orderOnWhatsApp()">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="24"> 
                         WhatsApp Order
                     </button>
@@ -124,6 +93,7 @@
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-col brand-col">
+                <img id="f-logo-img" src="" alt="Logo" style="display:none; max-height: 70px; margin-bottom: 15px;">
                 <h2 id="f-name" class="footer-logo">লোড হচ্ছে...</h2>
                 <p id="f-desc" class="footer-desc">...</p>
                 <div class="social-icons">
@@ -202,6 +172,9 @@
 
     <!-- স্ক্রিপ্ট -->
     <script type="module">
+        // মেনুবার লোড করা
+        import { loadNavbar } from './modules/common/navbar/navbar.js';
+        
         import { db, auth, loginWithGoogle } from './config/firebase-config.js';
         import { doc, getDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -235,6 +208,14 @@
 
         async function loadProduct() {
             if (!productId) return;
+            
+            // ১. দোকানের তথ্য আনা (হোয়াটসঅ্যাপ নম্বরের জন্য)
+            const shopRef = doc(db, "settings", "shopInfo");
+            const shopSnap = await getDoc(shopRef);
+            const shopData = shopSnap.data() || {};
+            const shopPhone = shopData.phone ? shopData.phone.replace(/\D/g,'') : "919876543210";
+
+            // ২. প্রোডাক্টের তথ্য আনা
             const docRef = doc(db, "products", productId);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
@@ -246,6 +227,30 @@
                 document.getElementById('view-price').innerText = p.price;
                 document.getElementById('view-category').innerText = p.category;
                 document.getElementById('view-desc').innerText = p.description || "খুবই উন্নত মানের কাপড় এবং আধুনিক ডিজাইন।";
+
+                // 👇 স্টক চেক লজিক
+                const cartBtn = document.getElementById('add-to-cart-btn');
+                const waBtn = document.getElementById('wa-order-btn');
+                const stockStatus = document.getElementById('stock-status');
+
+                if (p.qty <= 0) {
+                    cartBtn.disabled = true;
+                    cartBtn.innerText = "🚫 Out of Stock";
+                    cartBtn.style.background = "#ccc";
+                    
+                    waBtn.disabled = true;
+                    waBtn.style.opacity = "0.5";
+                    
+                    stockStatus.innerHTML = `<span style="color:red; font-weight:bold;">Stock Out</span>`;
+                } else {
+                    stockStatus.innerHTML = `<span style="color:green;">In Stock: ${p.qty} pcs</span>`;
+                }
+
+                // 👇 হোয়াটসঅ্যাপ লিঙ্ক সেট করা
+                window.orderOnWhatsApp = () => {
+                    const msg = `Hi, I want to order: ${p.name} (ID: ${docSnap.id})`;
+                    window.open(`https://wa.me/${shopPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+                };
 
                 // থাম্বনেইল রেন্ডার
                 const thumbContainer = document.getElementById('thumb-container');
@@ -260,14 +265,14 @@
                     });
                 }
 
-                // ২. ইউটিউব ভিডিও থাকলে যোগ করা
+                // ২. ইউটিউব ভিডিও বা Instagram Reels থাকলে যোগ করা
                 if (p.video) {
                     const videoId = getYouTubeID(p.video);
+                    const instaId = getInstagramID(p.video);
                     
                     if (videoId) {
-                        const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0`;
-                        
-                        // থাম্বনেইল ইমেজ (High Quality)
+                        // YouTube ভিডিও (Privacy-enhanced mode)
+                        const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=0&rel=0`;
                         const thumbUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
                         thumbContainer.innerHTML += `
@@ -276,8 +281,20 @@
                                 <span class="play-icon">▶</span>
                             </div>
                         `;
+                    } else if (instaId) {
+                        // Instagram Reels
+                        const embedUrl = `https://www.instagram.com/p/${instaId}/embed`;
+                        
+                        thumbContainer.innerHTML += `
+                            <div class="thumb-video instagram-reel" onclick="changeView('video', '${embedUrl}')">
+                                <div class="instagram-thumb">
+                                    <span class="instagram-icon">📷</span>
+                                    <span class="play-icon">▶</span>
+                                </div>
+                            </div>
+                        `;
                     } else {
-                        console.log("Invalid YouTube URL:", p.video);
+                        console.log("Invalid video URL:", p.video);
                     }
                 }
 
@@ -317,16 +334,44 @@
             }
         };
 
-        // ৪. ইউটিউব আইডি বের করার শক্তিশালী ফাংশন (সব ধরনের লিঙ্কের জন্য)
+        // YouTube এবং Instagram ID বের করার ফাংশন
         function getYouTubeID(url) {
             if (!url) return null;
             
-            // সব ধরনের ইউটিউব লিঙ্ক প্যাটার্ন
-            const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-            const match = url.match(regExp);
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/,
+                /youtube\.com\/shorts\/([^&\n?#]+)/,
+                /youtube\.com\/embed\/([^&\n?#]+)/
+            ];
             
-            // আইডি ১১ ক্যারেক্টারের হয়
-            return (match && match[7].length === 11) ? match[7] : null;
+            for (let pattern of patterns) {
+                const match = url.match(pattern);
+                if (match && match[1]) {
+                    return match[1];
+                }
+            }
+            
+            return null;
+        }
+
+        function getInstagramID(url) {
+            if (!url) return null;
+            
+            // Instagram Reels/Posts patterns
+            const patterns = [
+                /instagram\.com\/p\/([^\/?]+)/,
+                /instagram\.com\/reel\/([^\/?]+)/,
+                /instagr\.am\/p\/([^\/?]+)/
+            ];
+            
+            for (let pattern of patterns) {
+                const match = url.match(pattern);
+                if (match && match[1]) {
+                    return match[1];
+                }
+            }
+            
+            return null;
         }
 
         window.addToCartBtn = () => {
@@ -384,9 +429,7 @@
         };
         
         window.orderOnWhatsApp = () => {
-            const phone = "919876543210"; 
-            const msg = `Hi, I want to order: ${currentProduct.name}, Price: ₹${currentProduct.price}`;
-            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+            // This will be set dynamically in loadProduct function
         };
 
         document.getElementById('order-form').addEventListener('submit', async (e) => {

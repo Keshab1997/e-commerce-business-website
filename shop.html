@@ -19,15 +19,30 @@
         <!-- পেজ হেডার -->
         <div class="gallery-header">
             <h2>আমাদের এক্সক্লুসিভ কালেকশন</h2>
-            <p>সেরা মানের বেনারসি, কাতান এবং সিল্ক শাড়ির সমাহার</p>
+            <p>সেরা মানের পোশাক ও গয়নার সমাহার</p>
+        </div>
+
+        <!-- 👇 নতুন: সার্চ এবং সর্ট সেকশন -->
+        <div class="shop-controls">
+            <div class="search-box">
+                <input type="text" id="customer-search" placeholder="🔍 কি খুঁজছেন? (যেমন: বেনারসি, গোল্ড...)" onkeyup="applyFilters()">
+            </div>
+            
+            <div class="sort-box">
+                <select id="price-sort" onchange="applyFilters()">
+                    <option value="default">সাজান (Default)</option>
+                    <option value="low">দাম: কম থেকে বেশি</option>
+                    <option value="high">দাম: বেশি থেকে কম</option>
+                </select>
+            </div>
         </div>
 
         <!-- ফিল্টার বাটন -->
         <div class="filter-bar">
-            <button class="filter-btn active" onclick="filterProducts('all')">সব</button>
-            <button class="filter-btn" onclick="filterProducts('saree')">শাড়ি</button>
-            <button class="filter-btn" onclick="filterProducts('suit')">সুট</button>
-            <button class="filter-btn" onclick="filterProducts('jewelry')">গয়না</button>
+            <button class="filter-btn active" onclick="setCategory('all', event)">সব</button>
+            <button class="filter-btn" onclick="setCategory('saree', event)">শাড়ি</button>
+            <button class="filter-btn" onclick="setCategory('suit', event)">সুট</button>
+            <button class="filter-btn" onclick="setCategory('jewelry', event)">গয়না</button>
         </div>
 
         <!-- প্রোডাক্ট গ্রিড -->

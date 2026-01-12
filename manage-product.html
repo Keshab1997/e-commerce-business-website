@@ -28,6 +28,11 @@
                     <div class="form-grid">
                         <input type="text" id="p-name" placeholder="পণ্যের নাম (যেমন: লাল বেনারসি)" required>
                         <input type="number" id="p-price" placeholder="দাম (₹)" required>
+                        
+                        <!-- 👇 নতুন: Qty এবং Barcode -->
+                        <input type="number" id="p-qty" placeholder="পরিমাণ (Qty)" required>
+                        <input type="text" id="p-barcode" placeholder="বারকোড / SKU নম্বর">
+                        
                         <select id="p-category">
                             <option value="saree">শাড়ি</option>
                             <option value="suit">সুট / থ্রি-পিস</option>
@@ -59,8 +64,8 @@
 
                         <!-- ভিডিও লিঙ্ক -->
                         <div>
-                            <label>ইউটিউব ভিডিও লিঙ্ক (অপশনাল)</label>
-                            <input type="text" id="p-video" placeholder="https://youtu.be/xyz... বা https://www.youtube.com/watch?v=xyz...">
+                            <label>ভিডিও লিঙ্ক (অপশনাল)</label>
+                            <input type="text" id="p-video" placeholder="YouTube: https://youtu.be/xyz... বা Instagram: https://instagram.com/p/xyz...">
                         </div>
                     </div>
 
@@ -82,6 +87,11 @@
                     <p id="p-status"></p>
                 </form>
             </div>
+        </div>
+
+        <!-- 👇 নতুন: সার্চ বার সেকশন -->
+        <div class="search-section">
+            <input type="text" id="product-search" placeholder="🔍 নাম বা বারকোড দিয়ে খুঁজুন..." onkeyup="searchProducts()">
         </div>
 
         <!-- প্রোডাক্ট গ্রিড -->

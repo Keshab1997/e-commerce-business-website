@@ -429,3 +429,71 @@
         padding: 15px;
     }
 }
+/* সার্চ বার স্টাইল */
+.search-section {
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+#product-search {
+    width: 100%;
+    padding: 15px 25px;
+    border-radius: 50px;
+    border: 2px solid #eee;
+    font-size: 1.1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: 0.3s;
+    outline: none;
+}
+
+#product-search:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 8px 20px rgba(128, 0, 0, 0.1);
+}
+
+/* Qty ও Barcode রো */
+.qty-barcode-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #666;
+    margin: 10px 0;
+    background: #f8f9fa;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.qty-input, .barcode-input {
+    width: 60px !important;
+    font-weight: bold !important;
+    color: var(--primary-color) !important;
+    border: none !important;
+    background: transparent !important;
+    text-align: center;
+}
+
+.barcode-input { 
+    width: 100px !important; 
+    text-align: left;
+}
+
+/* এডিট মোডে Qty ও Barcode ইনপুট */
+.admin-card.editing .qty-input,
+.admin-card.editing .barcode-input {
+    border: 1px solid #ddd !important;
+    background: white !important;
+    border-radius: 3px;
+}
+
+/* মোবাইলে qty-barcode রো */
+@media (max-width: 768px) {
+    .qty-barcode-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .qty-input, .barcode-input {
+        width: 100% !important;
+        text-align: left;
+    }
+}

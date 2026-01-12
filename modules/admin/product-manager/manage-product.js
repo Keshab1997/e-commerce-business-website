@@ -34,6 +34,8 @@ export function initProductManager() {
                 const productData = {
                     name: document.getElementById('p-name').value,
                     price: Number(document.getElementById('p-price').value),
+                    qty: Number(document.getElementById('p-qty').value), // নতুন
+                    barcode: document.getElementById('p-barcode').value || "N/A", // নতুন
                     category: document.getElementById('p-category').value,
                     color: document.getElementById('p-color').value || "N/A",
                     material: document.getElementById('p-material').value || "N/A",
@@ -110,6 +112,12 @@ async function loadProducts() {
                         <label class="input-label">দাম (₹):</label>
                         <input type="number" class="edit-input price-input" id="price-${doc.id}" value="${p.price}" disabled>
                         
+                        <!-- 👇 নতুন: Qty ও Barcode রো -->
+                        <div class="qty-barcode-row">
+                            <span>📦 Qty: <input type="number" class="edit-input qty-input" id="qty-${doc.id}" value="${p.qty || 0}" disabled></span>
+                            <span class="barcode-text">🆔 Barcode: <input type="text" class="edit-input barcode-input" id="barcode-${doc.id}" value="${p.barcode || 'N/A'}" disabled></span>
+                        </div>
+                        
                         <!-- ডিটেইলস -->
                         <div class="details-edit-grid">
                             <div><label class="input-label">রঙ:</label><input type="text" class="edit-input detail-input" id="color-${doc.id}" value="${p.color || ''}" disabled></div>
@@ -126,7 +134,7 @@ async function loadProducts() {
                         <!-- নতুন: ভিডিও এবং গ্যালারি এডিট সেকশন -->
                         <div class="extra-edit-section" style="display:none;" id="extra-${doc.id}">
                             <label class="input-label">ভিডিও লিঙ্ক:</label>
-                            <input type="text" class="edit-input" id="video-${doc.id}" value="${p.video || ''}" placeholder="https://youtu.be/...">
+                            <input type="text" class="edit-input" id="video-${doc.id}" value="${p.video || ''}" placeholder="YouTube বা Instagram Reels লিঙ্ক">
                             
                             <label class="input-label" style="margin-top:10px;">গ্যালারি ছবি (ক্লিক করে বদলান):</label>
                             ${galleryHtml}
@@ -178,6 +186,8 @@ window.toggleEdit = (id, isEditing) => {
 window.saveProduct = async (id) => {
     const newName = document.getElementById(`name-${id}`).value;
     const newPrice = document.getElementById(`price-${id}`).value;
+    const newQty = document.getElementById(`qty-${id}`).value; // নতুন
+    const newBarcode = document.getElementById(`barcode-${id}`).value; // নতুন
     const newColor = document.getElementById(`color-${id}`).value;
     const newMaterial = document.getElementById(`material-${id}`).value;
     const newSize = document.getElementById(`size-${id}`).value;
@@ -188,6 +198,8 @@ window.saveProduct = async (id) => {
         await updateDoc(doc(db, "products", id), {
             name: newName,
             price: Number(newPrice),
+            qty: Number(newQty), // নতুন
+            barcode: newBarcode, // নতুন
             color: newColor,
             material: newMaterial,
             size: newSize,
@@ -277,4 +289,21 @@ window.replaceGalleryImage = async (id, index, input) => {
             }
         }
     }
+};
+
+// ৩. সার্চ ফাংশন (নতুন)
+window.searchProducts = () => {
+    const term = document.getElementById('product-search').value.toLowerCase();
+    const cards = document.querySelectorAll('.admin-card');
+
+    cards.forEach(card => {
+        const name = card.querySelector('.name-input').value.toLowerCase();
+        const barcode = card.querySelector('.barcode-input').value.toLowerCase();
+        
+        if (name.includes(term) || barcode.includes(term)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
 };

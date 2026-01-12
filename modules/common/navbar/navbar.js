@@ -9,8 +9,11 @@ export function loadNavbar() {
 
     navContainer.innerHTML = `
         <div class="nav-container">
-            <!-- লোগো -->
-            <a href="index.html" class="nav-logo" id="dynamic-nav-logo">SootBoot</a>
+            <!-- লোগো এবং নাম একসাথে -->
+            <a href="index.html" class="nav-logo">
+                <img id="nav-logo-img" src="" alt="Logo" style="display:none;">
+                <span id="dynamic-nav-logo">SootBoot</span>
+            </a>
             
             <!-- হ্যামবার্গার বাটন (মোবাইলের জন্য) -->
             <div class="hamburger" id="mobile-menu-btn">
@@ -85,22 +88,20 @@ function setupNavbarLogic() {
     onAuthStateChanged(auth, (user) => {
         const menu = document.getElementById('auth-menu');
         if (user) {
-            // ইউজারের ছবি না থাকলে ডিফল্ট ছবি
-            const userImg = user.photoURL || 'https://via.placeholder.com/40';
-            const userName = user.displayName.split(' ')[0]; // শুধু প্রথম নাম
+            const userImg = user.photoURL || 'https://via.placeholder.com/35';
+            const userName = user.displayName.split(' ')[0];
 
             let html = `
-                <a href="profile.html" class="nav-link profile-link" style="display:flex; align-items:center; gap:10px;">
-                    <img src="${userImg}" style="width:35px; height:35px; border-radius:50%; border:2px solid white;">
+                <a href="profile.html" class="nav-link profile-link" title="My Profile">
+                    <img src="${userImg}" class="nav-user-img">
                     <span>${userName}</span>
                 </a>
             `;
             
-            // এডমিন চেক
             if(user.email === "keshabsarkar2018@gmail.com") {
                 html += `
-                    <a href="dashboard.html" class="nav-link dashboard-link">
-                        🔒 Dashboard
+                    <a href="dashboard.html" class="admin-badge" title="Admin Dashboard">
+                        ⚙️
                     </a>
                 `;
             }

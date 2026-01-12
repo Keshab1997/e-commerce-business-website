@@ -30,11 +30,25 @@ export async function loadShopBranding() {
 }
 
 // নাম আপডেট করার ফাংশন
-function updateNameElements(name) {
+function updateNameElements(name, logoUrl) {
     document.title = name + " | অনলাইন শপ";
     
-    const navLogo = document.getElementById('dynamic-nav-logo');
-    if (navLogo) navLogo.innerText = name;
+    setTimeout(() => {
+        const navLogoText = document.getElementById('dynamic-nav-logo');
+        const navLogoImg = document.getElementById('nav-logo-img');
+        
+        // ১. নাম সব সময় দেখাবে
+        if (navLogoText) {
+            navLogoText.innerText = name;
+            navLogoText.style.display = 'block';
+        }
+        
+        // ২. লোগো থাকলে সেটি গোল হয়ে নামের বামে দেখাবে
+        if (navLogoImg && logoUrl) {
+            navLogoImg.src = logoUrl;
+            navLogoImg.style.display = 'block';
+        }
+    }, 500);
 
     const footerName = document.getElementById('f-name');
     if (footerName) footerName.innerText = name;
@@ -48,14 +62,20 @@ function updateNameElements(name) {
 function updateFooterDetails(data) {
     // ১. নাম ও বিবরণ
     if(data.name) {
-        const nameEl = document.getElementById('f-name');
-        if(nameEl) nameEl.innerText = data.name;
+        updateNameElements(data.name, data.logo);
         const copyrightName = document.getElementById('f-copyright-name');
         if(copyrightName) copyrightName.innerText = data.name;
     }
     if(data.description) {
         const descEl = document.getElementById('f-desc');
         if(descEl) descEl.innerText = data.description;
+    }
+    
+    // ২. ফুটারের লোগো আপডেট
+    const footerLogoImg = document.getElementById('f-logo-img');
+    if (footerLogoImg && data.logo) {
+        footerLogoImg.src = data.logo;
+        footerLogoImg.style.display = 'block';
     }
     
     // ২. যোগাযোগ আপডেট

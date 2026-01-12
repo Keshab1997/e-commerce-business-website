@@ -23,11 +23,31 @@
     padding: 0 20px;
 }
 
+/* লোগো কন্টেইনার */
 .nav-logo {
-    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 12px; /* লোগো এবং নামের মাঝখানের গ্যাপ */
+    text-decoration: none;
+}
+
+/* গোল লোগো ডিজাইন */
+#nav-logo-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%; /* গোল করবে */
+    object-fit: cover; /* ছবি চ্যাপ্টা হবে না */
+    border: 2px solid var(--secondary-color); /* গোল্ডেন বর্ডার */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* লোগোর পাশের নাম */
+#dynamic-nav-logo {
+    font-size: 1.6rem;
     font-weight: 800;
     color: var(--primary-color);
-    text-decoration: none;
+    font-family: 'Hind Siliguri', sans-serif;
+    display: block; /* নাম সব সময় দেখাবে */
 }
 
 .nav-menu {
@@ -69,22 +89,62 @@
     right: -5px;
 }
 
-/* প্রোফাইল লিঙ্ক স্টাইল */
+/* প্রোফাইল এবং অ্যাডমিন বাটন কন্টেইনার */
+#auth-menu {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* বাটন দুটির মাঝখানের গ্যাপ */
+    list-style: none;
+}
+
+/* প্রোফাইল লিঙ্ক */
 .profile-link {
-    background-color: #f0f8ff;
-    padding: 5px 15px 5px 5px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f0f2f5;
+    padding: 5px 12px 5px 5px !important;
     border-radius: 50px;
-    border: 1px solid #e0e0e0;
+    text-decoration: none;
+    height: 40px; /* ফিক্সড হাইট */
     transition: 0.3s;
 }
 
 .profile-link:hover {
-    background-color: #e3f2fd;
+    background: #e3f2fd;
     border-color: var(--primary-color);
 }
 
-.profile-link img {
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+/* অ্যাডমিন ব্যাজ (⚙️ আইকন) */
+.admin-badge {
+    width: 40px;
+    height: 40px;
+    background: #333;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: 0.3s;
+    border: 2px solid gold;
+    flex-shrink: 0; /* যাতে ছোট না হয়ে যায় */
+}
+
+.admin-badge:hover {
+    transform: rotate(90deg);
+    background: gold;
+    color: #333;
+}
+
+/* নেভ ইউজার ইমেজ */
+.nav-user-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid white;
+    object-fit: cover;
 }
 
 /* হ্যামবার্গার বাটন (শুরুতে লুকানো) */
@@ -104,6 +164,14 @@
 
 /* 📱 মোবাইল রেসপন্সিভ */
 @media (max-width: 768px) {
+    #nav-logo-img {
+        width: 35px;
+        height: 35px;
+    }
+    #dynamic-nav-logo {
+        font-size: 1.2rem;
+    }
+    
     .hamburger {
         display: flex; /* মোবাইলে দেখাবে */
     }
@@ -165,5 +233,23 @@
     }
     .hamburger.active span:nth-child(3) {
         transform: rotate(-45deg) translate(5px, -5px);
+    }
+}
+/* মোবাইল রেসপন্সিভ ফিক্স */
+@media (max-width: 768px) {
+    #auth-menu {
+        flex-direction: row; /* মোবাইলেও পাশাপাশি থাকবে */
+        justify-content: flex-start;
+        width: auto;
+    }
+    
+    .profile-link span {
+        display: none; /* মোবাইলে শুধু ছবি দেখাবে স্পেস বাঁচাতে */
+    }
+    
+    .profile-link {
+        padding: 5px !important;
+        width: 40px;
+        justify-content: center;
     }
 }

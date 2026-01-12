@@ -12,7 +12,11 @@ export function addToCart(product) {
     cart.push(product);
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
-    alert("✅ কার্টে যোগ করা হয়েছে!");
+    
+    // কার্টে যোগ করার পর একটি কনফার্মেশন বক্স দেখানো
+    if(confirm("✅ Added to bag! Do you want to view your cart now?")) {
+        window.location.href = 'cart.html';
+    }
 }
 
 export function getCart() {

@@ -13,16 +13,38 @@
 
 .btn-back {
     text-decoration: none;
-    color: #666;
-    font-weight: 600;
     display: inline-flex;
     align-items: center;
-    transition: 0.3s;
+    gap: 8px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, var(--primary-color), #a00000);
+    color: white;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(128, 0, 0, 0.2);
+    border: 2px solid transparent;
 }
 
 .btn-back:hover {
-    color: var(--primary-color);
-    transform: translateX(-5px);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(128, 0, 0, 0.3);
+    background: linear-gradient(135deg, #600000, var(--primary-color));
+    border-color: var(--secondary-color);
+}
+
+.back-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.btn-back:hover .back-icon {
+    transform: translateX(-3px);
+}
+
+.back-text {
+    letter-spacing: 0.5px;
 }
 
 /* গ্রিড লেআউট */
@@ -367,5 +389,29 @@
 
 .thumb-video:hover {
     border-color: red; /* ইউটিউব কালার */
+    transform: scale(1.1);
+}
+/* Instagram Reels থাম্বনেইল */
+.instagram-reel {
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+}
+
+.instagram-thumb {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.instagram-icon {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.instagram-reel:hover {
+    border-color: #e1306c;
     transform: scale(1.1);
 }

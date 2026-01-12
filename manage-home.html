@@ -92,6 +92,14 @@
 
                     <!-- ২. অফার ও ভিডিও -->
                     <div class="config-card">
+                        <h3>📷 Popular Categories (Up to 6)</h3>
+                        <div id="category-inputs-container">
+                            <!-- জাভাস্ক্রিপ্ট দিয়ে ৬টি বক্স তৈরি হবে -->
+                        </div>
+                    </div>
+
+                    <!-- ৩. অফার ও ভিডিও -->
+                    <div class="config-card">
                         <h3>📢 Offer Banners (Up to 10)</h3>
                         <div id="offer-inputs-container">
                             <!-- জাভাস্ক্রিপ্ট দিয়ে ১০টি অফার বক্স তৈরি হবে -->
@@ -185,7 +193,19 @@
             `;
         }
 
-        // ২. ১০টি অফার ইনপুট বক্স তৈরি
+        // ২. ৬টি ক্যাটাগরি ইনপুট বক্স তৈরি
+        const catInputContainer = document.getElementById('category-inputs-container');
+        for (let i = 1; i <= 6; i++) {
+            catInputContainer.innerHTML += `
+                <div class="input-group" style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                    <label>Category ${i} (Name & Image URL)</label>
+                    <input type="text" id="cat${i}-name" placeholder="Category Name" style="margin-bottom:5px;">
+                    <input type="text" id="cat${i}-img" placeholder="Image URL">
+                </div>
+            `;
+        }
+
+        // ৩. ১০টি অফার ইনপুট বক্স তৈরি
         const offerContainer = document.getElementById('offer-inputs-container');
         for (let i = 1; i <= 10; i++) {
             offerContainer.innerHTML += `
@@ -224,6 +244,17 @@
                         document.getElementById(`offer${i}-img`).value = data[`offer${i}`].img || '';
                         document.getElementById(`offer${i}-title`).value = data[`offer${i}`].title || '';
                     }
+                }
+                
+                // ক্যাটাগরি লোড করা
+                if (data.categories) {
+                    data.categories.forEach((cat, index) => {
+                        const i = index + 1;
+                        if(document.getElementById(`cat${i}-name`)) {
+                            document.getElementById(`cat${i}-name`).value = cat.name || '';
+                            document.getElementById(`cat${i}-img`).value = cat.img || '';
+                        }
+                    });
                 }
                 
                 // ১০টি ভিডিও লোড করা
@@ -277,6 +308,16 @@
                     title: document.getElementById(`offer${i}-title`).value
                 };
             }
+            
+            // ক্যাটাগরি সেভ করা
+            const cats = [];
+            for (let i = 1; i <= 6; i++) {
+                cats.push({
+                    name: document.getElementById(`cat${i}-name`).value,
+                    img: document.getElementById(`cat${i}-img`).value
+                });
+            }
+            newData.categories = cats;
             
             // ১০টি ভিডিও সেভ করা
             const vids = [];

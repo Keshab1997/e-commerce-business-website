@@ -186,9 +186,9 @@ async function loadHomeContent() {
     }
 }
 
-// ৩. ক্যাটাগরি রেন্ডার
-function renderCategories() {
-    const categories = [
+// ৩. ক্যাটাগরি রেন্ডার (ডাইনামিক)
+async function renderCategories() {
+    let categories = [
         { name: "শাড়ি", img: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?q=80&w=300" },
         { name: "পাঞ্জাবি", img: "https://images.unsplash.com/photo-1629196914375-f7e48f477b6d?q=80&w=300" },
         { name: "ব্লেজার", img: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=300" },
@@ -196,6 +196,17 @@ function renderCategories() {
         { name: "কুর্তা", img: "https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?q=80&w=300" },
         { name: "লেহেঙ্গা", img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=300" }
     ];
+
+    // ডেটাবেস থেকে ক্যাটাগরি নেওয়া
+    try {
+        const docSnap = await getDoc(doc(db, "settings", "homeConfig"));
+        if (docSnap.exists() && docSnap.data().categories) {
+            const dbCategories = docSnap.data().categories.filter(cat => cat.name && cat.img);
+            if (dbCategories.length > 0) {
+                categories = dbCategories;
+            }
+        }
+    } catch (e) { console.log("Using default categories"); }
 
     const catContainer = document.getElementById('category-container');
     if (catContainer) {

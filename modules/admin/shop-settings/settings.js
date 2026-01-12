@@ -7,15 +7,18 @@ export async function initSettings() {
     const statusMsg = document.getElementById('status-msg');
     const saveBtn = document.getElementById('save-btn');
 
-    // লোড ডেটা
+    if (!form) return;
+
     loadCurrentSettings();
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        saveBtn.disabled = true;
-        saveBtn.innerText = "সেভ হচ্ছে...";
-        statusMsg.innerText = "";
+        if (saveBtn) {
+            saveBtn.disabled = true;
+            saveBtn.innerText = "সেভ হচ্ছে...";
+        }
+        if (statusMsg) statusMsg.innerText = "";
 
         try {
             const shopData = {
@@ -25,36 +28,43 @@ export async function initSettings() {
                 email: document.getElementById('shop-email').value,
                 address: document.getElementById('shop-address').value,
                 facebook: document.getElementById('shop-fb').value,
-                instagram: document.getElementById('shop-insta').value
+                instagram: document.getElementById('shop-insta') ? document.getElementById('shop-insta').value : ""
             };
 
             const fileInput = document.getElementById('shop-logo-file');
-            if (fileInput.files.length > 0) {
+            if (fileInput && fileInput.files.length > 0) {
                 const imageUrl = await uploadImage(fileInput.files[0]);
                 shopData.logo = imageUrl;
             } else {
-                // আগের লোগো রাখা (যদি নতুন না দেয়)
-                const oldLogo = document.getElementById('current-logo').src;
-                if(oldLogo && oldLogo !== window.location.href) shopData.logo = oldLogo;
+                const currentLogoImg = document.getElementById('current-logo');
+                if (currentLogoImg && currentLogoImg.src && !currentLogoImg.src.includes(window.location.host)) {
+                    shopData.logo = currentLogoImg.src;
+                }
             }
 
             await setDoc(doc(db, "settings", "shopInfo"), shopData, { merge: true });
 
-            // 👇 এই লাইনটি যোগ করা হয়েছে: লোকাল স্টোরেজ আপডেট করা যাতে রিফ্রেশ ছাড়াই নাম বদলে যায়
             localStorage.setItem('shopName', shopData.name);
-            const navLogo = document.getElementById('dynamic-nav-logo');
-            if (navLogo) navLogo.innerText = shopData.name; // যদি মেনুবার থাকে
 
-            statusMsg.style.color = "green";
-            statusMsg.innerText = "✅ সফলভাবে সেভ হয়েছে!";
-            saveBtn.innerText = "💾 সেটিংস সেভ করুন";
-            saveBtn.disabled = false;
+            const navLogo = document.getElementById('dynamic-nav-logo');
+            if (navLogo) navLogo.innerText = shopData.name;
+
+            if (statusMsg) {
+                statusMsg.style.color = "green";
+                statusMsg.innerText = "✅ সফলভাবে সেভ হয়েছে!";
+            }
 
         } catch (error) {
-            console.error(error);
-            statusMsg.style.color = "red";
-            statusMsg.innerText = "❌ সেভ করা যায়নি।";
-            saveBtn.disabled = false;
+            console.error("Save Error:", error);
+            if (statusMsg) {
+                statusMsg.style.color = "red";
+                statusMsg.innerText = "❌ সেভ করা যায়নি।";
+            }
+        } finally {
+            if (saveBtn) {
+                saveBtn.disabled = false;
+                saveBtn.innerText = "💾 সেটিংস সেভ করুন";
+            }
         }
     });
 }
@@ -66,22 +76,22 @@ async function loadCurrentSettings() {
 
         if (docSnap.exists()) {
             const data = docSnap.data();
-            document.getElementById('shop-name').value = data.name || '';
-            document.getElementById('shop-desc').value = data.description || '';
-            document.getElementById('shop-phone').value = data.phone || '';
-            document.getElementById('shop-email').value = data.email || '';
-            document.getElementById('shop-address').value = data.address || '';
-            document.getElementById('shop-fb').value = data.facebook || '';
-            document.getElementById('shop-insta').value = data.instagram || '';
+            if(document.getElementById('shop-name')) document.getElementById('shop-name').value = data.name || '';
+            if(document.getElementById('shop-desc')) document.getElementById('shop-desc').value = data.description || '';
+            if(document.getElementById('shop-phone')) document.getElementById('shop-phone').value = data.phone || '';
+            if(document.getElementById('shop-email')) document.getElementById('shop-email').value = data.email || '';
+            if(document.getElementById('shop-address')) document.getElementById('shop-address').value = data.address || '';
+            if(document.getElementById('shop-fb')) document.getElementById('shop-fb').value = data.facebook || '';
+            if(document.getElementById('shop-insta')) document.getElementById('shop-insta').value = data.instagram || '';
 
-            if (data.logo) {
-                const img = document.getElementById('current-logo');
+            const img = document.getElementById('current-logo');
+            if (img && data.logo) {
                 img.src = data.logo;
                 img.style.display = 'block';
             }
         }
     } catch (error) {
-        console.log("No settings found.");
+        console.log("Load Error:", error);
     }
 }
 

@@ -115,18 +115,18 @@
 }
 
 .cat-item img {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%; /* গোল ছবি */
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* গোল করবে */
     object-fit: cover;
-    border: 4px solid white;
+    border: 3px solid white;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     transition: 0.3s;
 }
 
 .cat-item:hover img {
     border-color: var(--secondary-color);
-    transform: scale(1.1); /* জুম হবে */
+    transform: scale(1.1);
 }
 
 .cat-item p {
