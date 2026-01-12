@@ -74,4 +74,4 @@ function renderProducts(products) {
     `).join('');
 }
 
-initGallery();
+// initGallery(); // Removed - will be called from shop.html

@@ -115,11 +115,48 @@
         }
         .btn-confirm:hover { transform: translateY(-3px); background: #600000; }
 
+        /* Continue Shopping Button Style */
+        .cart-footer-actions {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            text-align: left;
+        }
+
+        .btn-add-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background-color: transparent;
+            color: #666;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        .btn-add-more:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background-color: #fff5f5;
+        }
+
         /* মোবাইল রেসপন্সিভ */
         @media (max-width: 992px) {
             .cart-wrapper { grid-template-columns: 1fr; padding: 20px 15px 100px; }
             .checkout-card { position: static; }
             .cart-item img { width: 90px; height: 90px; }
+            .cart-footer-actions {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .btn-add-more {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -132,8 +169,17 @@
         <h2 class="cart-section-title">🛒 Your Shopping Bag</h2>
 
         <!-- বাম পাশ: আইটেম লিস্ট -->
-        <div class="cart-items-list" id="cart-items">
-            <p style="text-align:center; padding:50px; color:#888;">Loading your bag...</p>
+        <div class="cart-items-list">
+            <div id="cart-items">
+                <p style="text-align:center; padding:50px; color:#888;">Loading your bag...</p>
+            </div>
+            
+            <!-- Continue Shopping Button -->
+            <div class="cart-footer-actions">
+                <a href="shop.html" class="btn-add-more">
+                    <span>←</span> আরও পণ্য যোগ করুন
+                </a>
+            </div>
         </div>
 
         <!-- ডান পাশ: চেকআউট সামারি -->

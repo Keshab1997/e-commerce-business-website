@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>প্রোডাক্ট বিস্তারিত | শাড়ি সম্ভার</title>
+    <title id="dynamic-title">Product Details | SootBoot</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="উন্নত মানের পণ্য এবং আধুনিক ডিজাইন">
+    <meta name="keywords" content="শাড়ি, কাপড়, অনলাইন শপ, বাংলাদেশ">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="product">
+    <meta property="og:site_name" content="SootBoot">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
     
     <!-- স্টাইলশিট -->
     <link rel="stylesheet" href="styles/variables.css">
@@ -174,6 +185,10 @@
     <script type="module">
         // মেনুবার লোড করা
         import { loadNavbar } from './modules/common/navbar/navbar.js';
+        import { updatePageHeader, updateMetaTags } from './utils/dynamic-header.js';
+        
+        // নেভবার লোড করা (async)
+        loadNavbar();
         
         import { db, auth, loginWithGoogle } from './config/firebase-config.js';
         import { doc, getDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -227,6 +242,11 @@
                 document.getElementById('view-price').innerText = p.price;
                 document.getElementById('view-category').innerText = p.category;
                 document.getElementById('view-desc').innerText = p.description || "খুবই উন্নত মানের কাপড় এবং আধুনিক ডিজাইন।";
+                
+                // ডাইনামিক হেডার আপডেট
+                const shopName = shopData.name || 'SootBoot';
+                updatePageHeader(p.name, p.category, shopName);
+                updateMetaTags(p.name, p.description || "খুবই উন্নত মানের কাপড় এবং আধুনিক ডিজাইন।", p.image);
 
                 // 👇 স্টক চেক লজিক
                 const cartBtn = document.getElementById('add-to-cart-btn');

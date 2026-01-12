@@ -1,18 +1,36 @@
 import { auth, loginWithGoogle } from '../../../config/firebase-config.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getCart } from '../../../utils/cart.js';
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { db } from '../../../config/firebase-config.js';
 
 // মেনুবার লোড করার ফাংশন
-export function loadNavbar() {
+export async function loadNavbar() {
     const navContainer = document.querySelector('.navbar');
     if (!navContainer) return;
+
+    // দোকানের তথ্য লোড করা
+    let shopName = 'SootBoot';
+    let shopLogo = '';
+    
+    try {
+        const shopRef = doc(db, "settings", "shopInfo");
+        const shopSnap = await getDoc(shopRef);
+        if (shopSnap.exists()) {
+            const shopData = shopSnap.data();
+            shopName = shopData.name || 'SootBoot';
+            shopLogo = shopData.logo || '';
+        }
+    } catch (error) {
+        console.log('Shop info load error:', error);
+    }
 
     navContainer.innerHTML = `
         <div class="nav-container">
             <!-- লোগো এবং নাম একসাথে -->
             <a href="index.html" class="nav-logo">
-                <img id="nav-logo-img" src="" alt="Logo" style="display:none;">
-                <span id="dynamic-nav-logo">SootBoot</span>
+                <img id="nav-logo-img" src="${shopLogo}" alt="Logo" style="${shopLogo ? 'display:inline; max-height:40px; margin-right:8px;' : 'display:none;'}">
+                <span id="dynamic-nav-logo">${shopName}</span>
             </a>
             
             <!-- হ্যামবার্গার বাটন (মোবাইলের জন্য) -->
@@ -111,4 +129,4 @@ function setupNavbarLogic() {
 }
 
 // অটোমেটিক রান
-loadNavbar();
+// loadNavbar(); // এটি কমেন্ট করা হলো কারণ এখন এটি async function

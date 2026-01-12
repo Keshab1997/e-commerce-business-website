@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles/variables.css">
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="modules/common/navbar/navbar.css">
+    <link rel="stylesheet" href="modules/common/footer/footer.css">
     <link rel="stylesheet" href="modules/client/collections/gallery.css">
 </head>
 <body>
@@ -51,11 +52,55 @@
         </div>
     </div>
 
+    <!-- ফুটার -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <img id="f-logo-img" src="" alt="Logo" style="display:none; max-height: 70px; margin-bottom: 15px;">
+                <h2 id="f-name" class="footer-logo">লোড হচ্ছে...</h2>
+                <p id="f-desc" class="footer-desc">...</p>
+                <div class="social-icons">
+                    <a href="#" id="f-fb" target="_blank" class="social-btn fb">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="FB">
+                    </a>
+                    <a href="#" id="f-insta" target="_blank" class="social-btn insta">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Insta">
+                    </a>
+                    <a href="#" id="f-wa" target="_blank" class="social-btn wa">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>প্রয়োজনীয় লিঙ্ক</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">হোম</a></li>
+                    <li><a href="shop.html">কালেকশন</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>যোগাযোগ করুন</h4>
+                <div class="contact-info">
+                    <p id="f-phone">📞 ...</p>
+                    <p id="f-email">✉️ ...</p>
+                    <p id="f-address">📍 ...</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="year">2025</span> <span id="f-copyright-name">SootBoot</span> | সর্বস্বত্ব সংরক্ষিত</p>
+        </div>
+    </footer>
+
     <!-- স্ক্রিপ্ট -->
     <script type="module">
         // মেনুবার লোড করা
         import { loadNavbar } from './modules/common/navbar/navbar.js';
         import { initGallery } from './modules/client/collections/gallery.js';
+        
+        // নেভবার এবং গ্যালারি লোড করা
+        loadNavbar();
+        initGallery();
     </script>
 
     <!-- গ্লোবাল ব্র্যান্ডিং লোডার -->
