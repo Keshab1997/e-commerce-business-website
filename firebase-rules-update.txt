@@ -1,0 +1,39 @@
+Firebase Firestore Rules আপডেট করুন:
+
+Firebase Console > Firestore Database > Rules এ গিয়ে নিচের কোডটি পেস্ট করে Publish করুন:
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ১. প্রোডাক্টস (সবাই দেখতে পারবে)
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.email == "keshabsarkar2018@gmail.com";
+    }
+
+    // ২. অর্ডার (গুরুত্বপূর্ণ আপডেট)
+    match /orders/{orderId} {
+      // কাস্টমার অর্ডার তৈরি করতে পারবে
+      allow create: if request.auth != null;
+      
+      // কাস্টমার শুধু তার নিজের অর্ডার দেখতে পারবে
+      // এডমিন সব অর্ডার দেখতে পারবে
+      allow read: if request.auth != null && (
+        resource.data.userEmail == request.auth.token.email || 
+        request.auth.token.email == "keshabsarkar2018@gmail.com"
+      );
+      
+      // আপডেট/ডিলিট শুধু এডমিন করতে পারবে
+      allow update, delete: if request.auth != null && request.auth.token.email == "keshabsarkar2018@gmail.com";
+    }
+
+    // ৩. সেটিংস (সবাই দেখতে পারবে)
+    match /settings/{document=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.email == "keshabsarkar2018@gmail.com";
+    }
+  }
+}
+
+এই রুলস আপডেট করার পর কাস্টমার তার নিজের অর্ডার দেখতে পারবে।

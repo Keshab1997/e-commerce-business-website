@@ -31,11 +31,31 @@ ul { list-style: none; }
 
 /* মোবাইল রেসপন্সিভ */
 @media (max-width: 768px) {
+    html, body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+    
     .container, 
     .nav-container, 
     .footer-container, 
-    .gallery-container {
-        padding: 0 15px; /* মোবাইলে কম প্যাডিং */
+    .gallery-container,
+    .cart-container,
+    .profile-container {
+        padding: 0 15px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    input, textarea, select, button {
+        font-size: 16px !important;
+        max-width: 100%;
+    }
+    
+    img {
+        max-width: 100%;
+        height: auto;
     }
 }
 

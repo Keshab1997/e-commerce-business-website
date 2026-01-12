@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>My Profile</title>
     <link rel="stylesheet" href="styles/variables.css">
     <link rel="stylesheet" href="styles/main.css">
@@ -62,6 +63,50 @@
         /* Product List */
         .item-row { display: flex; gap: 15px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #f9f9f9; }
         .item-img { width: 60px; height: 60px; border-radius: 5px; object-fit: cover; }
+        
+        /* মোবাইল রেসপন্সিভ */
+        @media (max-width: 768px) {
+            .profile-container {
+                margin: 10px auto 80px;
+                padding: 15px;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .user-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .user-img {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .order-card {
+                padding: 15px;
+            }
+            
+            .track-container {
+                font-size: 0.8rem;
+            }
+            
+            .dot {
+                width: 25px; 
+                height: 25px;
+                font-size: 0.8rem;
+            }
+            
+            .steps {
+                gap: 5px;
+            }
+            
+            .step p {
+                font-size: 0.7rem;
+            }
+        }
     </style>
 </head>
 <body>
