@@ -1,22 +1,13 @@
-/* পুরো পেজের ব্যাকগ্রাউন্ড */
+/* ব্যাকগ্রাউন্ড */
 body {
-    background-color: #f4f6f9; /* হালকা ধূসর ব্যাকগ্রাউন্ড */
+    background-color: #f0f2f5;
+    font-family: 'Hind Siliguri', sans-serif;
 }
 
-/* লোডিং স্ক্রিন */
-.loading-screen {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: white;
-}
-
-/* টপ বার ডিজাইন */
+/* হেডার */
 .dash-header {
     background: white;
-    padding: 15px 30px;
+    padding: 15px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,28 +19,23 @@ body {
 
 .header-left h2 {
     color: var(--primary-color);
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin: 0;
 }
 
 .header-left p {
-    font-size: 0.8rem;
-    color: #666;
+    font-size: 0.85rem;
+    color: #777;
     margin: 0;
 }
 
-.header-right {
-    display: flex;
-    gap: 15px;
-}
-
 .btn-view-site {
-    padding: 8px 15px;
+    padding: 10px 20px;
     background: #e3f2fd;
     color: #1976d2;
-    border-radius: 5px;
+    border-radius: 50px;
     font-weight: 600;
-    font-size: 0.9rem;
+    text-decoration: none;
     transition: 0.3s;
 }
 
@@ -58,13 +44,14 @@ body {
 }
 
 .btn-logout {
-    padding: 8px 15px;
+    padding: 10px 20px;
     background: #ffebee;
     color: #d32f2f;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     cursor: pointer;
     font-weight: 600;
+    margin-left: 10px;
     transition: 0.3s;
 }
 
@@ -72,30 +59,28 @@ body {
     background: #ffcdd2;
 }
 
-/* মেইন কন্টেন্ট */
+/* কন্টেইনার */
 .dashboard-container {
     max-width: 1200px;
-    margin: 30px auto;
+    margin: 40px auto;
     padding: 0 20px;
 }
 
 .welcome-banner {
     margin-bottom: 40px;
+    text-align: center;
 }
 
 .welcome-banner h1 {
     color: #333;
-    font-size: 2rem;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
 }
 
-.welcome-banner p {
-    color: #666;
-}
-
-/* কার্ড গ্রিড */
+/* গ্রিড */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
 }
 
@@ -103,56 +88,105 @@ body {
 .dash-card {
     background: white;
     padding: 30px;
-    border-radius: 15px;
+    border-radius: 20px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 20px;
+    text-align: center;
     text-decoration: none;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     transition: all 0.3s ease;
     border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
 }
 
 .dash-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    border-color: var(--secondary-color);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
 /* আইকন বক্স */
 .icon-box {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2rem;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    transition: 0.3s;
 }
 
-.settings-icon {
-    background-color: #e3f2fd;
-    color: #1976d2;
+.dash-card:hover .icon-box {
+    transform: scale(1.1);
 }
 
-.product-icon {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-}
+/* কার্ড স্পেসিফিক কালার */
+.card-settings .icon-box { background: #e3f2fd; color: #1976d2; }
+.card-settings:hover { border-color: #1976d2; }
 
-.order-icon {
-    background-color: #fff3e0;
-    color: #ef6c00;
-}
+.card-product .icon-box { background: #e8f5e9; color: #2e7d32; }
+.card-product:hover { border-color: #2e7d32; }
+
+.card-home .icon-box { background: #f3e5f5; color: #8e24aa; }
+.card-home:hover { border-color: #8e24aa; }
+
+.card-order .icon-box { background: #fff3e0; color: #ef6c00; }
+.card-order:hover { border-color: #ef6c00; }
 
 /* কার্ড ইনফো */
 .card-info h3 {
     color: #333;
-    font-size: 1.2rem;
-    margin-bottom: 5px;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
 }
 
 .card-info p {
     color: #777;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+}
+
+/* মোবাইল রেসপন্সিভ */
+@media (max-width: 768px) {
+    .dash-header {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .dash-card {
+        padding: 20px;
+    }
+}
+
+/* লোডিং স্ক্রিন */
+.loading-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f0f2f5;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #ddd;
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
