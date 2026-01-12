@@ -147,13 +147,18 @@
     </div>
 
     <script type="module">
+        // ১. মেনুবার ও ফুটার লোড
+        import { loadNavbar } from './modules/common/navbar/navbar.js';
+        import { loadShopBranding } from './utils/global-loader.js';
+        
+        loadNavbar();
+        loadShopBranding();
+
+        // ২. প্রোফাইল লজিক
         import { db, auth, logoutUser } from './config/firebase-config.js';
         import { collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { updateCartCount } from './utils/cart.js';
-        import { loadShopBranding } from './utils/global-loader.js';
-
-        loadShopBranding();
 
         window.logout = () => {
             if(confirm("Are you sure you want to logout?")) {

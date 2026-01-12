@@ -12,8 +12,15 @@ export function loadNavbar() {
             <!-- লোগো -->
             <a href="index.html" class="nav-logo" id="dynamic-nav-logo">SootBoot</a>
             
+            <!-- হ্যামবার্গার বাটন (মোবাইলের জন্য) -->
+            <div class="hamburger" id="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
             <!-- মেনু আইটেম -->
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="nav-menu">
                 <li>
                     <a href="index.html" class="nav-link">
                         <span class="icon">🏠</span> <span>Home</span>
@@ -48,14 +55,25 @@ export function loadNavbar() {
 }
 
 function setupNavbarLogic() {
-    // ১. কার্ট কাউন্ট আপডেট
+    // ১. মোবাইল মেনু টগল
+    const hamburger = document.getElementById('mobile-menu-btn');
+    const navMenu = document.getElementById('nav-menu');
+
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
+
+    // ২. কার্ট কাউন্ট আপডেট
     const cartCount = document.getElementById('cart-count');
     if (cartCount) {
         const cart = getCart();
         cartCount.innerText = cart.length;
     }
 
-    // ২. লগইন বাটন লজিক
+    // ৩. লগইন বাটন লজিক
     const loginBtn = document.getElementById('login-btn');
     if (loginBtn) {
         loginBtn.addEventListener('click', async () => {
@@ -63,13 +81,18 @@ function setupNavbarLogic() {
         });
     }
 
-    // ৩. ইউজার চেক (প্রোফাইল ও ড্যাশবোর্ড দেখানো)
+    // ৪. ইউজার চেক (প্রোফাইল ছবি ও নাম দেখানো)
     onAuthStateChanged(auth, (user) => {
         const menu = document.getElementById('auth-menu');
         if (user) {
+            // ইউজারের ছবি না থাকলে ডিফল্ট ছবি
+            const userImg = user.photoURL || 'https://via.placeholder.com/40';
+            const userName = user.displayName.split(' ')[0]; // শুধু প্রথম নাম
+
             let html = `
-                <a href="profile.html" class="nav-link">
-                    <span class="icon">👤</span> <span>Profile</span>
+                <a href="profile.html" class="nav-link profile-link" style="display:flex; align-items:center; gap:10px;">
+                    <img src="${userImg}" style="width:35px; height:35px; border-radius:50%; border:2px solid white;">
+                    <span>${userName}</span>
                 </a>
             `;
             
@@ -77,7 +100,7 @@ function setupNavbarLogic() {
             if(user.email === "keshabsarkar2018@gmail.com") {
                 html += `
                     <a href="dashboard.html" class="nav-link dashboard-link">
-                        <span class="icon">🔒</span> <span>Dashboard</span>
+                        🔒 Dashboard
                     </a>
                 `;
             }
