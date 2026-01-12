@@ -8,7 +8,23 @@ const DEFAULT_HOME = {
     slide1: { img: "https://images.unsplash.com/photo-1610189012906-4783fdae2c26?q=80&w=1920", title: "এক্সক্লুসিভ বেনারসি" },
     slide2: { img: "https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?q=80&w=1920", title: "ছেলেদের প্রিমিয়াম পাঞ্জাবি" },
     slide3: { img: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1920", title: "স্টাইলিশ ব্লেজার ও সুট" },
-    offer: { img: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=1600", title: "ওয়েডিং কালেকশন - ৩০% ছাড়" }
+    offer: { img: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=1600", title: "ওয়েডিং কালেকশন - ৩০% ছাড়" },
+    videoGallery: [
+        "https://assets.mixkit.co/videos/preview/mixkit-woman-wearing-a-sari-walking-slowly-1234-large.mp4",
+        "https://assets.mixkit.co/videos/preview/mixkit-indian-bride-posing-for-photos-1235-large.mp4",
+        "",
+        ""
+    ],
+    reviews: [
+        { name: "রুমা খাতুন", text: "অসাধারণ শাড়ি! কোয়ালিটি খুবই ভালো।" },
+        { name: "সারা আক্তার", text: "দাম অনুযায়ী প্রোডাক্ট ভালো। সবাইকে সাজেস্ট করব।" },
+        { name: "নাজমা বেগম", text: "ডেলিভারি খুব দ্রুত। প্যাকিং ও ভালো ছিল।" }
+    ],
+    services: [
+        "ফ্রি হোম ডেলিভারি",
+        "প্রিমিয়াম কোয়ালিটি",
+        "২৪/৭ কাস্টমার সাপোর্ট"
+    ]
 };
 
 // মেইন ফাংশন যা সব লোড করবে
@@ -75,6 +91,71 @@ async function loadHomeContent() {
     if (offerSection) {
         offerSection.style.backgroundImage = `url('${data.offer.img}')`;
         document.getElementById('offer-title').innerText = data.offer.title;
+    }
+
+    // ভিডিও গ্যালারি লোড (Instagram Embed)
+    const videoContainer = document.getElementById('video-container');
+    if (videoContainer && data.videoGallery) {
+        videoContainer.innerHTML = '';
+        
+        data.videoGallery.forEach(vidUrl => {
+            if(vidUrl) {
+                // লিঙ্ক থেকে এম্বেড কোড তৈরি
+                const embedHtml = `
+                    <div class="insta-card">
+                        <blockquote class="instagram-media" 
+                            data-instgrm-permalink="${vidUrl}" 
+                            data-instgrm-version="14">
+                        </blockquote>
+                    </div>
+                `;
+                videoContainer.innerHTML += embedHtml;
+            }
+        });
+
+        // ইন্সটাগ্রাম স্ক্রিপ্ট রি-লোড করা (যাতে নতুন ভিডিও রেন্ডার হয়)
+        if(window.instgrm) {
+            window.instgrm.Embeds.process();
+        } else {
+            const script = document.createElement('script');
+            script.src = "//www.instagram.com/embed.js";
+            script.async = true;
+            document.body.appendChild(script);
+        }
+    }
+
+    // সার্ভিস লোড
+    const serviceContainer = document.getElementById('service-container');
+    if (serviceContainer && data.services) {
+        serviceContainer.innerHTML = '';
+        const icons = ['🚚', '💎', '🎧']; // ডিফল্ট আইকন
+        data.services.forEach((serv, index) => {
+            if(serv) {
+                serviceContainer.innerHTML += `
+                    <div class="service-box">
+                        <div class="s-icon">${icons[index] || '✨'}</div>
+                        <h3>${serv}</h3>
+                    </div>
+                `;
+            }
+        });
+    }
+
+    // রিভিউ লোড
+    const reviewContainer = document.getElementById('review-container');
+    if (reviewContainer && data.reviews) {
+        reviewContainer.innerHTML = '';
+        data.reviews.forEach(rev => {
+            if(rev.name && rev.text) {
+                reviewContainer.innerHTML += `
+                    <div class="review-card">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p class="rev-text">"${rev.text}"</p>
+                        <h4 class="rev-name">- ${rev.name}</h4>
+                    </div>
+                `;
+            }
+        });
     }
 }
 

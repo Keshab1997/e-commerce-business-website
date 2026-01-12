@@ -9,16 +9,69 @@
 </head>
 <body>
     <div class="orders-container">
-        <a href="dashboard.html" class="btn-back">⬅ ড্যাশবোর্ড</a>
-        <div class="orders-card">
-            <table class="orders-table">
-                <thead>
-                    <tr><th>তারিখ</th><th>নাম</th><th>ফোন</th><th>প্রোডাক্ট</th><th>দাম</th><th>স্ট্যাটাস</th><th>অ্যাকশন</th></tr>
-                </thead>
-                <tbody id="orders-table-body"></tbody>
-            </table>
+        <div class="orders-header">
+            <h2>📦 অর্ডার ম্যানেজমেন্ট</h2>
+            <a href="dashboard.html" class="btn-back">⬅ ড্যাশবোর্ড</a>
+        </div>
+
+        <!-- অর্ডার গ্রিড -->
+        <div id="orders-grid" class="orders-grid">
+            <div class="loading-spinner">অর্ডার লোড হচ্ছে...</div>
         </div>
     </div>
+
+    <!-- অর্ডার ডিটেইলস মোডাল -->
+    <div id="order-details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeOrderModal()">&times;</span>
+            <div class="modal-header">
+                <h3>অর্ডার বিস্তারিত</h3>
+                <p id="m-date" style="font-size:0.8rem; color:#666;">...</p>
+            </div>
+            
+            <div class="modal-body">
+                <!-- প্রোডাক্ট ইনফো -->
+                <div class="product-info-box">
+                    <img id="m-img" src="" alt="Product">
+                    <div>
+                        <h4 id="m-pname">...</h4>
+                        <p class="price">₹ <span id="m-price">0</span></p>
+                    </div>
+                </div>
+
+                <!-- কাস্টমার ইনফো -->
+                <div class="customer-info-box">
+                    <p><strong>👤 নাম:</strong> <span id="m-cname">...</span></p>
+                    <p><strong>📞 ফোন:</strong> <a id="m-phone" href="#">...</a></p>
+                    <p><strong>📍 ঠিকানা:</strong> <span id="m-address">...</span></p>
+                </div>
+
+                <!-- স্ট্যাটাস -->
+                <div class="status-box">
+                    <label>স্ট্যাটাস:</label>
+                    <select id="m-status" onchange="updateOrderStatus()">
+                        <option value="pending">অপেক্ষমান (Pending)</option>
+                        <option value="shipped">শিপড (Shipped)</option>
+                        <option value="delivered">ডেলিভারড (Delivered)</option>
+                        <option value="cancelled">বাতিল (Cancelled)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-footer" style="display:flex; gap:10px; margin-top:20px;">
+                <!-- অ্যাকসেপ্ট বাটন -->
+                <button class="btn-accept" onclick="acceptOrder()" style="flex:1; background:green; color:white; padding:10px; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">
+                    ✅ অর্ডার অ্যাকসেপ্ট করুন
+                </button>
+                
+                <!-- ডিলিট বাটন -->
+                <button class="btn-del" onclick="deleteCurrentOrder()" style="flex:1;">
+                    🗑️ ডিলিট করুন
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { initOrderView } from './modules/admin/order-view/orders.js';
     </script>

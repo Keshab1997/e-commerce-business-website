@@ -289,6 +289,107 @@
     font-size: 1.2rem;
 }
 
+/* ভিডিও গ্যালারি */
+.video-gallery-section {
+    padding: 60px 4%;
+    background: #fff;
+    text-align: center;
+}
+
+.video-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.insta-card {
+    width: 320px; /* ইন্সটাগ্রামের স্ট্যান্ডার্ড সাইজ */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    background: white;
+}
+
+/* ইন্সটাগ্রামের নিজস্ব বর্ডার ও শ্যাডো রিমুভ করার চেষ্টা */
+.instagram-media {
+    min-width: 320px !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* সার্ভিস সেকশন */
+.service-section {
+    padding: 50px 4%;
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.service-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.service-box {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    flex: 1;
+    min-width: 250px;
+}
+
+.s-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+/* রিভিউ সেকশন */
+.review-section {
+    padding: 80px 4%;
+    background: #f9f9f9;
+    text-align: center;
+}
+
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.review-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: 0.3s;
+    border: 1px solid #eee;
+}
+
+.review-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+}
+
+.rev-text {
+    font-style: italic;
+    color: #555;
+    margin: 15px 0;
+    font-size: 1.1rem;
+}
+
+.rev-name {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
 /* রেসপন্সিভ ডিজাইন */
 @media (max-width: 768px) {
     .slide-content h1 {

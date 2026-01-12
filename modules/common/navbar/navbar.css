@@ -1,11 +1,12 @@
+/* মেনুবার মেইন */
 .navbar {
-    position: sticky; /* ফিক্সড না রেখে স্টিকি করা হলো */
+    position: sticky;
     top: 0;
     left: 0;
     width: 100%;
     background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(10px);
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     z-index: 1000;
     height: 80px;
     display: flex;
@@ -17,31 +18,128 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 0 4%; /* দুই পাশে স্পেস */
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 30px;
 }
 
+/* লোগো */
 .nav-logo {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--primary-color);
+    text-decoration: none;
+    font-family: 'Hind Siliguri', sans-serif;
     letter-spacing: 1px;
+    white-space: nowrap;
 }
 
+/* মেনু আইটেম */
 .nav-menu {
     display: flex;
-    gap: 40px;
+    gap: 15px;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
+/* সাধারণ লিঙ্ক */
 .nav-link {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #333;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #444;
+    text-decoration: none;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border-radius: 50px;
+    white-space: nowrap;
+    height: 45px;
 }
 
-/* মোবাইল মেনু */
-@media (max-width: 768px) {
-    .nav-menu { display: none; } /* হ্যামবার্গার মেনু লজিক থাকলে এখানে বসবে */
-    .nav-logo { font-size: 1.5rem; }
+.nav-link:hover {
+    background-color: #fff5f5;
+    color: var(--primary-color);
+}
+
+.icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+/* কার্ট বাটন */
+.cart-btn {
+    position: relative;
+    background-color: #f8f9fa;
+    border: 1px solid #eee;
+}
+
+.cart-badge {
+    background-color: #ff4757;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* লগইন বাটন */
+.btn-login {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 45px;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(128, 0, 0, 0.2);
+}
+
+.btn-login:hover {
+    background: #600000;
+    transform: translateY(-2px);
+}
+
+/* ড্যাশবোর্ড লিঙ্ক (স্পেশাল স্টাইল) */
+.dashboard-link {
+    background: #fff8e1;
+    color: #d4af37 !important;
+    border: 1px solid #ffe082;
+    font-weight: bold;
+}
+
+.dashboard-link:hover {
+    background: #ffecb3;
+}
+
+/* মোবাইল রেসপন্সিভ */
+@media (max-width: 900px) {
+    .nav-menu {
+        gap: 10px;
+    }
+    .nav-link, .btn-login {
+        padding: 0 10px;
+        font-size: 0.9rem;
+        height: 40px;
+    }
+    .nav-link span:not(.icon) {
+        display: none;
+    }
+    .icon {
+        font-size: 1.4rem;
+    }
 }

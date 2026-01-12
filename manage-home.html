@@ -45,6 +45,52 @@
                     <input type="text" id="offer-title" placeholder="অফারের নাম">
                 </div>
 
+                <!-- ৫. ভিডিও গ্যালারি -->
+                <div class="form-section">
+                    <h3>ইন্সটাগ্রাম রিলস (Instagram Reel Links)</h3>
+                    <p style="font-size:0.8rem; color:#666; margin-bottom:10px;">শুধু রিলসের লিঙ্ক পেস্ট করুন (যেমন: https://www.instagram.com/reel/xyz...)</p>
+                    
+                    <div class="form-grid">
+                        <input type="text" id="vid1" placeholder="রিল ১ লিঙ্ক">
+                        <input type="text" id="vid2" placeholder="রিল ২ লিঙ্ক">
+                        <input type="text" id="vid3" placeholder="রিল ৩ লিঙ্ক">
+                        <input type="text" id="vid4" placeholder="রিল ৪ লিঙ্ক">
+                    </div>
+                </div>
+
+                <!-- ৬. গ্রাহকের মতামত (Reviews) -->
+                <div class="form-section">
+                    <h3>গ্রাহকের মতামত (Top 3 Reviews)</h3>
+                    
+                    <div class="review-box" style="border:1px solid #eee; padding:10px; margin-bottom:10px;">
+                        <h4>রিভিউ ১</h4>
+                        <input type="text" id="rev1-name" placeholder="কাস্টমারের নাম">
+                        <textarea id="rev1-text" rows="2" placeholder="মতামত..."></textarea>
+                    </div>
+
+                    <div class="review-box" style="border:1px solid #eee; padding:10px; margin-bottom:10px;">
+                        <h4>রিভিউ ২</h4>
+                        <input type="text" id="rev2-name" placeholder="কাস্টমারের নাম">
+                        <textarea id="rev2-text" rows="2" placeholder="মতামত..."></textarea>
+                    </div>
+
+                    <div class="review-box" style="border:1px solid #eee; padding:10px;">
+                        <h4>রিভিউ ৩</h4>
+                        <input type="text" id="rev3-name" placeholder="কাস্টমারের নাম">
+                        <textarea id="rev3-text" rows="2" placeholder="মতামত..."></textarea>
+                    </div>
+                </div>
+
+                <!-- ৭. কেন আমাদের বাছবেন (Services) -->
+                <div class="form-section">
+                    <h3>সার্ভিস হাইলাইট</h3>
+                    <div class="form-grid">
+                        <input type="text" id="serv1" placeholder="সার্ভিস ১ (যেমন: ফাস্ট ডেলিভারি)">
+                        <input type="text" id="serv2" placeholder="সার্ভিস ২ (যেমন: প্রিমিয়াম কোয়ালিটি)">
+                        <input type="text" id="serv3" placeholder="সার্ভিস ৩ (যেমন: ২৪/৭ সাপোর্ট)">
+                    </div>
+                </div>
+
                 <button type="submit" class="btn btn-primary btn-block" id="save-btn">💾 সেভ করুন</button>
                 <p id="status-msg" class="status-text"></p>
             </form>
@@ -60,7 +106,23 @@
             slide1: { img: "https://images.unsplash.com/photo-1610189012906-4783fdae2c26?q=80&w=1920", title: "এক্সক্লুসিভ বেনারসি" },
             slide2: { img: "https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?q=80&w=1920", title: "ছেলেদের প্রিমিয়াম পাঞ্জাবি" },
             slide3: { img: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1920", title: "স্টাইলিশ ব্লেজার ও সুট" },
-            offer: { img: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=1600", title: "ওয়েডিং কালেকশন - ৩০% ছাড়" }
+            offer: { img: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=1600", title: "ওয়েডিং কালেকশন - ৩০% ছাড়" },
+            videoGallery: [
+                "https://www.instagram.com/reel/DSSMd0XCSVb/",
+                "https://www.instagram.com/reel/DSSMd0XCSVb/",
+                "",
+                ""
+            ],
+            reviews: [
+                { name: "রুমা খাতুন", text: "অসাধারণ শাড়ি! কোয়ালিটি খুবই ভালো।" },
+                { name: "সারা আক্তার", text: "দাম অনুযায়ী প্রোডাক্ট ভালো। সবাইকে সাজেস্ট করব।" },
+                { name: "নাজমা বেগম", text: "ডেলিভারি খুব দ্রুত। প্যাকিং ও ভালো ছিল।" }
+            ],
+            services: [
+                "ফ্রি হোম ডেলিভারি",
+                "প্রিমিয়াম কোয়ালিটি",
+                "২৪/৭ কাস্টমার সাপোর্ট"
+            ]
         };
 
         // লোড করা
@@ -80,6 +142,31 @@
 
                 document.getElementById('offer-img').value = data.offer.img;
                 document.getElementById('offer-title').value = data.offer.title;
+
+                // ভিডিও গ্যালারি লোড
+                if(data.videoGallery) {
+                    document.getElementById('vid1').value = data.videoGallery[0] || '';
+                    document.getElementById('vid2').value = data.videoGallery[1] || '';
+                    document.getElementById('vid3').value = data.videoGallery[2] || '';
+                    document.getElementById('vid4').value = data.videoGallery[3] || '';
+                }
+
+                // রিভিউ লোড
+                if(data.reviews) {
+                    document.getElementById('rev1-name').value = data.reviews[0]?.name || '';
+                    document.getElementById('rev1-text').value = data.reviews[0]?.text || '';
+                    document.getElementById('rev2-name').value = data.reviews[1]?.name || '';
+                    document.getElementById('rev2-text').value = data.reviews[1]?.text || '';
+                    document.getElementById('rev3-name').value = data.reviews[2]?.name || '';
+                    document.getElementById('rev3-text').value = data.reviews[2]?.text || '';
+                }
+
+                // সার্ভিস লোড
+                if(data.services) {
+                    document.getElementById('serv1').value = data.services[0] || '';
+                    document.getElementById('serv2').value = data.services[1] || '';
+                    document.getElementById('serv3').value = data.services[2] || '';
+                }
             } catch (e) { console.log(e); }
         }
         loadData();
@@ -106,7 +193,23 @@
                 offer: { 
                     img: document.getElementById('offer-img').value, 
                     title: document.getElementById('offer-title').value 
-                }
+                },
+                videoGallery: [
+                    document.getElementById('vid1').value,
+                    document.getElementById('vid2').value,
+                    document.getElementById('vid3').value,
+                    document.getElementById('vid4').value
+                ],
+                reviews: [
+                    { name: document.getElementById('rev1-name').value, text: document.getElementById('rev1-text').value },
+                    { name: document.getElementById('rev2-name').value, text: document.getElementById('rev2-text').value },
+                    { name: document.getElementById('rev3-name').value, text: document.getElementById('rev3-text').value }
+                ],
+                services: [
+                    document.getElementById('serv1').value,
+                    document.getElementById('serv2').value,
+                    document.getElementById('serv3').value
+                ]
             };
 
             try {

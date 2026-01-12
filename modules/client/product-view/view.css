@@ -246,3 +246,126 @@
     padding: 12px;
     font-size: 1.1rem;
 }
+
+/* মোডাল হেডার */
+.modal-header {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.modal-header h2 {
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.modal-header p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* ইনপুট ফিল্ড */
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: 0.3s;
+    background: #f9f9f9;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: var(--primary-color);
+    background: white;
+    outline: none;
+    box-shadow: 0 0 5px rgba(128, 0, 0, 0.1);
+}
+
+/* লোকেশন বাটন */
+.btn-location {
+    background: none;
+    border: none;
+    color: #1976d2;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: 0.2s;
+}
+
+.btn-location:hover {
+    background: #e3f2fd;
+}
+
+/* পেমেন্ট অপশন */
+.payment-option {
+    background: #f0f8ff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #d1e9ff;
+    font-size: 0.9rem;
+    color: #0056b3;
+}
+
+/* থাম্বনেইল গ্যালারি */
+.thumbnail-gallery {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.thumb-img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.thumb-img:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* ভিডিও থাম্বনেইল */
+.thumb-video {
+    width: 70px;
+    height: 70px;
+    position: relative;
+    cursor: pointer;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.thumb-video img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7); /* একটু কালো যাতে প্লে বাটন দেখা যায় */
+}
+
+.play-icon {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.5rem;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+}
+
+.thumb-video:hover {
+    border-color: red; /* ইউটিউব কালার */
+    transform: scale(1.1);
+}

@@ -42,28 +42,49 @@ function updateNameElements(name) {
 
 // 👇 ফুটার ডিটেইলস আপডেট করার ফাংশন
 function updateFooterDetails(data) {
-    // বিবরণ
-    const descEl = document.getElementById('f-desc');
-    if (descEl && data.description) descEl.innerText = data.description;
-
-    // ফোন নম্বর
-    const phoneEl = document.getElementById('f-phone');
-    if (phoneEl && data.phone) {
-        phoneEl.innerHTML = `📞 ${data.phone}`;
-        phoneEl.href = `tel:${data.phone}`; // ক্লিকেবল লিঙ্ক
+    // ১. নাম ও বিবরণ
+    if(data.name) {
+        const nameEl = document.getElementById('f-name');
+        if(nameEl) nameEl.innerText = data.name;
+        const copyrightName = document.getElementById('f-copyright-name');
+        if(copyrightName) copyrightName.innerText = data.name;
+    }
+    if(data.description) {
+        const descEl = document.getElementById('f-desc');
+        if(descEl) descEl.innerText = data.description;
+    }
+    
+    // ২. যোগাযোগ আপডেট
+    if(data.phone) {
+        const phoneEl = document.getElementById('f-phone');
+        if(phoneEl) phoneEl.innerHTML = `📞 ${data.phone}`;
+    }
+    if(data.email) {
+        const emailEl = document.getElementById('f-email');
+        if(emailEl) emailEl.innerHTML = `✉️ ${data.email}`;
+    }
+    if(data.address) {
+        const addressEl = document.getElementById('f-address');
+        if(addressEl) addressEl.innerHTML = `📍 ${data.address}`;
     }
 
-    // ঠিকানা
-    const addressEl = document.getElementById('f-address');
-    if (addressEl && data.address) {
-        addressEl.innerText = `📍 ${data.address}`;
+    // ৩. সোশ্যাল লিঙ্ক আপডেট
+    if(data.facebook) {
+        const fbEl = document.getElementById('f-fb');
+        if(fbEl) fbEl.href = data.facebook;
     }
-
-    // ইমেইল (যদি থাকে)
-    const emailEl = document.getElementById('f-email');
-    if (emailEl && data.email) {
-        emailEl.innerText = `✉️ ${data.email}`;
+    if(data.instagram) {
+        const instaEl = document.getElementById('f-insta');
+        if(instaEl) instaEl.href = data.instagram;
     }
+    if(data.phone) {
+        const waEl = document.getElementById('f-wa');
+        if(waEl) waEl.href = `https://wa.me/${data.phone}`;
+    }
+    
+    // ৪. বছর আপডেট
+    const yearEl = document.getElementById('year');
+    if(yearEl) yearEl.innerText = new Date().getFullYear();
 }
 
 // অটোমেটিক রান

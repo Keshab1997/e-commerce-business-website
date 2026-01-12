@@ -11,16 +11,7 @@
 </head>
 <body>
     <!-- নেভিগেশন বার -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <!-- লোগো টেক্সট এখন ফাঁকা থাকবে, জাভাস্ক্রিপ্ট বসাবে -->
-            <a href="index.html" class="nav-logo" id="dynamic-nav-logo">লোড হচ্ছে...</a>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">হোম</a></li>
-                <li><a href="shop.html" class="nav-link">কালেকশন</a></li>
-            </ul>
-        </div>
-    </nav>
+    <nav class="navbar"></nav>
 
     <!-- মেইন গ্যালারি সেকশন -->
     <div class="gallery-container">
@@ -47,6 +38,8 @@
 
     <!-- স্ক্রিপ্ট -->
     <script type="module">
+        // মেনুবার লোড করা
+        import { loadNavbar } from './modules/common/navbar/navbar.js';
         import { initGallery } from './modules/client/collections/gallery.js';
     </script>
 

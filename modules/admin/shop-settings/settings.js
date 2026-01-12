@@ -24,7 +24,8 @@ export async function initSettings() {
                 phone: document.getElementById('shop-phone').value,
                 email: document.getElementById('shop-email').value,
                 address: document.getElementById('shop-address').value,
-                facebook: document.getElementById('shop-fb').value
+                facebook: document.getElementById('shop-fb').value,
+                instagram: document.getElementById('shop-insta').value
             };
 
             const fileInput = document.getElementById('shop-logo-file');
@@ -71,6 +72,7 @@ async function loadCurrentSettings() {
             document.getElementById('shop-email').value = data.email || '';
             document.getElementById('shop-address').value = data.address || '';
             document.getElementById('shop-fb').value = data.facebook || '';
+            document.getElementById('shop-insta').value = data.instagram || '';
 
             if (data.logo) {
                 const img = document.getElementById('current-logo');

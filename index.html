@@ -13,18 +13,7 @@
 <body>
 
     <!-- নেভিগেশন বার -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo" id="dynamic-nav-logo">লোড হচ্ছে...</a>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">হোম</a></li>
-                <li><a href="shop.html" class="nav-link">কালেকশন</a></li>
-                <li id="admin-nav-item" style="display: none;">
-                    <a href="dashboard.html" class="nav-link" style="color:var(--secondary-color)">🔒 ড্যাশবোর্ড</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <nav class="navbar"></nav>
 
     <!-- ১. হিরো স্লাইডার -->
     <div class="slider-container" id="hero-slider"></div>
@@ -51,7 +40,30 @@
         </div>
     </section>
 
-    <!-- ৫. ভিডিও / স্টোরি সেকশন -->
+    <!-- ৫. ভিডিও গ্যালারি -->
+    <section class="video-gallery-section">
+        <h2 class="section-title">আমাদের এক্সক্লুসিভ ভিডিও</h2>
+        <div class="video-grid" id="video-container">
+            <!-- এখানে ভিডিও লোড হবে -->
+        </div>
+    </section>
+
+    <!-- ৬. কেন আমাদের বাছবেন -->
+    <section class="service-section">
+        <div class="service-container" id="service-container">
+            <!-- জাভাস্ক্রিপ্ট দিয়ে লোড হবে -->
+        </div>
+    </section>
+
+    <!-- ৭. গ্রাহকের মতামত -->
+    <section class="review-section">
+        <h2 class="section-title">গ্রাহকদের ভালোবাসা</h2>
+        <div class="review-grid" id="review-container">
+            <!-- জাভাস্ক্রিপ্ট দিয়ে লোড হবে -->
+        </div>
+    </section>
+
+    <!-- ৬. ভিডিও / স্টোরি সেকশন -->
     <section class="video-section" style="background-image: url('https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=1600');">
         <div class="video-overlay">
             <h2>আমাদের গল্প</h2>
@@ -62,14 +74,58 @@
     <!-- ফুটার -->
     <footer class="site-footer">
         <div class="footer-container">
-            <div class="footer-col"><h3 id="f-name">...</h3><p id="f-desc">...</p></div>
-            <div class="footer-col"><h4>লিঙ্ক</h4><ul><li><a href="shop.html">শপ</a></li></ul></div>
-            <div class="footer-col"><h4>যোগাযোগ</h4><p id="f-phone">...</p><p id="f-address">...</p></div>
+            
+            <!-- ১. ব্র্যান্ড ইনফো -->
+            <div class="footer-col brand-col">
+                <h2 id="f-name" class="footer-logo">লোড হচ্ছে...</h2>
+                <p id="f-desc" class="footer-desc">...</p>
+                
+                <!-- সোশ্যাল আইকন -->
+                <div class="social-icons">
+                    <a href="#" id="f-fb" target="_blank" class="social-btn fb" title="Facebook">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="FB">
+                    </a>
+                    <a href="#" id="f-insta" target="_blank" class="social-btn insta" title="Instagram">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Insta">
+                    </a>
+                    <a href="#" id="f-wa" target="_blank" class="social-btn wa" title="WhatsApp">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA">
+                    </a>
+                </div>
+            </div>
+
+            <!-- ২. কুইক লিঙ্ক -->
+            <div class="footer-col">
+                <h4>প্রয়োজনীয় লিঙ্ক</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">হোম</a></li>
+                    <li><a href="shop.html">কালেকশন</a></li>
+                    <li><a href="admin.html">এডমিন লগইন</a></li>
+                </ul>
+            </div>
+
+            <!-- ৩. যোগাযোগ -->
+            <div class="footer-col">
+                <h4>যোগাযোগ করুন</h4>
+                <div class="contact-info">
+                    <p id="f-phone">📞 ...</p>
+                    <p id="f-email">✉️ ...</p>
+                    <p id="f-address">📍 ...</p>
+                </div>
+            </div>
         </div>
-        <div class="footer-bottom"><p>&copy; ২০২৫ শাড়ি সম্ভার</p></div>
+
+        <!-- কপিরাইট -->
+        <div class="footer-bottom">
+            <p>&copy; <span id="year">2025</span> <span id="f-copyright-name">SootBoot</span> | সর্বস্বত্ব সংরক্ষিত</p>
+        </div>
     </footer>
 
     <!-- মেইন স্ক্রিপ্ট লিঙ্ক -->
-    <script type="module" src="./modules/client/home/home.js"></script>
+    <script type="module">
+        // মেনুবার লোড করা
+        import { loadNavbar } from './modules/common/navbar/navbar.js';
+        import './modules/client/home/home.js';
+    </script>
 </body>
 </html>
