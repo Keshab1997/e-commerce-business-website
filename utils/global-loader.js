@@ -31,7 +31,7 @@ export async function loadShopBranding() {
 
 // নাম আপডেট করার ফাংশন
 function updateNameElements(name, logoUrl) {
-    document.title = name + " | অনলাইন শপ";
+    document.title = name + " | Online Shop";
     
     setTimeout(() => {
         const navLogoText = document.getElementById('dynamic-nav-logo');
@@ -55,10 +55,10 @@ function updateNameElements(name, logoUrl) {
     
     // এডমিন প্যানেলের জন্য
     const adminPageTitle = document.getElementById('admin-page-title');
-    if (adminPageTitle) adminPageTitle.innerText = name + " - এডমিন প্যানেল";
+    if (adminPageTitle) adminPageTitle.innerText = name + " - Admin Panel";
 }
 
-// 👇 ফুটার ডিটেইলস আপডেট করার ফাংশন
+// ফুটার ডিটেইলস আপডেট করার ফাংশন
 function updateFooterDetails(data) {
     // ১. নাম ও বিবরণ
     if(data.name) {
@@ -78,21 +78,28 @@ function updateFooterDetails(data) {
         footerLogoImg.style.display = 'block';
     }
     
-    // ২. যোগাযোগ আপডেট
+    // ৩. যোগাযোগ আপডেট (English Labels)
     if(data.phone) {
         const phoneEl = document.getElementById('f-phone');
-        if(phoneEl) phoneEl.innerHTML = `📞 ${data.phone}`;
+        const phoneLink = document.getElementById('f-phone-link');
+        if(phoneEl) phoneEl.innerText = `📞 ${data.phone}`;
+        if(phoneLink) {
+            const cleanPhone = data.phone.replace(/\D/g,'');
+            phoneLink.href = `tel:${cleanPhone}`;
+        }
     }
     if(data.email) {
         const emailEl = document.getElementById('f-email');
-        if(emailEl) emailEl.innerHTML = `✉️ ${data.email}`;
+        const emailLink = document.getElementById('f-email-link');
+        if(emailEl) emailEl.innerText = `✉️ ${data.email}`;
+        if(emailLink) emailLink.href = `mailto:${data.email}`;
     }
     if(data.address) {
         const addressEl = document.getElementById('f-address');
-        if(addressEl) addressEl.innerHTML = `📍 ${data.address}`;
+        if(addressEl) addressEl.innerText = `📍 ${data.address}`;
     }
 
-    // ৩. সোশ্যাল লিঙ্ক আপডেট
+    // ৪. সোশ্যাল লিঙ্ক আপডেট
     if(data.facebook) {
         const fbEl = document.getElementById('f-fb');
         if(fbEl) fbEl.href = data.facebook;
@@ -103,10 +110,10 @@ function updateFooterDetails(data) {
     }
     if(data.phone) {
         const waEl = document.getElementById('f-wa');
-        if(waEl) waEl.href = `https://wa.me/${data.phone}`;
+        if(waEl) waEl.href = `https://wa.me/${data.phone.replace(/\D/g,'')}`;
     }
     
-    // ৪. বছর আপডেট
+    // ৫. বছর আপডেট
     const yearEl = document.getElementById('year');
     if(yearEl) yearEl.innerText = new Date().getFullYear();
 }

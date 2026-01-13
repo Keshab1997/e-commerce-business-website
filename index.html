@@ -72,54 +72,51 @@
         </div>
     </section>
 
-    <!-- ফুটার -->
+    <!-- Footer Section -->
     <footer class="site-footer">
         <div class="footer-container">
             
-            <!-- ১. ব্র্যান্ড ইনফো -->
+            <!-- 1. Brand Info -->
             <div class="footer-col brand-col">
-                <img id="f-logo-img" src="" alt="Logo" style="display:none; max-height: 70px; margin-bottom: 15px;">
-                <h2 id="f-name" class="footer-logo">লোড হচ্ছে...</h2>
-                <p id="f-desc" class="footer-desc">...</p>
+                <img id="f-logo-img" src="" alt="Logo" style="display:none;">
+                <h2 id="f-name" class="footer-logo">SootBoot</h2>
+                <p id="f-desc" class="footer-desc">Loading description...</p>
                 
-                <!-- সোশ্যাল আইকন -->
                 <div class="social-icons">
-                    <a href="#" id="f-fb" target="_blank" class="social-btn fb" title="Facebook">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="FB">
-                    </a>
-                    <a href="#" id="f-insta" target="_blank" class="social-btn insta" title="Instagram">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Insta">
-                    </a>
-                    <a href="#" id="f-wa" target="_blank" class="social-btn wa" title="WhatsApp">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WA">
-                    </a>
+                    <a href="#" id="f-fb" target="_blank" class="social-btn fb"><img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"></a>
+                    <a href="#" id="f-insta" target="_blank" class="social-btn insta"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"></a>
+                    <a href="#" id="f-wa" target="_blank" class="social-btn wa"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"></a>
                 </div>
             </div>
 
-            <!-- ২. কুইক লিঙ্ক -->
+            <!-- 2. Quick Links -->
             <div class="footer-col">
-                <h4>প্রয়োজনীয় লিঙ্ক</h4>
+                <h4>Quick Links</h4>
                 <ul class="footer-links">
-                    <li><a href="index.html">হোম</a></li>
-                    <li><a href="shop.html">কালেকশন</a></li>
-                    <li><a href="admin.html">এডমিন লগইন</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Collection</a></li>
+                    <li><a href="admin.html">Admin Login</a></li>
                 </ul>
             </div>
 
-            <!-- ৩. যোগাযোগ -->
+            <!-- 3. Contact Us -->
             <div class="footer-col">
-                <h4>যোগাযোগ করুন</h4>
+                <h4>Contact Us</h4>
                 <div class="contact-info">
-                    <p id="f-phone">📞 ...</p>
-                    <p id="f-email">✉️ ...</p>
+                    <a href="#" id="f-phone-link" class="footer-contact-link">
+                        <span id="f-phone">📞 Loading...</span>
+                    </a>
+                    <a href="#" id="f-email-link" class="footer-contact-link">
+                        <span id="f-email">✉️ Loading...</span>
+                    </a>
                     <p id="f-address">📍 ...</p>
                 </div>
             </div>
         </div>
 
-        <!-- কপিরাইট -->
+        <!-- Copyright -->
         <div class="footer-bottom">
-            <p>&copy; <span id="year">2025</span> <span id="f-copyright-name">SootBoot</span> | সর্বস্বত্ব সংরক্ষিত</p>
+            <p>&copy; <span id="year">2025</span> <span id="f-copyright-name">SootBoot</span> | All Rights Reserved</p>
         </div>
     </footer>
 
@@ -128,6 +125,7 @@
         // মেনুবার লোড করা
         import { loadNavbar } from './modules/common/navbar/navbar.js';
         import './modules/client/home/home.js';
+        import './utils/chat-loader.js';
         
         // নেভবার লোড করা
         loadNavbar();

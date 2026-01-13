@@ -247,8 +247,12 @@
             <div class="footer-col">
                 <h4>Contact Us</h4>
                 <div class="contact-info">
-                    <p id="f-phone">📞 ...</p>
-                    <p id="f-email">✉️ ...</p>
+                    <a href="#" id="f-phone-link" class="footer-contact-link">
+                        <span id="f-phone">📞 ...</span>
+                    </a>
+                    <a href="#" id="f-email-link" class="footer-contact-link">
+                        <span id="f-email">✉️ ...</span>
+                    </a>
                     <p id="f-address">📍 ...</p>
                 </div>
             </div>
@@ -264,6 +268,7 @@
         import { getCart, clearCart, updateCartCount } from './utils/cart.js';
         import { db, auth } from './config/firebase-config.js';
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import './utils/chat-loader.js';
 
         loadNavbar();
         loadShopBranding();

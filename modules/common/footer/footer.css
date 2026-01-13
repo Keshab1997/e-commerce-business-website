@@ -130,6 +130,21 @@
     gap: 10px;
 }
 
+/* ক্লিকেবল কন্টাক্ট লিঙ্ক */
+.footer-contact-link {
+    text-decoration: none;
+    color: #bbb;
+    display: block;
+    margin-bottom: 15px;
+    transition: 0.3s;
+    font-size: 0.95rem;
+}
+
+.footer-contact-link:hover {
+    color: var(--secondary-color);
+    transform: translateX(5px);
+}
+
 /* কপিরাইট সেকশন */
 .footer-bottom {
     text-align: center;
