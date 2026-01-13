@@ -21,15 +21,14 @@
     <script type="module">
         import { auth, loginWithGoogle, logoutUser } from './config/firebase-config.js';
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        const ADMIN_EMAIL = "keshabsarkar2018@gmail.com";
+        import { isAdmin } from './utils/auth-helper.js';
 
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                if (user.email === ADMIN_EMAIL) {
+                if (await isAdmin(user.email)) {
                     window.location.href = 'dashboard.html';
                 } else {
                     logoutUser();
-                    // 👇 এখানে index.html দিন
                     window.location.href = 'index.html';
                 }
             }
@@ -37,7 +36,7 @@
 
         document.getElementById('google-login-btn').addEventListener('click', async () => {
             const user = await loginWithGoogle();
-            if (user.email === ADMIN_EMAIL) {
+            if (await isAdmin(user.email)) {
                 window.location.href = 'dashboard.html';
             } else {
                 await logoutUser();

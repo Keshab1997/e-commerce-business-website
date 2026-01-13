@@ -3,6 +3,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/fi
 import { getCart } from '../../../utils/cart.js';
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { db } from '../../../config/firebase-config.js';
+import { isAdmin } from '../../../utils/auth-helper.js';
 
 // মেনুবার লোড করার ফাংশন
 export async function loadNavbar() {
@@ -103,7 +104,7 @@ function setupNavbarLogic() {
     }
 
     // ৪. ইউজার চেক (প্রোফাইল ছবি ও নাম দেখানো)
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
         const menu = document.getElementById('auth-menu');
         if (user) {
             const userImg = user.photoURL || 'https://via.placeholder.com/35';
@@ -116,7 +117,8 @@ function setupNavbarLogic() {
                 </a>
             `;
             
-            if(user.email === "keshabsarkar2018@gmail.com") {
+            const isUserAdmin = await isAdmin(user.email);
+            if(isUserAdmin) {
                 html += `
                     <a href="dashboard.html" class="admin-badge" title="Admin Dashboard">
                         ⚙️

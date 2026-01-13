@@ -41,6 +41,22 @@
                 <p>আজকের দিনের কার্যক্রম এখান থেকে পরিচালনা করুন।</p>
             </div>
 
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <p>Today's Sales</p>
+                    <h2 id="stat-today-sales">₹ 0</h2>
+                </div>
+                <div class="stat-card">
+                    <p>Total Orders</p>
+                    <h2 id="stat-total-orders">0</h2>
+                </div>
+                <div class="stat-card alert-card" id="low-stock-alert" style="display:none;">
+                    <p>⚠️ Low Stock Items</p>
+                    <h2 id="stat-low-stock">0</h2>
+                </div>
+            </div>
+
             <div class="dashboard-grid">
                 
                 <!-- ১. সেটিংস -->
@@ -79,20 +95,89 @@
                     </div>
                 </a>
 
+                <!-- ৫. চ্যাট সেন্টার -->
+                <a href="https://dashboard.tawk.to/#/chat" target="_blank" class="dash-card card-chat">
+                    <div class="icon-box">💬</div>
+                    <div class="card-info">
+                        <h3>Live Chat Inbox</h3>
+                        <p>Click here to reply to customers</p>
+                    </div>
+                </a>
+
+                <!-- ৬. অ্যাডমিন ম্যানেজমেন্ট -->
+                <a href="manage-admins.html" class="dash-card card-admin">
+                    <div class="icon-box">👥</div>
+                    <div class="card-info">
+                        <h3>অ্যাডমিন ম্যানেজমেন্ট</h3>
+                        <p>নতুন অ্যাডমিন যোগ ও রিমুভ করুন</p>
+                    </div>
+                </a>
+
+                <!-- ৭. কাস্টমার ডেটাবেস -->
+                <a href="manage-customers.html" class="dash-card card-customers">
+                    <div class="icon-box">📊</div>
+                    <div class="card-info">
+                        <h3>Customer Database</h3>
+                        <p>View all customer information</p>
+                    </div>
+                </a>
+
             </div>
         </div>
+    </div>
+
+    <!-- ড্যাশবোর্ডের ভেতরে চ্যাট ইনবক্স প্যানেল -->
+    <div id="admin-chat-panel" class="admin-chat-panel">
+        <div class="chat-panel-header">
+            <h3>💬 Live Chat Inbox</h3>
+            <button onclick="toggleChatPanel()" class="btn-close-chat">✖</button>
+        </div>
+        <iframe id="chat-inbox-frame" src="https://tawk.to/chat/6965d60db5ffaf19820cc735/1jeqso9s7" frameborder="0"></iframe>
     </div>
 
     <!-- স্ক্রিপ্ট -->
     <script type="module">
         import { auth, logoutUser } from './config/firebase-config.js';
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        const ADMIN_EMAIL = "keshabsarkar2018@gmail.com";
+        import { isAdmin } from './utils/auth-helper.js';
+        import { db } from './config/firebase-config.js';
+        import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        onAuthStateChanged(auth, (user) => {
-            if (user && user.email === ADMIN_EMAIL) {
+        async function loadDashboardStats() {
+            const orderSnap = await getDocs(collection(db, "orders"));
+            let totalOrders = 0;
+            let todaySales = 0;
+            const today = new Date().toLocaleDateString();
+
+            orderSnap.forEach(doc => {
+                const data = doc.data();
+                totalOrders++;
+                const orderDate = new Date(data.orderDate.seconds * 1000).toLocaleDateString();
+                if(orderDate === today && data.status !== 'cancelled') {
+                    todaySales += Number(data.totalPrice || 0);
+                }
+            });
+
+            document.getElementById('stat-total-orders').innerText = totalOrders;
+            document.getElementById('stat-today-sales').innerText = `₹ ${todaySales}`;
+
+            const productSnap = await getDocs(collection(db, "products"));
+            let lowStockCount = 0;
+            productSnap.forEach(doc => {
+                if(doc.data().qty <= 5) lowStockCount++;
+            });
+
+            if(lowStockCount > 0) {
+                document.getElementById('low-stock-alert').style.display = 'block';
+                document.getElementById('stat-low-stock').innerText = lowStockCount;
+            }
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user && await isAdmin(user.email)) {
                 document.getElementById('auth-check').style.display = 'none';
                 document.getElementById('main-dash').style.display = 'block';
+                loadDashboardStats();
             } else {
                 window.location.href = 'admin.html';
             }
@@ -101,10 +186,15 @@
         document.getElementById('logout-btn').addEventListener('click', () => {
             if(confirm("আপনি কি লগআউট করতে চান?")) {
                 logoutUser();
-                // 👇 নিশ্চিত করুন এখানেও index.html আছে
                 window.location.href = 'index.html';
             }
         });
+
+        // চ্যাট প্যানেল টগল ফাংশন
+        window.toggleChatPanel = () => {
+            const panel = document.getElementById('admin-chat-panel');
+            panel.classList.toggle('active');
+        };
     </script>
 
     <!-- গ্লোবাল ব্র্যান্ডিং লোডার -->

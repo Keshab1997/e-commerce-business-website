@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অ্যাডমিন ম্যানেজমেন্ট | SootBoot Admin</title>
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        body { background-color: #f4f7f6; font-family: 'Hind Siliguri', sans-serif; }
+        
+        /* হেডার */
+        .top-bar {
+            background: white; padding: 15px 4%; display: flex;
+            justify-content: space-between; align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100;
+        }
+        .top-bar h2 { color: var(--primary-color); margin: 0; font-size: 1.5rem; }
+        .btn-back { text-decoration: none; color: #666; border: 1px solid #ddd; padding: 8px 20px; border-radius: 50px; transition: 0.3s; font-weight: 600; }
+        .btn-back:hover { background: #eee; }
+
+        /* মেইন কন্টেইনার */
+        .content-container { padding: 40px 4%; max-width: 1200px; margin: 0 auto; }
+        
+        .form-grid-main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* কার্ড স্টাইল */
+        .config-card {
+            background: white; padding: 30px; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03); border-top: 4px solid var(--primary-color);
+        }
+        .config-card h3 { color: #333; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+
+        /* ইনপুট ও বাটন */
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-weight: 700; margin-bottom: 10px; color: #555; }
+        .input-group input {
+            width: 100%; padding: 14px; border: 1px solid #e0e0e0;
+            border-radius: 10px; font-size: 1rem; background: #fafafa; transition: 0.3s;
+        }
+        .input-group input:focus { border-color: var(--primary-color); background: white; outline: none; }
+
+        .btn-add {
+            width: 100%; padding: 15px; background: var(--primary-color);
+            color: white; border: none; border-radius: 10px;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .btn-add:hover { background: #600000; transform: translateY(-2px); }
+
+        /* অ্যাডমিন লিস্ট আইটেম */
+        .admin-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px; background: #f9f9f9; border-radius: 12px;
+            margin-bottom: 10px; border: 1px solid #eee; transition: 0.3s;
+        }
+        .admin-item:hover { background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        
+        .admin-info { display: flex; align-items: center; gap: 12px; }
+        .admin-email { font-weight: 600; color: #333; }
+        .role-badge { font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-weight: bold; }
+        .role-owner { background: #fff8e1; color: #ffa000; border: 1px solid #ffe082; }
+        .role-admin { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+
+        .btn-remove {
+            background: #fff0f0; color: #ff4757; border: none;
+            padding: 8px 15px; border-radius: 8px; cursor: pointer;
+            font-weight: 700; font-size: 0.85rem; transition: 0.3s;
+        }
+        .btn-remove:hover { background: #ff4757; color: white; }
+
+        /* মোবাইল ফিক্স */
+        @media (max-width: 768px) {
+            .form-grid-main { grid-template-columns: 1fr; }
+            .content-container { padding: 20px 15px; }
+            .admin-item { flex-direction: column; text-align: center; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="manager-wrapper">
+        <!-- টপ বার -->
+        <div class="top-bar">
+            <h2>👥 Admin Management</h2>
+            <a href="dashboard.html" class="btn-back">⬅ Dashboard</a>
+        </div>
+
+        <div class="content-container">
+            <div class="form-grid-main">
+                
+                <!-- ১. অ্যাডমিন যোগ করার ফর্ম -->
+                <div class="config-card">
+                    <h3>➕ Add New Admin</h3>
+                    <p style="color:#777; font-size:0.9rem; margin-bottom:20px;">Enter the Gmail address of the person you want to grant admin access.</p>
+                    <form id="add-admin-form">
+                        <div class="input-group">
+                            <label>Gmail Address</label>
+                            <input type="email" id="new-admin-email" placeholder="example@gmail.com" required>
+                        </div>
+                        <button type="submit" class="btn-add" id="add-btn">Grant Admin Access</button>
+                    </form>
+                </div>
+
+                <!-- ২. বর্তমান অ্যাডমিন লিস্ট -->
+                <div class="config-card">
+                    <h3>📜 Current Admins</h3>
+                    <div id="admin-list" style="margin-top:10px;">
+                        <p style="text-align:center; color:#888;">Loading admins...</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { db } from './config/firebase-config.js';
+        import { collection, doc, setDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const adminListDiv = document.getElementById('admin-list');
+        const OWNER_EMAIL = "keshabsarkar2018@gmail.com";
+
+        // অ্যাডমিন লিস্ট লোড করা
+        async function loadAdmins() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "admins"));
+                adminListDiv.innerHTML = '';
+                
+                querySnapshot.forEach((adminDoc) => {
+                    const email = adminDoc.id;
+                    const data = adminDoc.data();
+                    const isOwner = email === OWNER_EMAIL;
+
+                    adminListDiv.innerHTML += `
+                        <div class="admin-item">
+                            <div class="admin-info">
+                                <span style="font-size:1.2rem;">👤</span>
+                                <div>
+                                    <div class="admin-email">${email}</div>
+                                    <span class="role-badge ${isOwner ? 'role-owner' : 'role-admin'}">
+                                        ${isOwner ? 'SUPER ADMIN' : 'ADMIN'}
+                                    </span>
+                                </div>
+                            </div>
+                            ${!isOwner ? `
+                                <button class="btn-remove" onclick="removeAdmin('${email}')">🗑️ Remove</button>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+            } catch (e) {
+                adminListDiv.innerHTML = '<p style="color:red;">Error loading admins.</p>';
+            }
+        }
+
+        // অ্যাডমিন যোগ করা
+        document.getElementById('add-admin-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('add-btn');
+            const emailInput = document.getElementById('new-admin-email');
+            const email = emailInput.value.toLowerCase().trim();
+
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            try {
+                await setDoc(doc(db, "admins", email), { 
+                    role: "admin", 
+                    addedAt: new Date() 
+                });
+                alert("✅ Admin access granted to: " + email);
+                emailInput.value = '';
+                loadAdmins();
+            } catch (e) { 
+                alert("❌ Error: You don't have permission to add admins."); 
+            } finally {
+                btn.innerText = "Grant Admin Access";
+                btn.disabled = false;
+            }
+        });
+
+        // অ্যাডমিন রিমুভ করা
+        window.removeAdmin = async (email) => {
+            if(confirm("Are you sure you want to remove admin access for: " + email + "?")) {
+                try {
+                    await deleteDoc(doc(db, "admins", email));
+                    loadAdmins();
+                } catch (e) {
+                    alert("❌ Error removing admin.");
+                }
+            }
+        };
+
+        loadAdmins();
+    </script>
+</body>
+</html>

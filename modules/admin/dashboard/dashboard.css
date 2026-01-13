@@ -77,6 +77,29 @@ body {
     margin-bottom: 10px;
 }
 
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    text-align: center;
+    border-bottom: 4px solid var(--secondary-color);
+}
+
+.stat-card p { color: #777; font-size: 0.9rem; margin-bottom: 5px; }
+.stat-card h2 { color: var(--primary-color); font-size: 1.8rem; }
+
+.alert-card { border-bottom-color: #ff4757; background: #fff5f5; }
+.alert-card h2 { color: #ff4757; }
+
 /* গ্রিড */
 .dashboard-grid {
     display: grid;
@@ -135,6 +158,67 @@ body {
 
 .card-order .icon-box { background: #fff3e0; color: #ef6c00; }
 .card-order:hover { border-color: #ef6c00; }
+
+.card-admin .icon-box { background: #fce4ec; color: #c2185b; }
+.card-admin:hover { border-color: #c2185b; }
+
+.card-chat .icon-box { background: #e1f5fe; color: #0277bd; }
+.card-chat:hover { border-color: #0277bd; }
+
+.card-customers .icon-box { background: #f3e5f5; color: #7b1fa2; }
+.card-customers:hover { border-color: #7b1fa2; }
+
+/* অ্যাডমিন চ্যাট প্যানেল */
+.admin-chat-panel {
+    position: fixed;
+    top: 0;
+    right: -100%; /* শুরুতে স্ক্রিনের বাইরে থাকবে */
+    width: 450px;
+    height: 100%;
+    background: white;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+    z-index: 2000;
+    transition: 0.4s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-chat-panel.active {
+    right: 0; /* ক্লিক করলে ভেতরে আসবে */
+}
+
+.chat-panel-header {
+    padding: 20px;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-close-chat {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+#chat-inbox-frame {
+    flex: 1;
+    width: 100%;
+    border: none;
+}
+
+/* মোবাইল ফিক্স */
+@media (max-width: 600px) {
+    .admin-chat-panel {
+        width: 100%; /* মোবাইলে পুরো স্ক্রিন জুড়ে থাকবে */
+    }
+}
 
 /* কার্ড ইনফো */
 .card-info h3 {
